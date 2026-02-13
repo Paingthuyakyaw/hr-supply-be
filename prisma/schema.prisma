@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Department {
+  id Int @id @default(autoincrement())
+  name String @unique
+  is_active Boolean
+  employees Employee[]
+}
+
+model Position {
+  id Int @id @default(autoincrement())
+  name String @unique
+  is_active Boolean
+  employees Employee[]
+}
+
+enum EmployeType {
+  PART_TIME
+  FULL_TIME
+  HYBRID
+}
+
+model Employee {
+  id Int @id @default(autoincrement())
+  full_name String
+  avatar String?
+  code String @unique
+  email String? @unique
+  phoneNumber String? @unique
+  dob DateTime?
+  employment_type  EmployeType @default(FULL_TIME)
+  department_id Int
+  department Department @relation(fields: [department_id] , references: [id])
+  position_id Int
+  position Position @relation(fields: [position_id] , references: [id])
+  location String
+  date_joined DateTime @default(now())
+  updated_at DateTime @updatedAt()
+}
+
+model Image {
+  id Int @id @default(autoincrement())
+  url String 
+  fileKey String? @unique
+  folder String?
+  mimeType String?
+  size String?
+  createdAt    DateTime @default(now())  
+}
