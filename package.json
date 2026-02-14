@@ -29,6 +29,7 @@
     "@faker-js/faker": "^10.3.0",
     "@tsconfig/node22": "^22.0.5",
     "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@types/node": "^25.2.3",

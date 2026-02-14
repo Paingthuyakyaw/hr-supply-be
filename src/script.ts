@@ -62,7 +62,7 @@ async function main() {
         {
           name: `${dept.name} Executive`,
           is_active: true,
-          department_id: dept.id,
+          department_id: allDepartments[1].id,
           min_salary: 30000,
           max_salary: 60000,
           avg_salary: 45000,

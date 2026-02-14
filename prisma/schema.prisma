@@ -1,17 +1,81 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
   moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Department {
+  id               Int        @id @default(autoincrement())
+  name             String     @unique
+  is_active        Boolean
+  head_employee_id Int        @unique
+  url              String?
+  employee_count   Int
+  location         String
+  annual_budget    String?
+  startTime        DateTime   @db.Time(6)
+  endTime          DateTime   @db.Time(6)
+  working_days     WeekDay[]
+  created_at       DateTime   @default(now())
+  updated_at       DateTime   @updatedAt
+  employees        Employee[]
+  positions        Position?
+}
+
+model Position {
+  id            Int        @id @default(autoincrement())
+  name          String     @unique
+  is_active     Boolean
+  department_id Int        @unique
+  avg_salary    Int?
+  min_salary    Int?
+  max_salary    Int?
+  employees     Employee[]
+  department    Department @relation(fields: [department_id], references: [id])
+}
+
+model Employee {
+  id              Int           @id @default(autoincrement())
+  full_name       String
+  avatar          String?
+  code            String        @unique
+  email           String?       @unique
+  phoneNumber     String?       @unique
+  dob             DateTime?
+  employment_type EmployeType   @default(FULL_TIME)
+  department_id   Int
+  position_id     Int
+  location        String
+  date_joined     DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  department      Department    @relation(fields: [department_id], references: [id])
+  position        Position      @relation(fields: [position_id], references: [id])
+  documents       ID_Document[]
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  url       String
+  fileKey   String?  @unique
+  folder    String?
+  mimeType  String?
+  size      Int?
+  createdAt DateTime @default(now())
+}
+
+model ID_Document {
+  id          Int       @id @default(autoincrement())
+  type        IDDocType
+  front_url   String?
+  back_url    String?
+  employee_id Int?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  employee    Employee? @relation(fields: [employee_id], references: [id])
 }
 
 enum WeekDay {
@@ -22,37 +86,6 @@ enum WeekDay {
   FRI
   SAT
   SUN
-}
-
-
-model Department {
-  id Int @id @default(autoincrement())
-  name String @unique
-  is_active Boolean
-  employees Employee[]
-  head_employee_id Int @unique
-  positions Position[]
-  url String?
-  employee_count Int
-  location String
-  annual_budget String?
-  startTime DateTime @db.Time()
-  endTime DateTime @db.Time()
-  working_days WeekDay[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Position {
-  id Int @id @default(autoincrement())
-  name String @unique
-  is_active Boolean
-  employees Employee[]
-  department_id Int @unique
-  department Department @relation(fields: [department_id] , references: [id])
-  avg_salary Int?
-  min_salary Int?
-  max_salary Int?
 }
 
 enum EmployeType {
@@ -71,48 +104,8 @@ enum EmployeeStatus {
   RETIRED
 }
 
-model Employee {
-  id Int @id @default(autoincrement())
-  full_name String
-  avatar String?
-  code String @unique
-  email String? @unique
-  phoneNumber String? @unique
-  dob DateTime?
-  employment_type  EmployeType @default(FULL_TIME)
-  department_id Int
-  department Department @relation(fields: [department_id] , references: [id])
-  position_id Int
-  position Position @relation(fields: [position_id] , references: [id])
-  documents ID_Document[]
-  location String
-  date_joined DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Image {
-  id Int @id @default(autoincrement())
-  url String 
-  fileKey String? @unique
-  folder String?
-  mimeType String?
-  size Int?
-  createdAt    DateTime @default(now())  
-}
-
 enum IDDocType {
   PASSPORT
   DRIVER_LICENSE
   NRC
 }
-
-model ID_Document {
-  id Int @id @default(autoincrement())
-  type IDDocType
-  front_url String?
-  back_url String?
-  employee_id Int?
-  employee Employee? @relation(fields: [employee_id] , references: [id])
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-} 

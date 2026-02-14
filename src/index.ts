@@ -26,7 +26,11 @@ app.use("/employees", emRouter);
 app.use("/departments", deptRouter);
 app.use("/positions", posRouter);
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) =>
+  res.json({
+    message: "HELLO WORLD",
+  }),
+);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 export default app;
