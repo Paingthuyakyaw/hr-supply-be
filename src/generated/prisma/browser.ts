@@ -18,6 +18,16 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
+ * Model Plan
+ * 
+ */
+export type Plan = Prisma.PlanModel
+/**
  * Model Department
  * 
  */
@@ -42,3 +52,28 @@ export type Image = Prisma.ImageModel
  * 
  */
 export type ID_Document = Prisma.ID_DocumentModel
+/**
+ * Model Menu
+ * 
+ */
+export type Menu = Prisma.MenuModel
+/**
+ * Model PlanOnMenu
+ * 
+ */
+export type PlanOnMenu = Prisma.PlanOnMenuModel
+/**
+ * Model Designation
+ * 
+ */
+export type Designation = Prisma.DesignationModel
+/**
+ * Model DesignationOnMenu
+ * 
+ */
+export type DesignationOnMenu = Prisma.DesignationOnMenuModel
+/**
+ * Model DesignationOnEmployee
+ * 
+ */
+export type DesignationOnEmployee = Prisma.DesignationOnEmployeeModel

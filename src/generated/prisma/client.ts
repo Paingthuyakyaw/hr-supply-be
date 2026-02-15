@@ -27,8 +27,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Departments
- * const departments = await prisma.department.findMany()
+ * // Fetch zero or more Organizations
+ * const organizations = await prisma.organization.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -37,6 +37,16 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
+/**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
+ * Model Plan
+ * 
+ */
+export type Plan = Prisma.PlanModel
 /**
  * Model Department
  * 
@@ -62,3 +72,28 @@ export type Image = Prisma.ImageModel
  * 
  */
 export type ID_Document = Prisma.ID_DocumentModel
+/**
+ * Model Menu
+ * 
+ */
+export type Menu = Prisma.MenuModel
+/**
+ * Model PlanOnMenu
+ * 
+ */
+export type PlanOnMenu = Prisma.PlanOnMenuModel
+/**
+ * Model Designation
+ * 
+ */
+export type Designation = Prisma.DesignationModel
+/**
+ * Model DesignationOnMenu
+ * 
+ */
+export type DesignationOnMenu = Prisma.DesignationOnMenuModel
+/**
+ * Model DesignationOnEmployee
+ * 
+ */
+export type DesignationOnEmployee = Prisma.DesignationOnEmployeeModel

@@ -29,6 +29,7 @@ export type AggregatePosition = {
 export type PositionAvgAggregateOutputType = {
   id: number | null
   department_id: number | null
+  organizationId: number | null
   avg_salary: number | null
   min_salary: number | null
   max_salary: number | null
@@ -37,6 +38,7 @@ export type PositionAvgAggregateOutputType = {
 export type PositionSumAggregateOutputType = {
   id: number | null
   department_id: number | null
+  organizationId: number | null
   avg_salary: number | null
   min_salary: number | null
   max_salary: number | null
@@ -47,6 +49,7 @@ export type PositionMinAggregateOutputType = {
   name: string | null
   is_active: boolean | null
   department_id: number | null
+  organizationId: number | null
   avg_salary: number | null
   min_salary: number | null
   max_salary: number | null
@@ -57,6 +60,7 @@ export type PositionMaxAggregateOutputType = {
   name: string | null
   is_active: boolean | null
   department_id: number | null
+  organizationId: number | null
   avg_salary: number | null
   min_salary: number | null
   max_salary: number | null
@@ -67,6 +71,7 @@ export type PositionCountAggregateOutputType = {
   name: number
   is_active: number
   department_id: number
+  organizationId: number
   avg_salary: number
   min_salary: number
   max_salary: number
@@ -77,6 +82,7 @@ export type PositionCountAggregateOutputType = {
 export type PositionAvgAggregateInputType = {
   id?: true
   department_id?: true
+  organizationId?: true
   avg_salary?: true
   min_salary?: true
   max_salary?: true
@@ -85,6 +91,7 @@ export type PositionAvgAggregateInputType = {
 export type PositionSumAggregateInputType = {
   id?: true
   department_id?: true
+  organizationId?: true
   avg_salary?: true
   min_salary?: true
   max_salary?: true
@@ -95,6 +102,7 @@ export type PositionMinAggregateInputType = {
   name?: true
   is_active?: true
   department_id?: true
+  organizationId?: true
   avg_salary?: true
   min_salary?: true
   max_salary?: true
@@ -105,6 +113,7 @@ export type PositionMaxAggregateInputType = {
   name?: true
   is_active?: true
   department_id?: true
+  organizationId?: true
   avg_salary?: true
   min_salary?: true
   max_salary?: true
@@ -115,6 +124,7 @@ export type PositionCountAggregateInputType = {
   name?: true
   is_active?: true
   department_id?: true
+  organizationId?: true
   avg_salary?: true
   min_salary?: true
   max_salary?: true
@@ -212,6 +222,7 @@ export type PositionGroupByOutputType = {
   name: string
   is_active: boolean
   department_id: number
+  organizationId: number
   avg_salary: number | null
   min_salary: number | null
   max_salary: number | null
@@ -245,11 +256,13 @@ export type PositionWhereInput = {
   name?: Prisma.StringFilter<"Position"> | string
   is_active?: Prisma.BoolFilter<"Position"> | boolean
   department_id?: Prisma.IntFilter<"Position"> | number
+  organizationId?: Prisma.IntFilter<"Position"> | number
   avg_salary?: Prisma.IntNullableFilter<"Position"> | number | null
   min_salary?: Prisma.IntNullableFilter<"Position"> | number | null
   max_salary?: Prisma.IntNullableFilter<"Position"> | number | null
-  employees?: Prisma.EmployeeListRelationFilter
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
+  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  employees?: Prisma.EmployeeListRelationFilter
 }
 
 export type PositionOrderByWithRelationInput = {
@@ -257,33 +270,39 @@ export type PositionOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   avg_salary?: Prisma.SortOrderInput | Prisma.SortOrder
   min_salary?: Prisma.SortOrderInput | Prisma.SortOrder
   max_salary?: Prisma.SortOrderInput | Prisma.SortOrder
-  employees?: Prisma.EmployeeOrderByRelationAggregateInput
   department?: Prisma.DepartmentOrderByWithRelationInput
+  organization?: Prisma.OrganizationOrderByWithRelationInput
+  employees?: Prisma.EmployeeOrderByRelationAggregateInput
 }
 
 export type PositionWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  name?: string
-  department_id?: number
+  organizationId_name?: Prisma.PositionOrganizationIdNameCompoundUniqueInput
   AND?: Prisma.PositionWhereInput | Prisma.PositionWhereInput[]
   OR?: Prisma.PositionWhereInput[]
   NOT?: Prisma.PositionWhereInput | Prisma.PositionWhereInput[]
+  name?: Prisma.StringFilter<"Position"> | string
   is_active?: Prisma.BoolFilter<"Position"> | boolean
+  department_id?: Prisma.IntFilter<"Position"> | number
+  organizationId?: Prisma.IntFilter<"Position"> | number
   avg_salary?: Prisma.IntNullableFilter<"Position"> | number | null
   min_salary?: Prisma.IntNullableFilter<"Position"> | number | null
   max_salary?: Prisma.IntNullableFilter<"Position"> | number | null
-  employees?: Prisma.EmployeeListRelationFilter
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
-}, "id" | "name" | "department_id">
+  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  employees?: Prisma.EmployeeListRelationFilter
+}, "id" | "organizationId_name">
 
 export type PositionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   avg_salary?: Prisma.SortOrderInput | Prisma.SortOrder
   min_salary?: Prisma.SortOrderInput | Prisma.SortOrder
   max_salary?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -302,6 +321,7 @@ export type PositionScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Position"> | string
   is_active?: Prisma.BoolWithAggregatesFilter<"Position"> | boolean
   department_id?: Prisma.IntWithAggregatesFilter<"Position"> | number
+  organizationId?: Prisma.IntWithAggregatesFilter<"Position"> | number
   avg_salary?: Prisma.IntNullableWithAggregatesFilter<"Position"> | number | null
   min_salary?: Prisma.IntNullableWithAggregatesFilter<"Position"> | number | null
   max_salary?: Prisma.IntNullableWithAggregatesFilter<"Position"> | number | null
@@ -313,8 +333,9 @@ export type PositionCreateInput = {
   avg_salary?: number | null
   min_salary?: number | null
   max_salary?: number | null
-  employees?: Prisma.EmployeeCreateNestedManyWithoutPositionInput
   department: Prisma.DepartmentCreateNestedOneWithoutPositionsInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutPositionsInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutPositionInput
 }
 
 export type PositionUncheckedCreateInput = {
@@ -322,6 +343,7 @@ export type PositionUncheckedCreateInput = {
   name: string
   is_active: boolean
   department_id: number
+  organizationId: number
   avg_salary?: number | null
   min_salary?: number | null
   max_salary?: number | null
@@ -334,8 +356,9 @@ export type PositionUpdateInput = {
   avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  employees?: Prisma.EmployeeUpdateManyWithoutPositionNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutPositionsNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutPositionsNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutPositionNestedInput
 }
 
 export type PositionUncheckedUpdateInput = {
@@ -343,6 +366,7 @@ export type PositionUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -354,6 +378,7 @@ export type PositionCreateManyInput = {
   name: string
   is_active: boolean
   department_id: number
+  organizationId: number
   avg_salary?: number | null
   min_salary?: number | null
   max_salary?: number | null
@@ -372,14 +397,25 @@ export type PositionUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
-export type PositionNullableScalarRelationFilter = {
-  is?: Prisma.PositionWhereInput | null
-  isNot?: Prisma.PositionWhereInput | null
+export type PositionListRelationFilter = {
+  every?: Prisma.PositionWhereInput
+  some?: Prisma.PositionWhereInput
+  none?: Prisma.PositionWhereInput
+}
+
+export type PositionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type PositionOrganizationIdNameCompoundUniqueInput = {
+  organizationId: number
+  name: string
 }
 
 export type PositionCountOrderByAggregateInput = {
@@ -387,6 +423,7 @@ export type PositionCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   avg_salary?: Prisma.SortOrder
   min_salary?: Prisma.SortOrder
   max_salary?: Prisma.SortOrder
@@ -395,6 +432,7 @@ export type PositionCountOrderByAggregateInput = {
 export type PositionAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   avg_salary?: Prisma.SortOrder
   min_salary?: Prisma.SortOrder
   max_salary?: Prisma.SortOrder
@@ -405,6 +443,7 @@ export type PositionMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   avg_salary?: Prisma.SortOrder
   min_salary?: Prisma.SortOrder
   max_salary?: Prisma.SortOrder
@@ -415,6 +454,7 @@ export type PositionMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   avg_salary?: Prisma.SortOrder
   min_salary?: Prisma.SortOrder
   max_salary?: Prisma.SortOrder
@@ -423,6 +463,7 @@ export type PositionMinOrderByAggregateInput = {
 export type PositionSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   avg_salary?: Prisma.SortOrder
   min_salary?: Prisma.SortOrder
   max_salary?: Prisma.SortOrder
@@ -433,44 +474,88 @@ export type PositionScalarRelationFilter = {
   isNot?: Prisma.PositionWhereInput
 }
 
-export type PositionCreateNestedOneWithoutDepartmentInput = {
-  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput>
-  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput
-  connect?: Prisma.PositionWhereUniqueInput
+export type PositionCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutOrganizationInput, Prisma.PositionUncheckedCreateWithoutOrganizationInput> | Prisma.PositionCreateWithoutOrganizationInput[] | Prisma.PositionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutOrganizationInput | Prisma.PositionCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.PositionCreateManyOrganizationInputEnvelope
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
 }
 
-export type PositionUncheckedCreateNestedOneWithoutDepartmentInput = {
-  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput>
-  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput
-  connect?: Prisma.PositionWhereUniqueInput
+export type PositionUncheckedCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutOrganizationInput, Prisma.PositionUncheckedCreateWithoutOrganizationInput> | Prisma.PositionCreateWithoutOrganizationInput[] | Prisma.PositionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutOrganizationInput | Prisma.PositionCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.PositionCreateManyOrganizationInputEnvelope
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
 }
 
-export type PositionUpdateOneWithoutDepartmentNestedInput = {
-  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput>
-  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput
-  upsert?: Prisma.PositionUpsertWithoutDepartmentInput
-  disconnect?: Prisma.PositionWhereInput | boolean
-  delete?: Prisma.PositionWhereInput | boolean
-  connect?: Prisma.PositionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PositionUpdateToOneWithWhereWithoutDepartmentInput, Prisma.PositionUpdateWithoutDepartmentInput>, Prisma.PositionUncheckedUpdateWithoutDepartmentInput>
+export type PositionUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutOrganizationInput, Prisma.PositionUncheckedCreateWithoutOrganizationInput> | Prisma.PositionCreateWithoutOrganizationInput[] | Prisma.PositionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutOrganizationInput | Prisma.PositionCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.PositionUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.PositionUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.PositionCreateManyOrganizationInputEnvelope
+  set?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  disconnect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  delete?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  update?: Prisma.PositionUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.PositionUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.PositionUpdateManyWithWhereWithoutOrganizationInput | Prisma.PositionUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.PositionScalarWhereInput | Prisma.PositionScalarWhereInput[]
 }
 
-export type PositionUncheckedUpdateOneWithoutDepartmentNestedInput = {
-  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput>
-  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput
-  upsert?: Prisma.PositionUpsertWithoutDepartmentInput
-  disconnect?: Prisma.PositionWhereInput | boolean
-  delete?: Prisma.PositionWhereInput | boolean
-  connect?: Prisma.PositionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PositionUpdateToOneWithWhereWithoutDepartmentInput, Prisma.PositionUpdateWithoutDepartmentInput>, Prisma.PositionUncheckedUpdateWithoutDepartmentInput>
+export type PositionUncheckedUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutOrganizationInput, Prisma.PositionUncheckedCreateWithoutOrganizationInput> | Prisma.PositionCreateWithoutOrganizationInput[] | Prisma.PositionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutOrganizationInput | Prisma.PositionCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.PositionUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.PositionUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.PositionCreateManyOrganizationInputEnvelope
+  set?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  disconnect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  delete?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  update?: Prisma.PositionUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.PositionUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.PositionUpdateManyWithWhereWithoutOrganizationInput | Prisma.PositionUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.PositionScalarWhereInput | Prisma.PositionScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type PositionCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput> | Prisma.PositionCreateWithoutDepartmentInput[] | Prisma.PositionUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput | Prisma.PositionCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.PositionCreateManyDepartmentInputEnvelope
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+}
+
+export type PositionUncheckedCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput> | Prisma.PositionCreateWithoutDepartmentInput[] | Prisma.PositionUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput | Prisma.PositionCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.PositionCreateManyDepartmentInputEnvelope
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+}
+
+export type PositionUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput> | Prisma.PositionCreateWithoutDepartmentInput[] | Prisma.PositionUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput | Prisma.PositionCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.PositionUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.PositionUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.PositionCreateManyDepartmentInputEnvelope
+  set?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  disconnect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  delete?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  update?: Prisma.PositionUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.PositionUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.PositionUpdateManyWithWhereWithoutDepartmentInput | Prisma.PositionUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.PositionScalarWhereInput | Prisma.PositionScalarWhereInput[]
+}
+
+export type PositionUncheckedUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput> | Prisma.PositionCreateWithoutDepartmentInput[] | Prisma.PositionUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.PositionCreateOrConnectWithoutDepartmentInput | Prisma.PositionCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.PositionUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.PositionUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.PositionCreateManyDepartmentInputEnvelope
+  set?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  disconnect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  delete?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  connect?: Prisma.PositionWhereUniqueInput | Prisma.PositionWhereUniqueInput[]
+  update?: Prisma.PositionUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.PositionUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.PositionUpdateManyWithWhereWithoutDepartmentInput | Prisma.PositionUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.PositionScalarWhereInput | Prisma.PositionScalarWhereInput[]
 }
 
 export type PositionCreateNestedOneWithoutEmployeesInput = {
@@ -487,12 +572,74 @@ export type PositionUpdateOneRequiredWithoutEmployeesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PositionUpdateToOneWithWhereWithoutEmployeesInput, Prisma.PositionUpdateWithoutEmployeesInput>, Prisma.PositionUncheckedUpdateWithoutEmployeesInput>
 }
 
+export type PositionCreateWithoutOrganizationInput = {
+  name: string
+  is_active: boolean
+  avg_salary?: number | null
+  min_salary?: number | null
+  max_salary?: number | null
+  department: Prisma.DepartmentCreateNestedOneWithoutPositionsInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutPositionInput
+}
+
+export type PositionUncheckedCreateWithoutOrganizationInput = {
+  id?: number
+  name: string
+  is_active: boolean
+  department_id: number
+  avg_salary?: number | null
+  min_salary?: number | null
+  max_salary?: number | null
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutPositionInput
+}
+
+export type PositionCreateOrConnectWithoutOrganizationInput = {
+  where: Prisma.PositionWhereUniqueInput
+  create: Prisma.XOR<Prisma.PositionCreateWithoutOrganizationInput, Prisma.PositionUncheckedCreateWithoutOrganizationInput>
+}
+
+export type PositionCreateManyOrganizationInputEnvelope = {
+  data: Prisma.PositionCreateManyOrganizationInput | Prisma.PositionCreateManyOrganizationInput[]
+  skipDuplicates?: boolean
+}
+
+export type PositionUpsertWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.PositionWhereUniqueInput
+  update: Prisma.XOR<Prisma.PositionUpdateWithoutOrganizationInput, Prisma.PositionUncheckedUpdateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.PositionCreateWithoutOrganizationInput, Prisma.PositionUncheckedCreateWithoutOrganizationInput>
+}
+
+export type PositionUpdateWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.PositionWhereUniqueInput
+  data: Prisma.XOR<Prisma.PositionUpdateWithoutOrganizationInput, Prisma.PositionUncheckedUpdateWithoutOrganizationInput>
+}
+
+export type PositionUpdateManyWithWhereWithoutOrganizationInput = {
+  where: Prisma.PositionScalarWhereInput
+  data: Prisma.XOR<Prisma.PositionUpdateManyMutationInput, Prisma.PositionUncheckedUpdateManyWithoutOrganizationInput>
+}
+
+export type PositionScalarWhereInput = {
+  AND?: Prisma.PositionScalarWhereInput | Prisma.PositionScalarWhereInput[]
+  OR?: Prisma.PositionScalarWhereInput[]
+  NOT?: Prisma.PositionScalarWhereInput | Prisma.PositionScalarWhereInput[]
+  id?: Prisma.IntFilter<"Position"> | number
+  name?: Prisma.StringFilter<"Position"> | string
+  is_active?: Prisma.BoolFilter<"Position"> | boolean
+  department_id?: Prisma.IntFilter<"Position"> | number
+  organizationId?: Prisma.IntFilter<"Position"> | number
+  avg_salary?: Prisma.IntNullableFilter<"Position"> | number | null
+  min_salary?: Prisma.IntNullableFilter<"Position"> | number | null
+  max_salary?: Prisma.IntNullableFilter<"Position"> | number | null
+}
+
 export type PositionCreateWithoutDepartmentInput = {
   name: string
   is_active: boolean
   avg_salary?: number | null
   min_salary?: number | null
   max_salary?: number | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutPositionsInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutPositionInput
 }
 
@@ -500,6 +647,7 @@ export type PositionUncheckedCreateWithoutDepartmentInput = {
   id?: number
   name: string
   is_active: boolean
+  organizationId: number
   avg_salary?: number | null
   min_salary?: number | null
   max_salary?: number | null
@@ -511,34 +659,25 @@ export type PositionCreateOrConnectWithoutDepartmentInput = {
   create: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput>
 }
 
-export type PositionUpsertWithoutDepartmentInput = {
-  update: Prisma.XOR<Prisma.PositionUpdateWithoutDepartmentInput, Prisma.PositionUncheckedUpdateWithoutDepartmentInput>
-  create: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput>
-  where?: Prisma.PositionWhereInput
+export type PositionCreateManyDepartmentInputEnvelope = {
+  data: Prisma.PositionCreateManyDepartmentInput | Prisma.PositionCreateManyDepartmentInput[]
+  skipDuplicates?: boolean
 }
 
-export type PositionUpdateToOneWithWhereWithoutDepartmentInput = {
-  where?: Prisma.PositionWhereInput
+export type PositionUpsertWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.PositionWhereUniqueInput
+  update: Prisma.XOR<Prisma.PositionUpdateWithoutDepartmentInput, Prisma.PositionUncheckedUpdateWithoutDepartmentInput>
+  create: Prisma.XOR<Prisma.PositionCreateWithoutDepartmentInput, Prisma.PositionUncheckedCreateWithoutDepartmentInput>
+}
+
+export type PositionUpdateWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.PositionWhereUniqueInput
   data: Prisma.XOR<Prisma.PositionUpdateWithoutDepartmentInput, Prisma.PositionUncheckedUpdateWithoutDepartmentInput>
 }
 
-export type PositionUpdateWithoutDepartmentInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  employees?: Prisma.EmployeeUpdateManyWithoutPositionNestedInput
-}
-
-export type PositionUncheckedUpdateWithoutDepartmentInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutPositionNestedInput
+export type PositionUpdateManyWithWhereWithoutDepartmentInput = {
+  where: Prisma.PositionScalarWhereInput
+  data: Prisma.XOR<Prisma.PositionUpdateManyMutationInput, Prisma.PositionUncheckedUpdateManyWithoutDepartmentInput>
 }
 
 export type PositionCreateWithoutEmployeesInput = {
@@ -548,6 +687,7 @@ export type PositionCreateWithoutEmployeesInput = {
   min_salary?: number | null
   max_salary?: number | null
   department: Prisma.DepartmentCreateNestedOneWithoutPositionsInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutPositionsInput
 }
 
 export type PositionUncheckedCreateWithoutEmployeesInput = {
@@ -555,6 +695,7 @@ export type PositionUncheckedCreateWithoutEmployeesInput = {
   name: string
   is_active: boolean
   department_id: number
+  organizationId: number
   avg_salary?: number | null
   min_salary?: number | null
   max_salary?: number | null
@@ -583,6 +724,7 @@ export type PositionUpdateWithoutEmployeesInput = {
   min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   department?: Prisma.DepartmentUpdateOneRequiredWithoutPositionsNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutPositionsNestedInput
 }
 
 export type PositionUncheckedUpdateWithoutEmployeesInput = {
@@ -590,6 +732,89 @@ export type PositionUncheckedUpdateWithoutEmployeesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type PositionCreateManyOrganizationInput = {
+  id?: number
+  name: string
+  is_active: boolean
+  department_id: number
+  avg_salary?: number | null
+  min_salary?: number | null
+  max_salary?: number | null
+}
+
+export type PositionUpdateWithoutOrganizationInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  department?: Prisma.DepartmentUpdateOneRequiredWithoutPositionsNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutPositionNestedInput
+}
+
+export type PositionUncheckedUpdateWithoutOrganizationInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutPositionNestedInput
+}
+
+export type PositionUncheckedUpdateManyWithoutOrganizationInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type PositionCreateManyDepartmentInput = {
+  id?: number
+  name: string
+  is_active: boolean
+  organizationId: number
+  avg_salary?: number | null
+  min_salary?: number | null
+  max_salary?: number | null
+}
+
+export type PositionUpdateWithoutDepartmentInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutPositionsNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutPositionNestedInput
+}
+
+export type PositionUncheckedUpdateWithoutDepartmentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutPositionNestedInput
+}
+
+export type PositionUncheckedUpdateManyWithoutDepartmentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   avg_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   min_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_salary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -631,11 +856,13 @@ export type PositionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name?: boolean
   is_active?: boolean
   department_id?: boolean
+  organizationId?: boolean
   avg_salary?: boolean
   min_salary?: boolean
   max_salary?: boolean
-  employees?: boolean | Prisma.Position$employeesArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  employees?: boolean | Prisma.Position$employeesArgs<ExtArgs>
   _count?: boolean | Prisma.PositionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["position"]>
 
@@ -644,10 +871,12 @@ export type PositionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   is_active?: boolean
   department_id?: boolean
+  organizationId?: boolean
   avg_salary?: boolean
   min_salary?: boolean
   max_salary?: boolean
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["position"]>
 
 export type PositionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -655,10 +884,12 @@ export type PositionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   is_active?: boolean
   department_id?: boolean
+  organizationId?: boolean
   avg_salary?: boolean
   min_salary?: boolean
   max_salary?: boolean
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["position"]>
 
 export type PositionSelectScalar = {
@@ -666,35 +897,41 @@ export type PositionSelectScalar = {
   name?: boolean
   is_active?: boolean
   department_id?: boolean
+  organizationId?: boolean
   avg_salary?: boolean
   min_salary?: boolean
   max_salary?: boolean
 }
 
-export type PositionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "is_active" | "department_id" | "avg_salary" | "min_salary" | "max_salary", ExtArgs["result"]["position"]>
+export type PositionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "is_active" | "department_id" | "organizationId" | "avg_salary" | "min_salary" | "max_salary", ExtArgs["result"]["position"]>
 export type PositionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  employees?: boolean | Prisma.Position$employeesArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  employees?: boolean | Prisma.Position$employeesArgs<ExtArgs>
   _count?: boolean | Prisma.PositionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PositionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
 export type PositionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
 
 export type $PositionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Position"
   objects: {
-    employees: Prisma.$EmployeePayload<ExtArgs>[]
     department: Prisma.$DepartmentPayload<ExtArgs>
+    organization: Prisma.$OrganizationPayload<ExtArgs>
+    employees: Prisma.$EmployeePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
     is_active: boolean
     department_id: number
+    organizationId: number
     avg_salary: number | null
     min_salary: number | null
     max_salary: number | null
@@ -1092,8 +1329,9 @@ readonly fields: PositionFieldRefs;
  */
 export interface Prisma__PositionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  employees<T extends Prisma.Position$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Position$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   department<T extends Prisma.DepartmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentDefaultArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  employees<T extends Prisma.Position$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Position$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1127,6 +1365,7 @@ export interface PositionFieldRefs {
   readonly name: Prisma.FieldRef<"Position", 'String'>
   readonly is_active: Prisma.FieldRef<"Position", 'Boolean'>
   readonly department_id: Prisma.FieldRef<"Position", 'Int'>
+  readonly organizationId: Prisma.FieldRef<"Position", 'Int'>
   readonly avg_salary: Prisma.FieldRef<"Position", 'Int'>
   readonly min_salary: Prisma.FieldRef<"Position", 'Int'>
   readonly max_salary: Prisma.FieldRef<"Position", 'Int'>

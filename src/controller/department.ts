@@ -3,12 +3,7 @@ import { prisma } from "../../lib/prisma";
 
 export async function getDepartments(req: Request, res: Response) {
   try {
-    const isActive = req.query.is_active;
-    const where =
-      typeof isActive === "string" ? { is_active: isActive === "true" } : {};
-
     const items = await prisma.department.findMany({
-      where,
       orderBy: { id: "desc" },
       include: {
         positions: true,

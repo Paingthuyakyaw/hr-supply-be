@@ -8,9 +8,16 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Organization'
+export type * from './models/Plan'
 export type * from './models/Department'
 export type * from './models/Position'
 export type * from './models/Employee'
 export type * from './models/Image'
 export type * from './models/ID_Document'
+export type * from './models/Menu'
+export type * from './models/PlanOnMenu'
+export type * from './models/Designation'
+export type * from './models/DesignationOnMenu'
+export type * from './models/DesignationOnEmployee'
 export type * from './commonInputTypes'

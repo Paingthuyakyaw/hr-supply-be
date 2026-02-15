@@ -17,6 +17,7 @@ export async function getEmployees(req: Request, res: Response) {
               { full_name: { contains: q, mode: "insensitive" as const } },
               { code: { contains: q, mode: "insensitive" as const } },
               { email: { contains: q, mode: "insensitive" as const } },
+              { phoneNumber: { contains: q, mode: "insensitive" as const } },
             ],
           }
         : {}),

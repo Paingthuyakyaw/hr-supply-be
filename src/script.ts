@@ -1,132 +1,205 @@
-import { EmployeType, WeekDay } from "./generated/prisma/enums";
 import { prisma } from "../lib/prisma";
+import {
+  PrismaClient,
+  MenuCode,
+  Action,
+  PlanCode,
+  EmployeeType,
+  WeekDay,
+  OrganizationStatus,
+  EmployeeStatus,
+} from "./generated/prisma/client";
 import { faker } from "@faker-js/faker";
 
 async function main() {
-  // 1️⃣ Create Departments
-  const departments = await prisma.department.createMany({
-    data: [
-      {
-        name: "Marketing",
-        is_active: true,
-        head_employee_id: 1, // later update လုပ်နိုင်
-        employee_count: 0,
-        location: "Yangon",
-        annual_budget: "500000",
-        startTime: new Date("1970-01-01T09:00:00"),
-        endTime: new Date("1970-01-01T18:00:00"),
-        working_days: [
-          WeekDay.MON,
-          WeekDay.TUE,
-          WeekDay.WED,
-          WeekDay.THU,
-          WeekDay.FRI,
-        ],
-      },
-      {
-        name: "IT",
-        is_active: true,
-        head_employee_id: 2,
-        employee_count: 0,
-        location: "Mandalay",
-        annual_budget: "800000",
-        startTime: new Date("1970-01-01T09:30:00"),
-        endTime: new Date("1970-01-01T18:30:00"),
-        working_days: [
-          WeekDay.MON,
-          WeekDay.TUE,
-          WeekDay.WED,
-          WeekDay.THU,
-          WeekDay.FRI,
-        ],
-      },
-    ],
+  console.log("🌱 Seeding started (Full Reset Mode)...");
+
+  // ============================
+  // 1️⃣ Create Menus
+  // ============================
+  console.log("Creating Menus...");
+  const menuData = Object.values(MenuCode).map((code) => ({
+    menu: code,
+    action: [Action.VIEW, Action.CREATE, Action.UPDATE, Action.DELETE], // Master menu definitions
+  }));
+
+  // Batch create menus
+  await prisma.menu.createMany({ data: menuData });
+  const allMenus = await prisma.menu.findMany();
+  console.log(`✅ ${allMenus.length} Menus Created`);
+
+  // ============================
+  // 2️⃣ Create Plans
+  // ============================
+  const freePlan = await prisma.plan.create({
+    data: { name: "Free Plan", code: PlanCode.FREE },
   });
 
-  console.log("✅ Departments Created");
+  const proPlan = await prisma.plan.create({
+    data: { name: "Pro Plan", code: PlanCode.PRO },
+  });
 
-  const allDepartments = await prisma.department.findMany();
+  const enterprisePlan = await prisma.plan.create({
+    data: { name: "Enterprise Plan", code: PlanCode.ENTERPRISE },
+  });
 
-  // 2️⃣ Create Positions
-  for (const dept of allDepartments) {
-    await prisma.position.createMany({
-      data: [
-        {
-          name: `${dept.name} Manager`,
-          is_active: true,
-          department_id: dept.id,
-          min_salary: 50000,
-          max_salary: 90000,
-          avg_salary: 70000,
-        },
-        {
-          name: `${dept.name} Executive`,
-          is_active: true,
-          department_id: allDepartments[1].id,
-          min_salary: 30000,
-          max_salary: 60000,
-          avg_salary: 45000,
-        },
+  console.log("✅ Plans Created");
+
+  // ============================
+  // 3️⃣ Assign Plan Permissions (The Ceiling)
+  // ============================
+
+  // Free Plan: Only VIEW for all menus
+  for (const menu of allMenus) {
+    await prisma.planOnMenu.create({
+      data: {
+        planId: freePlan.id,
+        menuId: menu.id,
+        actions: [Action.VIEW],
+      },
+    });
+  }
+
+  // Pro Plan: VIEW, CREATE, UPDATE for all menus
+  for (const menu of allMenus) {
+    await prisma.planOnMenu.create({
+      data: {
+        planId: proPlan.id,
+        menuId: menu.id,
+        actions: [Action.VIEW, Action.CREATE, Action.UPDATE],
+      },
+    });
+  }
+
+  // Enterprise Plan: All actions
+  for (const menu of allMenus) {
+    await prisma.planOnMenu.create({
+      data: {
+        planId: enterprisePlan.id,
+        menuId: menu.id,
+        actions: [Action.VIEW, Action.CREATE, Action.UPDATE, Action.DELETE],
+      },
+    });
+  }
+
+  console.log("✅ Plan-level Restrictions Set");
+
+  // ============================
+  // 4️⃣ Create Organization (Linked to PRO Plan)
+  // ============================
+  const org = await prisma.organization.create({
+    data: {
+      name: "Nexus Tech Solutions",
+      total_employees: 20,
+      status: OrganizationStatus.APPROVED,
+      planId: proPlan.id,
+    },
+  });
+
+  // ============================
+  // 5️⃣ Create Designations
+  // ============================
+  const adminRole = await prisma.designation.create({
+    data: { name: "Admin", organizationId: org.id },
+  });
+
+  const staffRole = await prisma.designation.create({
+    data: { name: "General Staff", organizationId: org.id },
+  });
+
+  // ============================
+  // 6️⃣ Assign Designation Permissions (Based on Plan)
+  // ============================
+
+  // Admin gets everything the PRO plan allows
+  const proPlanLimits = await prisma.planOnMenu.findMany({
+    where: { planId: proPlan.id },
+  });
+
+  for (const limit of proPlanLimits) {
+    await prisma.designationOnMenu.create({
+      data: {
+        designationId: adminRole.id,
+        menuId: limit.menuId,
+        actions: limit.actions, // Matches Pro Plan: [VIEW, CREATE, UPDATE]
+      },
+    });
+
+    // Staff only gets VIEW, even if the plan allows more
+    await prisma.designationOnMenu.create({
+      data: {
+        designationId: staffRole.id,
+        menuId: limit.menuId,
+        actions: [Action.VIEW],
+      },
+    });
+  }
+
+  console.log("✅ Designation Permissions Assigned (Plan-compliant)");
+
+  // ============================
+  // 7️⃣ Departments & Positions
+  // ============================
+  const itDept = await prisma.department.create({
+    data: {
+      name: "Engineering",
+      is_active: true,
+      employee_count: 0,
+      location: "Building A",
+      organizationId: org.id,
+      startTime: new Date("1970-01-01T09:00:00Z"),
+      endTime: new Date("1970-01-01T18:00:00Z"),
+      working_days: [
+        WeekDay.MON,
+        WeekDay.TUE,
+        WeekDay.WED,
+        WeekDay.THU,
+        WeekDay.FRI,
       ],
-    });
-  }
-
-  console.log("✅ Positions Created");
-
-  const allPositions = await prisma.position.findMany();
-
-  // 3️⃣ Create 20 Employees
-  const employees = [];
-
-  for (let i = 0; i < 20; i++) {
-    const randomDept = faker.helpers.arrayElement(allDepartments);
-    const deptPositions = allPositions.filter(
-      (p) => p.department_id === randomDept.id,
-    );
-    const randomPosition = faker.helpers.arrayElement(deptPositions);
-
-    employees.push({
-      full_name: faker.person.fullName(),
-      avatar: faker.image.avatar(),
-      code: `EMP${1000 + i}`,
-      email: faker.internet.email(),
-      phoneNumber: faker.phone.number(),
-      dob: faker.date.birthdate({ min: 22, max: 45, mode: "age" }),
-      employment_type: faker.helpers.arrayElement([
-        EmployeType.FULL_TIME,
-        EmployeType.PART_TIME,
-        EmployeType.HYBRID,
-      ]),
-      department_id: randomDept.id,
-      position_id: randomPosition.id,
-      location: faker.location.city(),
-      date_joined: faker.date.past({ years: 3 }),
-    });
-  }
-
-  await prisma.employee.createMany({
-    data: employees,
+    },
   });
 
-  console.log("✅ 20 Employees Created");
+  const leadDev = await prisma.position.create({
+    data: {
+      name: "Lead Developer",
+      is_active: true,
+      department_id: itDept.id,
+      organizationId: org.id,
+    },
+  });
 
-  // 4️⃣ Update employee_count
-  for (const dept of allDepartments) {
-    const count = await prisma.employee.count({
-      where: { department_id: dept.id },
-    });
+  // ============================
+  // 8️⃣ Employees & Role Linking
+  // ============================
+  const employee = await prisma.employee.create({
+    data: {
+      full_name: "John Doe",
+      code: "EMP-001",
+      email: "john@nexus.com",
+      organizationId: org.id,
+      department_id: itDept.id,
+      position_id: leadDev.id,
+      location: "Yangon",
+      status: EmployeeStatus.ACTIVE,
+    },
+  });
 
-    await prisma.department.update({
-      where: { id: dept.id },
-      data: { employee_count: count },
-    });
-  }
+  // Link Employee to Admin Designation
+  await prisma.designationOnEmployee.create({
+    data: {
+      employeeId: employee.id,
+      designationId: adminRole.id,
+    },
+  });
 
-  console.log("✅ Employee Count Updated");
+  console.log("🎉 Seeding Completed Successfully!");
 }
 
 main()
-  .catch((e) => console.error(e))
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
   .finally(async () => {
     await prisma.$disconnect();
   });

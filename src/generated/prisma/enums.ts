@@ -9,6 +9,31 @@
 * 🟢 You can import this file directly.
 */
 
+export const MenuCode = {
+  DASHBOARD: 'DASHBOARD',
+  EMPLOYEE: 'EMPLOYEE',
+  DEPARTMENT: 'DEPARTMENT',
+  POSITION: 'POSITION',
+  ORGANIZATION: 'ORGANIZATION',
+  PLAN_MANAGEMENT: 'PLAN_MANAGEMENT',
+  ATTENDANCE: 'ATTENDANCE',
+  LEAVE_MANGEMENT: 'LEAVE_MANGEMENT',
+  PAYROLL: 'PAYROLL'
+} as const
+
+export type MenuCode = (typeof MenuCode)[keyof typeof MenuCode]
+
+
+export const Action = {
+  CREATE: 'CREATE',
+  VIEW: 'VIEW',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE'
+} as const
+
+export type Action = (typeof Action)[keyof typeof Action]
+
+
 export const WeekDay = {
   MON: 'MON',
   TUE: 'TUE',
@@ -22,18 +47,19 @@ export const WeekDay = {
 export type WeekDay = (typeof WeekDay)[keyof typeof WeekDay]
 
 
-export const EmployeType = {
+export const EmployeeType = {
   PART_TIME: 'PART_TIME',
   FULL_TIME: 'FULL_TIME',
   HYBRID: 'HYBRID'
 } as const
 
-export type EmployeType = (typeof EmployeType)[keyof typeof EmployeType]
+export type EmployeeType = (typeof EmployeeType)[keyof typeof EmployeeType]
 
 
 export const EmployeeStatus = {
   ACTIVE: 'ACTIVE',
   ON_PROBATION: 'ON_PROBATION',
+  PENDING: 'PENDING',
   ON_LEAVE: 'ON_LEAVE',
   SUSPENDED: 'SUSPENDED',
   RESIGNED: 'RESIGNED',
@@ -51,3 +77,23 @@ export const IDDocType = {
 } as const
 
 export type IDDocType = (typeof IDDocType)[keyof typeof IDDocType]
+
+
+export const OrganizationStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type OrganizationStatus = (typeof OrganizationStatus)[keyof typeof OrganizationStatus]
+
+
+export const PlanCode = {
+  FREE: 'FREE',
+  PRO: 'PRO',
+  ENTERPRISE: 'ENTERPRISE',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+} as const
+
+export type PlanCode = (typeof PlanCode)[keyof typeof PlanCode]

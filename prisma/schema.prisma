@@ -8,53 +8,116 @@ datasource db {
   provider = "postgresql"
 }
 
+model Organization {
+  id              Int            @id @default(autoincrement())
+  name            String
+  total_employees Int
+  status          OrganizationStatus
+  expire_time     DateTime?
+
+  planId Int
+  plan   Plan @relation(fields: [planId], references: [id])
+
+  departments  Department[]
+  positions    Position[]
+  employees    Employee[]
+  designations Designation[]
+}
+
+model Plan {
+  id   Int      @id @default(autoincrement())
+  code PlanCode @default(FREE)
+  name String
+
+  organizations Organization[]
+  menuPermission   PlanOnMenu[]
+}
+
 model Department {
-  id               Int        @id @default(autoincrement())
-  name             String     @unique
+  id               Int       @id @default(autoincrement())
+  name             String
   is_active        Boolean
-  head_employee_id Int        @unique
-  url              String?
-  employee_count   Int
-  location         String
-  annual_budget    String?
-  startTime        DateTime   @db.Time(6)
-  endTime          DateTime   @db.Time(6)
-  working_days     WeekDay[]
-  created_at       DateTime   @default(now())
-  updated_at       DateTime   @updatedAt
-  employees        Employee[]
-  positions        Position?
+  head_employee_id Int?      @unique
+  head_employee    Employee? @relation("DepartmentHead", fields: [head_employee_id], references: [id])
+
+  employee_count Int
+  location       String
+  annual_budget  String?
+
+  startTime    DateTime @db.Time(6)
+  endTime      DateTime @db.Time(6)
+  working_days WeekDay[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  employees Employee[]
+  positions Position[]
+
+  @@index([organizationId])
+  @@unique([organizationId, name])
 }
 
 model Position {
-  id            Int        @id @default(autoincrement())
-  name          String     @unique
-  is_active     Boolean
-  department_id Int        @unique
-  avg_salary    Int?
-  min_salary    Int?
-  max_salary    Int?
-  employees     Employee[]
+  id        Int     @id @default(autoincrement())
+  name      String
+  is_active Boolean
+
+  department_id Int
   department    Department @relation(fields: [department_id], references: [id])
+
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  avg_salary Int?
+  min_salary Int?
+  max_salary Int?
+
+  employees Employee[]
+
+  @@index([organizationId])
+  @@index([department_id])
+  @@unique([organizationId, name])
 }
 
 model Employee {
-  id              Int           @id @default(autoincrement())
-  full_name       String
-  avatar          String?
-  code            String        @unique
-  email           String?       @unique
-  phoneNumber     String?       @unique
+  id        Int    @id @default(autoincrement())
+  full_name String
+  avatar    String?
+
+  code        String  @unique
+  email       String? @unique
+  phoneNumber String? @unique
+
   dob             DateTime?
-  employment_type EmployeType   @default(FULL_TIME)
-  department_id   Int
-  position_id     Int
-  location        String
-  date_joined     DateTime      @default(now())
-  updated_at      DateTime      @updatedAt
-  department      Department    @relation(fields: [department_id], references: [id])
-  position        Position      @relation(fields: [position_id], references: [id])
-  documents       ID_Document[]
+  employment_type EmployeeType   @default(FULL_TIME)
+  status          EmployeeStatus @default(PENDING)
+
+  department_id Int
+  position_id   Int
+
+  location    String
+  date_joined DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  department Department @relation(fields: [department_id], references: [id])
+  position   Position   @relation(fields: [position_id], references: [id])
+
+  documents ID_Document[]
+
+  head_employee Department? @relation("DepartmentHead")
+
+  designations DesignationOnEmployee[]
+
+  @@index([organizationId])
+  @@index([department_id])
+  @@index([position_id])
 }
 
 model Image {
@@ -68,14 +131,90 @@ model Image {
 }
 
 model ID_Document {
-  id          Int       @id @default(autoincrement())
-  type        IDDocType
-  front_url   String?
-  back_url    String?
+  id         Int       @id @default(autoincrement())
+  type       IDDocType
+  front_url  String?
+  back_url   String?
   employee_id Int?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
-  employee    Employee? @relation(fields: [employee_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  employee Employee? @relation(fields: [employee_id], references: [id])
+}
+
+model Menu {
+  id     Int      @id @default(autoincrement())
+  menu   MenuCode
+  action Action[] @default([VIEW])
+  planPermissions PlanOnMenu[]
+  designationPermission DesignationOnMenu[]
+ }
+
+
+model PlanOnMenu {
+  planId Int 
+  menuId Int
+  actions Action[] @default([VIEW])
+
+  plan Plan @relation(fields: [planId] , references: [id])
+  menu Menu @relation(fields: [menuId] , references: [id])
+
+  @@id([planId, menuId])
+}
+
+model Designation {
+  id             Int @id @default(autoincrement())
+  name           String
+  organizationId Int
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  menuPermission DesignationOnMenu[]
+  employees  DesignationOnEmployee[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
+}
+
+model DesignationOnMenu {
+  designationId Int
+  menuId  Int
+  actions Action[] @default([VIEW])
+
+  designation Designation @relation(fields: [designationId], references: [id])
+  menu  Menu  @relation(fields: [menuId], references: [id])
+
+  @@id([designationId, menuId])
+  @@index([designationId])
+}
+
+model DesignationOnEmployee {
+  designationId Int
+  employeeId    Int
+
+  designation Designation @relation(fields: [designationId], references: [id])
+  employee    Employee    @relation(fields: [employeeId], references: [id])
+
+  @@id([designationId, employeeId])
+}
+
+enum MenuCode {
+  DASHBOARD
+  EMPLOYEE
+  DEPARTMENT
+  POSITION
+  ORGANIZATION
+  PLAN_MANAGEMENT
+  ATTENDANCE
+  LEAVE_MANGEMENT
+  PAYROLL
+}
+
+enum Action {
+  CREATE
+  VIEW
+  UPDATE
+  DELETE
 }
 
 enum WeekDay {
@@ -88,7 +227,7 @@ enum WeekDay {
   SUN
 }
 
-enum EmployeType {
+enum EmployeeType {
   PART_TIME
   FULL_TIME
   HYBRID
@@ -97,6 +236,7 @@ enum EmployeType {
 enum EmployeeStatus {
   ACTIVE
   ON_PROBATION
+  PENDING
   ON_LEAVE
   SUSPENDED
   RESIGNED
@@ -108,4 +248,18 @@ enum IDDocType {
   PASSPORT
   DRIVER_LICENSE
   NRC
+}
+
+enum OrganizationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum PlanCode {
+  FREE
+  PRO
+  ENTERPRISE
+  SUPER_ADMIN
 }

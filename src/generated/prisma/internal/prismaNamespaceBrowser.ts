@@ -51,11 +51,18 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Organization: 'Organization',
+  Plan: 'Plan',
   Department: 'Department',
   Position: 'Position',
   Employee: 'Employee',
   Image: 'Image',
-  ID_Document: 'ID_Document'
+  ID_Document: 'ID_Document',
+  Menu: 'Menu',
+  PlanOnMenu: 'PlanOnMenu',
+  Designation: 'Designation',
+  DesignationOnMenu: 'DesignationOnMenu',
+  DesignationOnEmployee: 'DesignationOnEmployee'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -74,12 +81,32 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const OrganizationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  total_employees: 'total_employees',
+  status: 'status',
+  expire_time: 'expire_time',
+  planId: 'planId'
+} as const
+
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const PlanScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name'
+} as const
+
+export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
+
+
 export const DepartmentScalarFieldEnum = {
   id: 'id',
   name: 'name',
   is_active: 'is_active',
   head_employee_id: 'head_employee_id',
-  url: 'url',
   employee_count: 'employee_count',
   location: 'location',
   annual_budget: 'annual_budget',
@@ -87,7 +114,8 @@ export const DepartmentScalarFieldEnum = {
   endTime: 'endTime',
   working_days: 'working_days',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  organizationId: 'organizationId'
 } as const
 
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
@@ -98,6 +126,7 @@ export const PositionScalarFieldEnum = {
   name: 'name',
   is_active: 'is_active',
   department_id: 'department_id',
+  organizationId: 'organizationId',
   avg_salary: 'avg_salary',
   min_salary: 'min_salary',
   max_salary: 'max_salary'
@@ -115,11 +144,13 @@ export const EmployeeScalarFieldEnum = {
   phoneNumber: 'phoneNumber',
   dob: 'dob',
   employment_type: 'employment_type',
+  status: 'status',
   department_id: 'department_id',
   position_id: 'position_id',
   location: 'location',
   date_joined: 'date_joined',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  organizationId: 'organizationId'
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
@@ -149,6 +180,50 @@ export const ID_DocumentScalarFieldEnum = {
 } as const
 
 export type ID_DocumentScalarFieldEnum = (typeof ID_DocumentScalarFieldEnum)[keyof typeof ID_DocumentScalarFieldEnum]
+
+
+export const MenuScalarFieldEnum = {
+  id: 'id',
+  menu: 'menu',
+  action: 'action'
+} as const
+
+export type MenuScalarFieldEnum = (typeof MenuScalarFieldEnum)[keyof typeof MenuScalarFieldEnum]
+
+
+export const PlanOnMenuScalarFieldEnum = {
+  planId: 'planId',
+  menuId: 'menuId',
+  actions: 'actions'
+} as const
+
+export type PlanOnMenuScalarFieldEnum = (typeof PlanOnMenuScalarFieldEnum)[keyof typeof PlanOnMenuScalarFieldEnum]
+
+
+export const DesignationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  organizationId: 'organizationId'
+} as const
+
+export type DesignationScalarFieldEnum = (typeof DesignationScalarFieldEnum)[keyof typeof DesignationScalarFieldEnum]
+
+
+export const DesignationOnMenuScalarFieldEnum = {
+  designationId: 'designationId',
+  menuId: 'menuId',
+  actions: 'actions'
+} as const
+
+export type DesignationOnMenuScalarFieldEnum = (typeof DesignationOnMenuScalarFieldEnum)[keyof typeof DesignationOnMenuScalarFieldEnum]
+
+
+export const DesignationOnEmployeeScalarFieldEnum = {
+  designationId: 'designationId',
+  employeeId: 'employeeId'
+} as const
+
+export type DesignationOnEmployeeScalarFieldEnum = (typeof DesignationOnEmployeeScalarFieldEnum)[keyof typeof DesignationOnEmployeeScalarFieldEnum]
 
 
 export const SortOrder = {
