@@ -91,6 +91,7 @@ model Employee {
   code        String  @unique
   email       String? @unique
   phoneNumber String? @unique
+  password String?
 
   dob             DateTime?
   employment_type EmployeeType   @default(FULL_TIME)

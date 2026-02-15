@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 import deptRouter from "./router/department";
 import posRouter from "./router/position";
 import emRouter from "./router/employee";
+import authRouter from "./router/auth";
 
 const app = express();
 const port = 3000;
@@ -21,7 +22,10 @@ app.use(compression());
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(limiter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+app.use("/auth", authRouter);
 app.use("/employees", emRouter);
 app.use("/departments", deptRouter);
 app.use("/positions", posRouter);
