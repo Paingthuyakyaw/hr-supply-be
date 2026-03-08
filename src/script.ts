@@ -128,7 +128,7 @@ async function main() {
       full_name: "Super Admin User",
       code: "SUPER-001",
       email: "superadmin@gmail.com",
-      // password field က schema မှာ မပါသေးရင် DB မှာ အရင်ထည့်ထားဖို့ လိုပါမယ်
+      password: hashedPassword,
       // အခု email/code နဲ့ login ဝင်မယ့် flow ဆိုရင် password ကို ignore လုပ်ထားလို့ရပါတယ်
       organizationId: systemOrg.id,
       department_id: systemDept.id,

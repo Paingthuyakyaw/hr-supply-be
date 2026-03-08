@@ -73,3 +73,65 @@ export async function getEmployeeById(req: Request, res: Response) {
     res.status(500).json({ message: "Failed to fetch employee" });
   }
 }
+
+export async function createEmployee(req: Request, res: Response) {
+  try {
+    const data = req.body;
+
+    const item = await prisma.employee.create({
+      data,
+      include: { department: true, position: true },
+    });
+
+    res.status(201).json({ data: item });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to create employee" });
+  }
+}
+
+export async function updateEmployee(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ message: "Invalid id" });
+    }
+
+    const exists = await prisma.employee.findUnique({ where: { id } });
+    if (!exists) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    const item = await prisma.employee.update({
+      where: { id },
+      data: req.body,
+      include: { department: true, position: true, documents: true },
+    });
+
+    res.json({ data: item });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to update employee" });
+  }
+}
+
+export async function deleteEmployee(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ message: "Invalid id" });
+    }
+
+    const exists = await prisma.employee.findUnique({ where: { id } });
+    if (!exists) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    await prisma.employee.delete({ where: { id } });
+
+    res.status(204).send();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to delete employee" });
+  }
+}

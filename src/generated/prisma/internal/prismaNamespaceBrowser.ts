@@ -142,6 +142,7 @@ export const EmployeeScalarFieldEnum = {
   code: 'code',
   email: 'email',
   phoneNumber: 'phoneNumber',
+  password: 'password',
   dob: 'dob',
   employment_type: 'employment_type',
   status: 'status',

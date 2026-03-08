@@ -47,6 +47,7 @@ export type EmployeeMinAggregateOutputType = {
   code: string | null
   email: string | null
   phoneNumber: string | null
+  password: string | null
   dob: Date | null
   employment_type: $Enums.EmployeeType | null
   status: $Enums.EmployeeStatus | null
@@ -65,6 +66,7 @@ export type EmployeeMaxAggregateOutputType = {
   code: string | null
   email: string | null
   phoneNumber: string | null
+  password: string | null
   dob: Date | null
   employment_type: $Enums.EmployeeType | null
   status: $Enums.EmployeeStatus | null
@@ -83,6 +85,7 @@ export type EmployeeCountAggregateOutputType = {
   code: number
   email: number
   phoneNumber: number
+  password: number
   dob: number
   employment_type: number
   status: number
@@ -117,6 +120,7 @@ export type EmployeeMinAggregateInputType = {
   code?: true
   email?: true
   phoneNumber?: true
+  password?: true
   dob?: true
   employment_type?: true
   status?: true
@@ -135,6 +139,7 @@ export type EmployeeMaxAggregateInputType = {
   code?: true
   email?: true
   phoneNumber?: true
+  password?: true
   dob?: true
   employment_type?: true
   status?: true
@@ -153,6 +158,7 @@ export type EmployeeCountAggregateInputType = {
   code?: true
   email?: true
   phoneNumber?: true
+  password?: true
   dob?: true
   employment_type?: true
   status?: true
@@ -258,6 +264,7 @@ export type EmployeeGroupByOutputType = {
   code: string
   email: string | null
   phoneNumber: string | null
+  password: string | null
   dob: Date | null
   employment_type: $Enums.EmployeeType
   status: $Enums.EmployeeStatus
@@ -299,6 +306,7 @@ export type EmployeeWhereInput = {
   code?: Prisma.StringFilter<"Employee"> | string
   email?: Prisma.StringNullableFilter<"Employee"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Employee"> | string | null
+  password?: Prisma.StringNullableFilter<"Employee"> | string | null
   dob?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFilter<"Employee"> | $Enums.EmployeeStatus
@@ -323,6 +331,7 @@ export type EmployeeOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  password?: Prisma.SortOrderInput | Prisma.SortOrder
   dob?: Prisma.SortOrderInput | Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -350,6 +359,7 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
   full_name?: Prisma.StringFilter<"Employee"> | string
   avatar?: Prisma.StringNullableFilter<"Employee"> | string | null
+  password?: Prisma.StringNullableFilter<"Employee"> | string | null
   dob?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFilter<"Employee"> | $Enums.EmployeeStatus
@@ -374,6 +384,7 @@ export type EmployeeOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  password?: Prisma.SortOrderInput | Prisma.SortOrder
   dob?: Prisma.SortOrderInput | Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -400,6 +411,7 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   code?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
   phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
+  password?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
   dob?: Prisma.DateTimeNullableWithAggregatesFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeWithAggregatesFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusWithAggregatesFilter<"Employee"> | $Enums.EmployeeStatus
@@ -417,6 +429,7 @@ export type EmployeeCreateInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -438,6 +451,7 @@ export type EmployeeUncheckedCreateInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -458,6 +472,7 @@ export type EmployeeUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -479,6 +494,7 @@ export type EmployeeUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -500,6 +516,7 @@ export type EmployeeCreateManyInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -517,6 +534,7 @@ export type EmployeeUpdateManyMutationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -532,6 +550,7 @@ export type EmployeeUncheckedUpdateManyInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -565,6 +584,7 @@ export type EmployeeCountOrderByAggregateInput = {
   code?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -590,6 +610,7 @@ export type EmployeeMaxOrderByAggregateInput = {
   code?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -608,6 +629,7 @@ export type EmployeeMinOrderByAggregateInput = {
   code?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   dob?: Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -817,6 +839,7 @@ export type EmployeeCreateWithoutOrganizationInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -837,6 +860,7 @@ export type EmployeeUncheckedCreateWithoutOrganizationInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -886,6 +910,7 @@ export type EmployeeScalarWhereInput = {
   code?: Prisma.StringFilter<"Employee"> | string
   email?: Prisma.StringNullableFilter<"Employee"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Employee"> | string | null
+  password?: Prisma.StringNullableFilter<"Employee"> | string | null
   dob?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFilter<"Employee"> | $Enums.EmployeeStatus
@@ -903,6 +928,7 @@ export type EmployeeCreateWithoutHead_employeeInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -923,6 +949,7 @@ export type EmployeeUncheckedCreateWithoutHead_employeeInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -947,6 +974,7 @@ export type EmployeeCreateWithoutDepartmentInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -967,6 +995,7 @@ export type EmployeeUncheckedCreateWithoutDepartmentInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1007,6 +1036,7 @@ export type EmployeeUpdateWithoutHead_employeeInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1027,6 +1057,7 @@ export type EmployeeUncheckedUpdateWithoutHead_employeeInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1062,6 +1093,7 @@ export type EmployeeCreateWithoutPositionInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1082,6 +1114,7 @@ export type EmployeeUncheckedCreateWithoutPositionInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1127,6 +1160,7 @@ export type EmployeeCreateWithoutDocumentsInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1147,6 +1181,7 @@ export type EmployeeUncheckedCreateWithoutDocumentsInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1182,6 +1217,7 @@ export type EmployeeUpdateWithoutDocumentsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1202,6 +1238,7 @@ export type EmployeeUncheckedUpdateWithoutDocumentsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1221,6 +1258,7 @@ export type EmployeeCreateWithoutDesignationsInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1241,6 +1279,7 @@ export type EmployeeUncheckedCreateWithoutDesignationsInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1276,6 +1315,7 @@ export type EmployeeUpdateWithoutDesignationsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1296,6 +1336,7 @@ export type EmployeeUncheckedUpdateWithoutDesignationsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1316,6 +1357,7 @@ export type EmployeeCreateManyOrganizationInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1332,6 +1374,7 @@ export type EmployeeUpdateWithoutOrganizationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1352,6 +1395,7 @@ export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1372,6 +1416,7 @@ export type EmployeeUncheckedUpdateManyWithoutOrganizationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1389,6 +1434,7 @@ export type EmployeeCreateManyDepartmentInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1405,6 +1451,7 @@ export type EmployeeUpdateWithoutDepartmentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1425,6 +1472,7 @@ export type EmployeeUncheckedUpdateWithoutDepartmentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1445,6 +1493,7 @@ export type EmployeeUncheckedUpdateManyWithoutDepartmentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1462,6 +1511,7 @@ export type EmployeeCreateManyPositionInput = {
   code: string
   email?: string | null
   phoneNumber?: string | null
+  password?: string | null
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
@@ -1478,6 +1528,7 @@ export type EmployeeUpdateWithoutPositionInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1498,6 +1549,7 @@ export type EmployeeUncheckedUpdateWithoutPositionInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1518,6 +1570,7 @@ export type EmployeeUncheckedUpdateManyWithoutPositionInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
@@ -1575,6 +1628,7 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
+  password?: boolean
   dob?: boolean
   employment_type?: boolean
   status?: boolean
@@ -1600,6 +1654,7 @@ export type EmployeeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
+  password?: boolean
   dob?: boolean
   employment_type?: boolean
   status?: boolean
@@ -1621,6 +1676,7 @@ export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
+  password?: boolean
   dob?: boolean
   employment_type?: boolean
   status?: boolean
@@ -1642,6 +1698,7 @@ export type EmployeeSelectScalar = {
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
+  password?: boolean
   dob?: boolean
   employment_type?: boolean
   status?: boolean
@@ -1653,7 +1710,7 @@ export type EmployeeSelectScalar = {
   organizationId?: boolean
 }
 
-export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "avatar" | "code" | "email" | "phoneNumber" | "dob" | "employment_type" | "status" | "department_id" | "position_id" | "location" | "date_joined" | "updated_at" | "organizationId", ExtArgs["result"]["employee"]>
+export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "avatar" | "code" | "email" | "phoneNumber" | "password" | "dob" | "employment_type" | "status" | "department_id" | "position_id" | "location" | "date_joined" | "updated_at" | "organizationId", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
@@ -1691,6 +1748,7 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     code: string
     email: string | null
     phoneNumber: string | null
+    password: string | null
     dob: Date | null
     employment_type: $Enums.EmployeeType
     status: $Enums.EmployeeStatus
@@ -2135,6 +2193,7 @@ export interface EmployeeFieldRefs {
   readonly code: Prisma.FieldRef<"Employee", 'String'>
   readonly email: Prisma.FieldRef<"Employee", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"Employee", 'String'>
+  readonly password: Prisma.FieldRef<"Employee", 'String'>
   readonly dob: Prisma.FieldRef<"Employee", 'DateTime'>
   readonly employment_type: Prisma.FieldRef<"Employee", 'EmployeeType'>
   readonly status: Prisma.FieldRef<"Employee", 'EmployeeStatus'>
