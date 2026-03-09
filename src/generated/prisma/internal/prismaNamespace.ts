@@ -389,6 +389,7 @@ export const ModelName = {
   Department: 'Department',
   Position: 'Position',
   Employee: 'Employee',
+  EmployeeOnPosition: 'EmployeeOnPosition',
   Image: 'Image',
   ID_Document: 'ID_Document',
   Menu: 'Menu',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee"
+    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -782,6 +783,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.EmployeeCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.EmployeeCountAggregateOutputType> | number
+        }
+      }
+    }
+    EmployeeOnPosition: {
+      payload: Prisma.$EmployeeOnPositionPayload<ExtArgs>
+      fields: Prisma.EmployeeOnPositionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmployeeOnPositionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmployeeOnPositionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>
+        }
+        findFirst: {
+          args: Prisma.EmployeeOnPositionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmployeeOnPositionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>
+        }
+        findMany: {
+          args: Prisma.EmployeeOnPositionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>[]
+        }
+        create: {
+          args: Prisma.EmployeeOnPositionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>
+        }
+        createMany: {
+          args: Prisma.EmployeeOnPositionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EmployeeOnPositionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>[]
+        }
+        delete: {
+          args: Prisma.EmployeeOnPositionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>
+        }
+        update: {
+          args: Prisma.EmployeeOnPositionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmployeeOnPositionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmployeeOnPositionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EmployeeOnPositionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>[]
+        }
+        upsert: {
+          args: Prisma.EmployeeOnPositionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeOnPositionPayload>
+        }
+        aggregate: {
+          args: Prisma.EmployeeOnPositionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployeeOnPosition>
+        }
+        groupBy: {
+          args: Prisma.EmployeeOnPositionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeOnPositionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmployeeOnPositionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeOnPositionCountAggregateOutputType> | number
         }
       }
     }
@@ -1407,15 +1482,23 @@ export const EmployeeScalarFieldEnum = {
   dob: 'dob',
   employment_type: 'employment_type',
   status: 'status',
-  department_id: 'department_id',
-  position_id: 'position_id',
   location: 'location',
   date_joined: 'date_joined',
   updated_at: 'updated_at',
+  department_id: 'department_id',
   organizationId: 'organizationId'
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const EmployeeOnPositionScalarFieldEnum = {
+  position_id: 'position_id',
+  employee_id: 'employee_id',
+  assigned_at: 'assigned_at'
+} as const
+
+export type EmployeeOnPositionScalarFieldEnum = (typeof EmployeeOnPositionScalarFieldEnum)[keyof typeof EmployeeOnPositionScalarFieldEnum]
 
 
 export const ImageScalarFieldEnum = {
@@ -1446,8 +1529,7 @@ export type ID_DocumentScalarFieldEnum = (typeof ID_DocumentScalarFieldEnum)[key
 
 export const MenuScalarFieldEnum = {
   id: 'id',
-  menu: 'menu',
-  action: 'action'
+  menu: 'menu'
 } as const
 
 export type MenuScalarFieldEnum = (typeof MenuScalarFieldEnum)[keyof typeof MenuScalarFieldEnum]
@@ -1792,6 +1874,7 @@ export type GlobalOmitConfig = {
   department?: Prisma.DepartmentOmit
   position?: Prisma.PositionOmit
   employee?: Prisma.EmployeeOmit
+  employeeOnPosition?: Prisma.EmployeeOnPositionOmit
   image?: Prisma.ImageOmit
   iD_Document?: Prisma.ID_DocumentOmit
   menu?: Prisma.MenuOmit

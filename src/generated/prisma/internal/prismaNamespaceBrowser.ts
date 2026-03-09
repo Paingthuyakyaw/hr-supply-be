@@ -56,6 +56,7 @@ export const ModelName = {
   Department: 'Department',
   Position: 'Position',
   Employee: 'Employee',
+  EmployeeOnPosition: 'EmployeeOnPosition',
   Image: 'Image',
   ID_Document: 'ID_Document',
   Menu: 'Menu',
@@ -146,15 +147,23 @@ export const EmployeeScalarFieldEnum = {
   dob: 'dob',
   employment_type: 'employment_type',
   status: 'status',
-  department_id: 'department_id',
-  position_id: 'position_id',
   location: 'location',
   date_joined: 'date_joined',
   updated_at: 'updated_at',
+  department_id: 'department_id',
   organizationId: 'organizationId'
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const EmployeeOnPositionScalarFieldEnum = {
+  position_id: 'position_id',
+  employee_id: 'employee_id',
+  assigned_at: 'assigned_at'
+} as const
+
+export type EmployeeOnPositionScalarFieldEnum = (typeof EmployeeOnPositionScalarFieldEnum)[keyof typeof EmployeeOnPositionScalarFieldEnum]
 
 
 export const ImageScalarFieldEnum = {
@@ -185,8 +194,7 @@ export type ID_DocumentScalarFieldEnum = (typeof ID_DocumentScalarFieldEnum)[key
 
 export const MenuScalarFieldEnum = {
   id: 'id',
-  menu: 'menu',
-  action: 'action'
+  menu: 'menu'
 } as const
 
 export type MenuScalarFieldEnum = (typeof MenuScalarFieldEnum)[keyof typeof MenuScalarFieldEnum]

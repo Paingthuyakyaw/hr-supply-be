@@ -71,12 +71,10 @@ model Position {
 
   organizationId Int
   organization   Organization @relation(fields: [organizationId], references: [id])
-
+  employees EmployeeOnPosition[]
   avg_salary Int?
   min_salary Int?
   max_salary Int?
-
-  employees Employee[]
 
   @@index([organizationId])
   @@index([department_id])
@@ -97,18 +95,19 @@ model Employee {
   employment_type EmployeeType   @default(FULL_TIME)
   status          EmployeeStatus @default(PENDING)
 
-  department_id Int
-  position_id   Int
+
 
   location    String
   date_joined DateTime @default(now())
   updated_at  DateTime @updatedAt
 
+  department_id Int
+  positions EmployeeOnPosition[]
+
   organizationId Int
   organization   Organization @relation(fields: [organizationId], references: [id])
 
   department Department @relation(fields: [department_id], references: [id])
-  position   Position   @relation(fields: [position_id], references: [id])
 
   documents ID_Document[]
 
@@ -118,6 +117,18 @@ model Employee {
 
   @@index([organizationId])
   @@index([department_id])
+}
+
+model EmployeeOnPosition {
+  position_id Int
+  employee_id Int
+
+  position Position @relation(fields: [position_id] , references: [id])
+  employee Employee @relation(fields: [employee_id] , references: [id])
+    assigned_at DateTime @default(now())
+
+  @@id([employee_id, position_id])
+  @@index([employee_id])
   @@index([position_id])
 }
 
@@ -147,7 +158,6 @@ model ID_Document {
 model Menu {
   id     Int      @id @default(autoincrement())
   menu   MenuCode
-  action Action[] @default([VIEW])
   planPermissions PlanOnMenu[]
   designationPermission DesignationOnMenu[]
  }

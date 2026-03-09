@@ -63,6 +63,11 @@ export type Position = Prisma.PositionModel
  */
 export type Employee = Prisma.EmployeeModel
 /**
+ * Model EmployeeOnPosition
+ * 
+ */
+export type EmployeeOnPosition = Prisma.EmployeeOnPositionModel
+/**
  * Model Image
  * 
  */

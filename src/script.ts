@@ -20,7 +20,6 @@ async function main() {
   // ============================
   const menuData = Object.values(MenuCode).map((code) => ({
     menu: code,
-    action: [Action.VIEW, Action.CREATE, Action.UPDATE, Action.DELETE],
   }));
 
   await prisma.menu.createMany({ data: menuData });
@@ -132,7 +131,15 @@ async function main() {
       // အခု email/code နဲ့ login ဝင်မယ့် flow ဆိုရင် password ကို ignore လုပ်ထားလို့ရပါတယ်
       organizationId: systemOrg.id,
       department_id: systemDept.id,
-      position_id: systemPos.id,
+      positions: {
+        create: [
+          {
+            position: {
+              connect: { id: systemPos.id },
+            },
+          },
+        ],
+      },
       location: "Yangon",
       status: EmployeeStatus.ACTIVE,
     },

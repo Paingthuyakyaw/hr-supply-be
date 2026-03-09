@@ -30,7 +30,7 @@ export const login = async (req: Request, res: Response) => {
         },
       },
       department: true,
-      position: true,
+      positions: true,
       designations: {
         include: {
           designation: {
@@ -109,7 +109,7 @@ export const refresh = async (req: Request, res: Response) => {
           },
         },
         department: true,
-        position: true,
+        positions: true,
         designations: {
           include: {
             designation: {

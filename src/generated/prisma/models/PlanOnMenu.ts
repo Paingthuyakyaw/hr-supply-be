@@ -294,6 +294,14 @@ export type PlanOnMenuOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type EnumActionNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.Action[] | Prisma.ListEnumActionFieldRefInput<$PrismaModel> | null
+  has?: $Enums.Action | Prisma.EnumActionFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.Action[] | Prisma.ListEnumActionFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.Action[] | Prisma.ListEnumActionFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type PlanOnMenuPlanIdMenuIdCompoundUniqueInput = {
   planId: number
   menuId: number

@@ -47,7 +47,6 @@ export type MenuMaxAggregateOutputType = {
 export type MenuCountAggregateOutputType = {
   id: number
   menu: number
-  action: number
   _all: number
 }
 
@@ -73,7 +72,6 @@ export type MenuMaxAggregateInputType = {
 export type MenuCountAggregateInputType = {
   id?: true
   menu?: true
-  action?: true
   _all?: true
 }
 
@@ -166,7 +164,6 @@ export type MenuGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type MenuGroupByOutputType = {
   id: number
   menu: $Enums.MenuCode
-  action: $Enums.Action[]
   _count: MenuCountAggregateOutputType | null
   _avg: MenuAvgAggregateOutputType | null
   _sum: MenuSumAggregateOutputType | null
@@ -195,7 +192,6 @@ export type MenuWhereInput = {
   NOT?: Prisma.MenuWhereInput | Prisma.MenuWhereInput[]
   id?: Prisma.IntFilter<"Menu"> | number
   menu?: Prisma.EnumMenuCodeFilter<"Menu"> | $Enums.MenuCode
-  action?: Prisma.EnumActionNullableListFilter<"Menu">
   planPermissions?: Prisma.PlanOnMenuListRelationFilter
   designationPermission?: Prisma.DesignationOnMenuListRelationFilter
 }
@@ -203,7 +199,6 @@ export type MenuWhereInput = {
 export type MenuOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   menu?: Prisma.SortOrder
-  action?: Prisma.SortOrder
   planPermissions?: Prisma.PlanOnMenuOrderByRelationAggregateInput
   designationPermission?: Prisma.DesignationOnMenuOrderByRelationAggregateInput
 }
@@ -214,7 +209,6 @@ export type MenuWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MenuWhereInput[]
   NOT?: Prisma.MenuWhereInput | Prisma.MenuWhereInput[]
   menu?: Prisma.EnumMenuCodeFilter<"Menu"> | $Enums.MenuCode
-  action?: Prisma.EnumActionNullableListFilter<"Menu">
   planPermissions?: Prisma.PlanOnMenuListRelationFilter
   designationPermission?: Prisma.DesignationOnMenuListRelationFilter
 }, "id">
@@ -222,7 +216,6 @@ export type MenuWhereUniqueInput = Prisma.AtLeast<{
 export type MenuOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   menu?: Prisma.SortOrder
-  action?: Prisma.SortOrder
   _count?: Prisma.MenuCountOrderByAggregateInput
   _avg?: Prisma.MenuAvgOrderByAggregateInput
   _max?: Prisma.MenuMaxOrderByAggregateInput
@@ -236,12 +229,10 @@ export type MenuScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MenuScalarWhereWithAggregatesInput | Prisma.MenuScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Menu"> | number
   menu?: Prisma.EnumMenuCodeWithAggregatesFilter<"Menu"> | $Enums.MenuCode
-  action?: Prisma.EnumActionNullableListFilter<"Menu">
 }
 
 export type MenuCreateInput = {
   menu: $Enums.MenuCode
-  action?: Prisma.MenuCreateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuCreateNestedManyWithoutMenuInput
   designationPermission?: Prisma.DesignationOnMenuCreateNestedManyWithoutMenuInput
 }
@@ -249,14 +240,12 @@ export type MenuCreateInput = {
 export type MenuUncheckedCreateInput = {
   id?: number
   menu: $Enums.MenuCode
-  action?: Prisma.MenuCreateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuUncheckedCreateNestedManyWithoutMenuInput
   designationPermission?: Prisma.DesignationOnMenuUncheckedCreateNestedManyWithoutMenuInput
 }
 
 export type MenuUpdateInput = {
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuUpdateManyWithoutMenuNestedInput
   designationPermission?: Prisma.DesignationOnMenuUpdateManyWithoutMenuNestedInput
 }
@@ -264,7 +253,6 @@ export type MenuUpdateInput = {
 export type MenuUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuUncheckedUpdateManyWithoutMenuNestedInput
   designationPermission?: Prisma.DesignationOnMenuUncheckedUpdateManyWithoutMenuNestedInput
 }
@@ -272,32 +260,20 @@ export type MenuUncheckedUpdateInput = {
 export type MenuCreateManyInput = {
   id?: number
   menu: $Enums.MenuCode
-  action?: Prisma.MenuCreateactionInput | $Enums.Action[]
 }
 
 export type MenuUpdateManyMutationInput = {
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
 }
 
 export type MenuUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
-}
-
-export type EnumActionNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.Action[] | Prisma.ListEnumActionFieldRefInput<$PrismaModel> | null
-  has?: $Enums.Action | Prisma.EnumActionFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.Action[] | Prisma.ListEnumActionFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.Action[] | Prisma.ListEnumActionFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
 }
 
 export type MenuCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   menu?: Prisma.SortOrder
-  action?: Prisma.SortOrder
 }
 
 export type MenuAvgOrderByAggregateInput = {
@@ -323,17 +299,8 @@ export type MenuScalarRelationFilter = {
   isNot?: Prisma.MenuWhereInput
 }
 
-export type MenuCreateactionInput = {
-  set: $Enums.Action[]
-}
-
 export type EnumMenuCodeFieldUpdateOperationsInput = {
   set?: $Enums.MenuCode
-}
-
-export type MenuUpdateactionInput = {
-  set?: $Enums.Action[]
-  push?: $Enums.Action | $Enums.Action[]
 }
 
 export type MenuCreateNestedOneWithoutPlanPermissionsInput = {
@@ -366,14 +333,12 @@ export type MenuUpdateOneRequiredWithoutDesignationPermissionNestedInput = {
 
 export type MenuCreateWithoutPlanPermissionsInput = {
   menu: $Enums.MenuCode
-  action?: Prisma.MenuCreateactionInput | $Enums.Action[]
   designationPermission?: Prisma.DesignationOnMenuCreateNestedManyWithoutMenuInput
 }
 
 export type MenuUncheckedCreateWithoutPlanPermissionsInput = {
   id?: number
   menu: $Enums.MenuCode
-  action?: Prisma.MenuCreateactionInput | $Enums.Action[]
   designationPermission?: Prisma.DesignationOnMenuUncheckedCreateNestedManyWithoutMenuInput
 }
 
@@ -395,27 +360,23 @@ export type MenuUpdateToOneWithWhereWithoutPlanPermissionsInput = {
 
 export type MenuUpdateWithoutPlanPermissionsInput = {
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
   designationPermission?: Prisma.DesignationOnMenuUpdateManyWithoutMenuNestedInput
 }
 
 export type MenuUncheckedUpdateWithoutPlanPermissionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
   designationPermission?: Prisma.DesignationOnMenuUncheckedUpdateManyWithoutMenuNestedInput
 }
 
 export type MenuCreateWithoutDesignationPermissionInput = {
   menu: $Enums.MenuCode
-  action?: Prisma.MenuCreateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuCreateNestedManyWithoutMenuInput
 }
 
 export type MenuUncheckedCreateWithoutDesignationPermissionInput = {
   id?: number
   menu: $Enums.MenuCode
-  action?: Prisma.MenuCreateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuUncheckedCreateNestedManyWithoutMenuInput
 }
 
@@ -437,14 +398,12 @@ export type MenuUpdateToOneWithWhereWithoutDesignationPermissionInput = {
 
 export type MenuUpdateWithoutDesignationPermissionInput = {
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuUpdateManyWithoutMenuNestedInput
 }
 
 export type MenuUncheckedUpdateWithoutDesignationPermissionInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   menu?: Prisma.EnumMenuCodeFieldUpdateOperationsInput | $Enums.MenuCode
-  action?: Prisma.MenuUpdateactionInput | $Enums.Action[]
   planPermissions?: Prisma.PlanOnMenuUncheckedUpdateManyWithoutMenuNestedInput
 }
 
@@ -491,7 +450,6 @@ export type MenuCountOutputTypeCountDesignationPermissionArgs<ExtArgs extends ru
 export type MenuSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   menu?: boolean
-  action?: boolean
   planPermissions?: boolean | Prisma.Menu$planPermissionsArgs<ExtArgs>
   designationPermission?: boolean | Prisma.Menu$designationPermissionArgs<ExtArgs>
   _count?: boolean | Prisma.MenuCountOutputTypeDefaultArgs<ExtArgs>
@@ -500,22 +458,19 @@ export type MenuSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type MenuSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   menu?: boolean
-  action?: boolean
 }, ExtArgs["result"]["menu"]>
 
 export type MenuSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   menu?: boolean
-  action?: boolean
 }, ExtArgs["result"]["menu"]>
 
 export type MenuSelectScalar = {
   id?: boolean
   menu?: boolean
-  action?: boolean
 }
 
-export type MenuOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "menu" | "action", ExtArgs["result"]["menu"]>
+export type MenuOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "menu", ExtArgs["result"]["menu"]>
 export type MenuInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   planPermissions?: boolean | Prisma.Menu$planPermissionsArgs<ExtArgs>
   designationPermission?: boolean | Prisma.Menu$designationPermissionArgs<ExtArgs>
@@ -533,7 +488,6 @@ export type $MenuPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     menu: $Enums.MenuCode
-    action: $Enums.Action[]
   }, ExtArgs["result"]["menu"]>
   composites: {}
 }
@@ -961,7 +915,6 @@ export interface Prisma__MenuClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface MenuFieldRefs {
   readonly id: Prisma.FieldRef<"Menu", 'Int'>
   readonly menu: Prisma.FieldRef<"Menu", 'MenuCode'>
-  readonly action: Prisma.FieldRef<"Menu", 'Action[]'>
 }
     
 

@@ -29,14 +29,12 @@ export type AggregateEmployee = {
 export type EmployeeAvgAggregateOutputType = {
   id: number | null
   department_id: number | null
-  position_id: number | null
   organizationId: number | null
 }
 
 export type EmployeeSumAggregateOutputType = {
   id: number | null
   department_id: number | null
-  position_id: number | null
   organizationId: number | null
 }
 
@@ -51,11 +49,10 @@ export type EmployeeMinAggregateOutputType = {
   dob: Date | null
   employment_type: $Enums.EmployeeType | null
   status: $Enums.EmployeeStatus | null
-  department_id: number | null
-  position_id: number | null
   location: string | null
   date_joined: Date | null
   updated_at: Date | null
+  department_id: number | null
   organizationId: number | null
 }
 
@@ -70,11 +67,10 @@ export type EmployeeMaxAggregateOutputType = {
   dob: Date | null
   employment_type: $Enums.EmployeeType | null
   status: $Enums.EmployeeStatus | null
-  department_id: number | null
-  position_id: number | null
   location: string | null
   date_joined: Date | null
   updated_at: Date | null
+  department_id: number | null
   organizationId: number | null
 }
 
@@ -89,11 +85,10 @@ export type EmployeeCountAggregateOutputType = {
   dob: number
   employment_type: number
   status: number
-  department_id: number
-  position_id: number
   location: number
   date_joined: number
   updated_at: number
+  department_id: number
   organizationId: number
   _all: number
 }
@@ -102,14 +97,12 @@ export type EmployeeCountAggregateOutputType = {
 export type EmployeeAvgAggregateInputType = {
   id?: true
   department_id?: true
-  position_id?: true
   organizationId?: true
 }
 
 export type EmployeeSumAggregateInputType = {
   id?: true
   department_id?: true
-  position_id?: true
   organizationId?: true
 }
 
@@ -124,11 +117,10 @@ export type EmployeeMinAggregateInputType = {
   dob?: true
   employment_type?: true
   status?: true
-  department_id?: true
-  position_id?: true
   location?: true
   date_joined?: true
   updated_at?: true
+  department_id?: true
   organizationId?: true
 }
 
@@ -143,11 +135,10 @@ export type EmployeeMaxAggregateInputType = {
   dob?: true
   employment_type?: true
   status?: true
-  department_id?: true
-  position_id?: true
   location?: true
   date_joined?: true
   updated_at?: true
+  department_id?: true
   organizationId?: true
 }
 
@@ -162,11 +153,10 @@ export type EmployeeCountAggregateInputType = {
   dob?: true
   employment_type?: true
   status?: true
-  department_id?: true
-  position_id?: true
   location?: true
   date_joined?: true
   updated_at?: true
+  department_id?: true
   organizationId?: true
   _all?: true
 }
@@ -268,11 +258,10 @@ export type EmployeeGroupByOutputType = {
   dob: Date | null
   employment_type: $Enums.EmployeeType
   status: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined: Date
   updated_at: Date
+  department_id: number
   organizationId: number
   _count: EmployeeCountAggregateOutputType | null
   _avg: EmployeeAvgAggregateOutputType | null
@@ -310,15 +299,14 @@ export type EmployeeWhereInput = {
   dob?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFilter<"Employee"> | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFilter<"Employee"> | number
-  position_id?: Prisma.IntFilter<"Employee"> | number
   location?: Prisma.StringFilter<"Employee"> | string
   date_joined?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  department_id?: Prisma.IntFilter<"Employee"> | number
   organizationId?: Prisma.IntFilter<"Employee"> | number
+  positions?: Prisma.EmployeeOnPositionListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
-  position?: Prisma.XOR<Prisma.PositionScalarRelationFilter, Prisma.PositionWhereInput>
   documents?: Prisma.ID_DocumentListRelationFilter
   head_employee?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   designations?: Prisma.DesignationOnEmployeeListRelationFilter
@@ -335,15 +323,14 @@ export type EmployeeOrderByWithRelationInput = {
   dob?: Prisma.SortOrderInput | Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  department_id?: Prisma.SortOrder
-  position_id?: Prisma.SortOrder
   location?: Prisma.SortOrder
   date_joined?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  department_id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
+  positions?: Prisma.EmployeeOnPositionOrderByRelationAggregateInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
   department?: Prisma.DepartmentOrderByWithRelationInput
-  position?: Prisma.PositionOrderByWithRelationInput
   documents?: Prisma.ID_DocumentOrderByRelationAggregateInput
   head_employee?: Prisma.DepartmentOrderByWithRelationInput
   designations?: Prisma.DesignationOnEmployeeOrderByRelationAggregateInput
@@ -363,15 +350,14 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   dob?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFilter<"Employee"> | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFilter<"Employee"> | number
-  position_id?: Prisma.IntFilter<"Employee"> | number
   location?: Prisma.StringFilter<"Employee"> | string
   date_joined?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  department_id?: Prisma.IntFilter<"Employee"> | number
   organizationId?: Prisma.IntFilter<"Employee"> | number
+  positions?: Prisma.EmployeeOnPositionListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
-  position?: Prisma.XOR<Prisma.PositionScalarRelationFilter, Prisma.PositionWhereInput>
   documents?: Prisma.ID_DocumentListRelationFilter
   head_employee?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   designations?: Prisma.DesignationOnEmployeeListRelationFilter
@@ -388,11 +374,10 @@ export type EmployeeOrderByWithAggregationInput = {
   dob?: Prisma.SortOrderInput | Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  department_id?: Prisma.SortOrder
-  position_id?: Prisma.SortOrder
   location?: Prisma.SortOrder
   date_joined?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  department_id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   _count?: Prisma.EmployeeCountOrderByAggregateInput
   _avg?: Prisma.EmployeeAvgOrderByAggregateInput
@@ -415,11 +400,10 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   dob?: Prisma.DateTimeNullableWithAggregatesFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeWithAggregatesFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusWithAggregatesFilter<"Employee"> | $Enums.EmployeeStatus
-  department_id?: Prisma.IntWithAggregatesFilter<"Employee"> | number
-  position_id?: Prisma.IntWithAggregatesFilter<"Employee"> | number
   location?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   date_joined?: Prisma.DateTimeWithAggregatesFilter<"Employee"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Employee"> | Date | string
+  department_id?: Prisma.IntWithAggregatesFilter<"Employee"> | number
   organizationId?: Prisma.IntWithAggregatesFilter<"Employee"> | number
 }
 
@@ -436,9 +420,9 @@ export type EmployeeCreateInput = {
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  position: Prisma.PositionCreateNestedOneWithoutEmployeesInput
   documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
@@ -455,12 +439,12 @@ export type EmployeeUncheckedCreateInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
   organizationId: number
+  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
   documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -479,9 +463,9 @@ export type EmployeeUpdateInput = {
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  position?: Prisma.PositionUpdateOneRequiredWithoutEmployeesNestedInput
   documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
@@ -498,12 +482,12 @@ export type EmployeeUncheckedUpdateInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
   documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -520,11 +504,10 @@ export type EmployeeCreateManyInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
   organizationId: number
 }
 
@@ -554,11 +537,10 @@ export type EmployeeUncheckedUpdateManyInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -588,18 +570,16 @@ export type EmployeeCountOrderByAggregateInput = {
   dob?: Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  department_id?: Prisma.SortOrder
-  position_id?: Prisma.SortOrder
   location?: Prisma.SortOrder
   date_joined?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  department_id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
 }
 
 export type EmployeeAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
-  position_id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
 }
 
@@ -614,11 +594,10 @@ export type EmployeeMaxOrderByAggregateInput = {
   dob?: Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  department_id?: Prisma.SortOrder
-  position_id?: Prisma.SortOrder
   location?: Prisma.SortOrder
   date_joined?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  department_id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
 }
 
@@ -633,18 +612,16 @@ export type EmployeeMinOrderByAggregateInput = {
   dob?: Prisma.SortOrder
   employment_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  department_id?: Prisma.SortOrder
-  position_id?: Prisma.SortOrder
   location?: Prisma.SortOrder
   date_joined?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  department_id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
 }
 
 export type EmployeeSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   department_id?: Prisma.SortOrder
-  position_id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
 }
 
@@ -753,54 +730,26 @@ export type EmployeeUncheckedUpdateManyWithoutDepartmentNestedInput = {
   deleteMany?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
 }
 
-export type EmployeeCreateNestedManyWithoutPositionInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionInput, Prisma.EmployeeUncheckedCreateWithoutPositionInput> | Prisma.EmployeeCreateWithoutPositionInput[] | Prisma.EmployeeUncheckedCreateWithoutPositionInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPositionInput | Prisma.EmployeeCreateOrConnectWithoutPositionInput[]
-  createMany?: Prisma.EmployeeCreateManyPositionInputEnvelope
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-}
-
-export type EmployeeUncheckedCreateNestedManyWithoutPositionInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionInput, Prisma.EmployeeUncheckedCreateWithoutPositionInput> | Prisma.EmployeeCreateWithoutPositionInput[] | Prisma.EmployeeUncheckedCreateWithoutPositionInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPositionInput | Prisma.EmployeeCreateOrConnectWithoutPositionInput[]
-  createMany?: Prisma.EmployeeCreateManyPositionInputEnvelope
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-}
-
-export type EmployeeUpdateManyWithoutPositionNestedInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionInput, Prisma.EmployeeUncheckedCreateWithoutPositionInput> | Prisma.EmployeeCreateWithoutPositionInput[] | Prisma.EmployeeUncheckedCreateWithoutPositionInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPositionInput | Prisma.EmployeeCreateOrConnectWithoutPositionInput[]
-  upsert?: Prisma.EmployeeUpsertWithWhereUniqueWithoutPositionInput | Prisma.EmployeeUpsertWithWhereUniqueWithoutPositionInput[]
-  createMany?: Prisma.EmployeeCreateManyPositionInputEnvelope
-  set?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  disconnect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  delete?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  update?: Prisma.EmployeeUpdateWithWhereUniqueWithoutPositionInput | Prisma.EmployeeUpdateWithWhereUniqueWithoutPositionInput[]
-  updateMany?: Prisma.EmployeeUpdateManyWithWhereWithoutPositionInput | Prisma.EmployeeUpdateManyWithWhereWithoutPositionInput[]
-  deleteMany?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
-}
-
-export type EmployeeUncheckedUpdateManyWithoutPositionNestedInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionInput, Prisma.EmployeeUncheckedCreateWithoutPositionInput> | Prisma.EmployeeCreateWithoutPositionInput[] | Prisma.EmployeeUncheckedCreateWithoutPositionInput[]
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPositionInput | Prisma.EmployeeCreateOrConnectWithoutPositionInput[]
-  upsert?: Prisma.EmployeeUpsertWithWhereUniqueWithoutPositionInput | Prisma.EmployeeUpsertWithWhereUniqueWithoutPositionInput[]
-  createMany?: Prisma.EmployeeCreateManyPositionInputEnvelope
-  set?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  disconnect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  delete?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  connect?: Prisma.EmployeeWhereUniqueInput | Prisma.EmployeeWhereUniqueInput[]
-  update?: Prisma.EmployeeUpdateWithWhereUniqueWithoutPositionInput | Prisma.EmployeeUpdateWithWhereUniqueWithoutPositionInput[]
-  updateMany?: Prisma.EmployeeUpdateManyWithWhereWithoutPositionInput | Prisma.EmployeeUpdateManyWithWhereWithoutPositionInput[]
-  deleteMany?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
-}
-
 export type EnumEmployeeTypeFieldUpdateOperationsInput = {
   set?: $Enums.EmployeeType
 }
 
 export type EnumEmployeeStatusFieldUpdateOperationsInput = {
   set?: $Enums.EmployeeStatus
+}
+
+export type EmployeeCreateNestedOneWithoutPositionsInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionsInput, Prisma.EmployeeUncheckedCreateWithoutPositionsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPositionsInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+}
+
+export type EmployeeUpdateOneRequiredWithoutPositionsNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionsInput, Prisma.EmployeeUncheckedCreateWithoutPositionsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutPositionsInput
+  upsert?: Prisma.EmployeeUpsertWithoutPositionsInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutPositionsInput, Prisma.EmployeeUpdateWithoutPositionsInput>, Prisma.EmployeeUncheckedUpdateWithoutPositionsInput>
 }
 
 export type EmployeeCreateNestedOneWithoutDocumentsInput = {
@@ -846,8 +795,8 @@ export type EmployeeCreateWithoutOrganizationInput = {
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  position: Prisma.PositionCreateNestedOneWithoutEmployeesInput
   documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
@@ -864,11 +813,11 @@ export type EmployeeUncheckedCreateWithoutOrganizationInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
+  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
   documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -914,11 +863,10 @@ export type EmployeeScalarWhereInput = {
   dob?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFilter<"Employee"> | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFilter<"Employee"> | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFilter<"Employee"> | number
-  position_id?: Prisma.IntFilter<"Employee"> | number
   location?: Prisma.StringFilter<"Employee"> | string
   date_joined?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  department_id?: Prisma.IntFilter<"Employee"> | number
   organizationId?: Prisma.IntFilter<"Employee"> | number
 }
 
@@ -935,9 +883,9 @@ export type EmployeeCreateWithoutHead_employeeInput = {
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  position: Prisma.PositionCreateNestedOneWithoutEmployeesInput
   documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
 }
@@ -953,12 +901,12 @@ export type EmployeeUncheckedCreateWithoutHead_employeeInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
   organizationId: number
+  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
   documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
 }
@@ -981,8 +929,8 @@ export type EmployeeCreateWithoutDepartmentInput = {
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
-  position: Prisma.PositionCreateNestedOneWithoutEmployeesInput
   documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
@@ -999,11 +947,11 @@ export type EmployeeUncheckedCreateWithoutDepartmentInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
   organizationId: number
+  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
   documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -1043,9 +991,9 @@ export type EmployeeUpdateWithoutHead_employeeInput = {
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  position?: Prisma.PositionUpdateOneRequiredWithoutEmployeesNestedInput
   documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
 }
@@ -1061,12 +1009,12 @@ export type EmployeeUncheckedUpdateWithoutHead_employeeInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
   documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
 }
@@ -1087,7 +1035,7 @@ export type EmployeeUpdateManyWithWhereWithoutDepartmentInput = {
   data: Prisma.XOR<Prisma.EmployeeUpdateManyMutationInput, Prisma.EmployeeUncheckedUpdateManyWithoutDepartmentInput>
 }
 
-export type EmployeeCreateWithoutPositionInput = {
+export type EmployeeCreateWithoutPositionsInput = {
   full_name: string
   avatar?: string | null
   code: string
@@ -1107,7 +1055,7 @@ export type EmployeeCreateWithoutPositionInput = {
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
 }
 
-export type EmployeeUncheckedCreateWithoutPositionInput = {
+export type EmployeeUncheckedCreateWithoutPositionsInput = {
   id?: number
   full_name: string
   avatar?: string | null
@@ -1118,40 +1066,71 @@ export type EmployeeUncheckedCreateWithoutPositionInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
   organizationId: number
   documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
-export type EmployeeCreateOrConnectWithoutPositionInput = {
+export type EmployeeCreateOrConnectWithoutPositionsInput = {
   where: Prisma.EmployeeWhereUniqueInput
-  create: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionInput, Prisma.EmployeeUncheckedCreateWithoutPositionInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionsInput, Prisma.EmployeeUncheckedCreateWithoutPositionsInput>
 }
 
-export type EmployeeCreateManyPositionInputEnvelope = {
-  data: Prisma.EmployeeCreateManyPositionInput | Prisma.EmployeeCreateManyPositionInput[]
-  skipDuplicates?: boolean
+export type EmployeeUpsertWithoutPositionsInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutPositionsInput, Prisma.EmployeeUncheckedUpdateWithoutPositionsInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionsInput, Prisma.EmployeeUncheckedCreateWithoutPositionsInput>
+  where?: Prisma.EmployeeWhereInput
 }
 
-export type EmployeeUpsertWithWhereUniqueWithoutPositionInput = {
-  where: Prisma.EmployeeWhereUniqueInput
-  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutPositionInput, Prisma.EmployeeUncheckedUpdateWithoutPositionInput>
-  create: Prisma.XOR<Prisma.EmployeeCreateWithoutPositionInput, Prisma.EmployeeUncheckedCreateWithoutPositionInput>
+export type EmployeeUpdateToOneWithWhereWithoutPositionsInput = {
+  where?: Prisma.EmployeeWhereInput
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutPositionsInput, Prisma.EmployeeUncheckedUpdateWithoutPositionsInput>
 }
 
-export type EmployeeUpdateWithWhereUniqueWithoutPositionInput = {
-  where: Prisma.EmployeeWhereUniqueInput
-  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutPositionInput, Prisma.EmployeeUncheckedUpdateWithoutPositionInput>
+export type EmployeeUpdateWithoutPositionsInput = {
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
+  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
+  department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
+  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
+  head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
+  designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
 }
 
-export type EmployeeUpdateManyWithWhereWithoutPositionInput = {
-  where: Prisma.EmployeeScalarWhereInput
-  data: Prisma.XOR<Prisma.EmployeeUpdateManyMutationInput, Prisma.EmployeeUncheckedUpdateManyWithoutPositionInput>
+export type EmployeeUncheckedUpdateWithoutPositionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
+  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
+  head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
+  designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutDocumentsInput = {
@@ -1167,9 +1146,9 @@ export type EmployeeCreateWithoutDocumentsInput = {
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  position: Prisma.PositionCreateNestedOneWithoutEmployeesInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
 }
@@ -1185,12 +1164,12 @@ export type EmployeeUncheckedCreateWithoutDocumentsInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
   organizationId: number
+  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
 }
@@ -1224,9 +1203,9 @@ export type EmployeeUpdateWithoutDocumentsInput = {
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  position?: Prisma.PositionUpdateOneRequiredWithoutEmployeesNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
 }
@@ -1242,12 +1221,12 @@ export type EmployeeUncheckedUpdateWithoutDocumentsInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
 }
@@ -1265,9 +1244,9 @@ export type EmployeeCreateWithoutDesignationsInput = {
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  position: Prisma.PositionCreateNestedOneWithoutEmployeesInput
   documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
 }
@@ -1283,12 +1262,12 @@ export type EmployeeUncheckedCreateWithoutDesignationsInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
   organizationId: number
+  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
   documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
 }
@@ -1322,9 +1301,9 @@ export type EmployeeUpdateWithoutDesignationsInput = {
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  position?: Prisma.PositionUpdateOneRequiredWithoutEmployeesNestedInput
   documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
 }
@@ -1340,12 +1319,12 @@ export type EmployeeUncheckedUpdateWithoutDesignationsInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
   documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
 }
@@ -1361,11 +1340,10 @@ export type EmployeeCreateManyOrganizationInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  department_id: number
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
+  department_id: number
 }
 
 export type EmployeeUpdateWithoutOrganizationInput = {
@@ -1381,8 +1359,8 @@ export type EmployeeUpdateWithoutOrganizationInput = {
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  position?: Prisma.PositionUpdateOneRequiredWithoutEmployeesNestedInput
   documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
@@ -1399,11 +1377,11 @@ export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
   documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -1420,11 +1398,10 @@ export type EmployeeUncheckedUpdateManyWithoutOrganizationInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type EmployeeCreateManyDepartmentInput = {
@@ -1438,7 +1415,6 @@ export type EmployeeCreateManyDepartmentInput = {
   dob?: Date | string | null
   employment_type?: $Enums.EmployeeType
   status?: $Enums.EmployeeStatus
-  position_id: number
   location: string
   date_joined?: Date | string
   updated_at?: Date | string
@@ -1458,8 +1434,8 @@ export type EmployeeUpdateWithoutDepartmentInput = {
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
-  position?: Prisma.PositionUpdateOneRequiredWithoutEmployeesNestedInput
   documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
@@ -1476,11 +1452,11 @@ export type EmployeeUncheckedUpdateWithoutDepartmentInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
   documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -1497,84 +1473,6 @@ export type EmployeeUncheckedUpdateManyWithoutDepartmentInput = {
   dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
   status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  position_id?: Prisma.IntFieldUpdateOperationsInput | number
-  location?: Prisma.StringFieldUpdateOperationsInput | string
-  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
-}
-
-export type EmployeeCreateManyPositionInput = {
-  id?: number
-  full_name: string
-  avatar?: string | null
-  code: string
-  email?: string | null
-  phoneNumber?: string | null
-  password?: string | null
-  dob?: Date | string | null
-  employment_type?: $Enums.EmployeeType
-  status?: $Enums.EmployeeStatus
-  department_id: number
-  location: string
-  date_joined?: Date | string
-  updated_at?: Date | string
-  organizationId: number
-}
-
-export type EmployeeUpdateWithoutPositionInput = {
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
-  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  location?: Prisma.StringFieldUpdateOperationsInput | string
-  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
-  designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
-}
-
-export type EmployeeUncheckedUpdateWithoutPositionInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
-  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  location?: Prisma.StringFieldUpdateOperationsInput | string
-  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
-  designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
-}
-
-export type EmployeeUncheckedUpdateManyWithoutPositionInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
-  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
   date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1587,11 +1485,13 @@ export type EmployeeUncheckedUpdateManyWithoutPositionInput = {
  */
 
 export type EmployeeCountOutputType = {
+  positions: number
   documents: number
   designations: number
 }
 
 export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  positions?: boolean | EmployeeCountOutputTypeCountPositionsArgs
   documents?: boolean | EmployeeCountOutputTypeCountDocumentsArgs
   designations?: boolean | EmployeeCountOutputTypeCountDesignationsArgs
 }
@@ -1604,6 +1504,13 @@ export type EmployeeCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the EmployeeCountOutputType
    */
   select?: Prisma.EmployeeCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountPositionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EmployeeOnPositionWhereInput
 }
 
 /**
@@ -1632,15 +1539,14 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   dob?: boolean
   employment_type?: boolean
   status?: boolean
-  department_id?: boolean
-  position_id?: boolean
   location?: boolean
   date_joined?: boolean
   updated_at?: boolean
+  department_id?: boolean
   organizationId?: boolean
+  positions?: boolean | Prisma.Employee$positionsArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  position?: boolean | Prisma.PositionDefaultArgs<ExtArgs>
   documents?: boolean | Prisma.Employee$documentsArgs<ExtArgs>
   head_employee?: boolean | Prisma.Employee$head_employeeArgs<ExtArgs>
   designations?: boolean | Prisma.Employee$designationsArgs<ExtArgs>
@@ -1658,15 +1564,13 @@ export type EmployeeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   dob?: boolean
   employment_type?: boolean
   status?: boolean
-  department_id?: boolean
-  position_id?: boolean
   location?: boolean
   date_joined?: boolean
   updated_at?: boolean
+  department_id?: boolean
   organizationId?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  position?: boolean | Prisma.PositionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employee"]>
 
 export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1680,15 +1584,13 @@ export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   dob?: boolean
   employment_type?: boolean
   status?: boolean
-  department_id?: boolean
-  position_id?: boolean
   location?: boolean
   date_joined?: boolean
   updated_at?: boolean
+  department_id?: boolean
   organizationId?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  position?: boolean | Prisma.PositionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employee"]>
 
 export type EmployeeSelectScalar = {
@@ -1702,19 +1604,18 @@ export type EmployeeSelectScalar = {
   dob?: boolean
   employment_type?: boolean
   status?: boolean
-  department_id?: boolean
-  position_id?: boolean
   location?: boolean
   date_joined?: boolean
   updated_at?: boolean
+  department_id?: boolean
   organizationId?: boolean
 }
 
-export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "avatar" | "code" | "email" | "phoneNumber" | "password" | "dob" | "employment_type" | "status" | "department_id" | "position_id" | "location" | "date_joined" | "updated_at" | "organizationId", ExtArgs["result"]["employee"]>
+export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "avatar" | "code" | "email" | "phoneNumber" | "password" | "dob" | "employment_type" | "status" | "location" | "date_joined" | "updated_at" | "department_id" | "organizationId", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  positions?: boolean | Prisma.Employee$positionsArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  position?: boolean | Prisma.PositionDefaultArgs<ExtArgs>
   documents?: boolean | Prisma.Employee$documentsArgs<ExtArgs>
   head_employee?: boolean | Prisma.Employee$head_employeeArgs<ExtArgs>
   designations?: boolean | Prisma.Employee$designationsArgs<ExtArgs>
@@ -1723,20 +1624,18 @@ export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type EmployeeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  position?: boolean | Prisma.PositionDefaultArgs<ExtArgs>
 }
 export type EmployeeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  position?: boolean | Prisma.PositionDefaultArgs<ExtArgs>
 }
 
 export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Employee"
   objects: {
+    positions: Prisma.$EmployeeOnPositionPayload<ExtArgs>[]
     organization: Prisma.$OrganizationPayload<ExtArgs>
     department: Prisma.$DepartmentPayload<ExtArgs>
-    position: Prisma.$PositionPayload<ExtArgs>
     documents: Prisma.$ID_DocumentPayload<ExtArgs>[]
     head_employee: Prisma.$DepartmentPayload<ExtArgs> | null
     designations: Prisma.$DesignationOnEmployeePayload<ExtArgs>[]
@@ -1752,11 +1651,10 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     dob: Date | null
     employment_type: $Enums.EmployeeType
     status: $Enums.EmployeeStatus
-    department_id: number
-    position_id: number
     location: string
     date_joined: Date
     updated_at: Date
+    department_id: number
     organizationId: number
   }, ExtArgs["result"]["employee"]>
   composites: {}
@@ -2152,9 +2050,9 @@ readonly fields: EmployeeFieldRefs;
  */
 export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  positions<T extends Prisma.Employee$positionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$positionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeeOnPositionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   department<T extends Prisma.DepartmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentDefaultArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  position<T extends Prisma.PositionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PositionDefaultArgs<ExtArgs>>): Prisma.Prisma__PositionClient<runtime.Types.Result.GetResult<Prisma.$PositionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   documents<T extends Prisma.Employee$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ID_DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   head_employee<T extends Prisma.Employee$head_employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$head_employeeArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   designations<T extends Prisma.Employee$designationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$designationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DesignationOnEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2197,11 +2095,10 @@ export interface EmployeeFieldRefs {
   readonly dob: Prisma.FieldRef<"Employee", 'DateTime'>
   readonly employment_type: Prisma.FieldRef<"Employee", 'EmployeeType'>
   readonly status: Prisma.FieldRef<"Employee", 'EmployeeStatus'>
-  readonly department_id: Prisma.FieldRef<"Employee", 'Int'>
-  readonly position_id: Prisma.FieldRef<"Employee", 'Int'>
   readonly location: Prisma.FieldRef<"Employee", 'String'>
   readonly date_joined: Prisma.FieldRef<"Employee", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Employee", 'DateTime'>
+  readonly department_id: Prisma.FieldRef<"Employee", 'Int'>
   readonly organizationId: Prisma.FieldRef<"Employee", 'Int'>
 }
     
@@ -2596,6 +2493,30 @@ export type EmployeeDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Employees to delete.
    */
   limit?: number
+}
+
+/**
+ * Employee.positions
+ */
+export type Employee$positionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EmployeeOnPosition
+   */
+  select?: Prisma.EmployeeOnPositionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EmployeeOnPosition
+   */
+  omit?: Prisma.EmployeeOnPositionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeOnPositionInclude<ExtArgs> | null
+  where?: Prisma.EmployeeOnPositionWhereInput
+  orderBy?: Prisma.EmployeeOnPositionOrderByWithRelationInput | Prisma.EmployeeOnPositionOrderByWithRelationInput[]
+  cursor?: Prisma.EmployeeOnPositionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EmployeeOnPositionScalarFieldEnum | Prisma.EmployeeOnPositionScalarFieldEnum[]
 }
 
 /**
