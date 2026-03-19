@@ -84,17 +84,26 @@ CREATE TABLE "Employee" (
     "code" TEXT NOT NULL,
     "email" TEXT,
     "phoneNumber" TEXT,
+    "password" TEXT,
     "dob" TIMESTAMP(3),
     "employment_type" "EmployeeType" NOT NULL DEFAULT 'FULL_TIME',
     "status" "EmployeeStatus" NOT NULL DEFAULT 'PENDING',
-    "department_id" INTEGER NOT NULL,
-    "position_id" INTEGER NOT NULL,
     "location" TEXT NOT NULL,
     "date_joined" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
+    "department_id" INTEGER NOT NULL,
     "organizationId" INTEGER NOT NULL,
 
     CONSTRAINT "Employee_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EmployeeOnPosition" (
+    "position_id" INTEGER NOT NULL,
+    "employee_id" INTEGER NOT NULL,
+    "assigned_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "EmployeeOnPosition_pkey" PRIMARY KEY ("employee_id","position_id")
 );
 
 -- CreateTable
@@ -124,20 +133,20 @@ CREATE TABLE "ID_Document" (
 );
 
 -- CreateTable
-CREATE TABLE "Permission" (
+CREATE TABLE "Menu" (
     "id" SERIAL NOT NULL,
     "menu" "MenuCode" NOT NULL,
-    "action" "Action"[] DEFAULT ARRAY['VIEW']::"Action"[],
 
-    CONSTRAINT "Permission_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Menu_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "PlanOnPermission" (
+CREATE TABLE "PlanOnMenu" (
     "planId" INTEGER NOT NULL,
-    "permissionId" INTEGER NOT NULL,
+    "menuId" INTEGER NOT NULL,
+    "actions" "Action"[] DEFAULT ARRAY['VIEW']::"Action"[],
 
-    CONSTRAINT "PlanOnPermission_pkey" PRIMARY KEY ("permissionId","planId")
+    CONSTRAINT "PlanOnMenu_pkey" PRIMARY KEY ("planId","menuId")
 );
 
 -- CreateTable
@@ -150,11 +159,12 @@ CREATE TABLE "Designation" (
 );
 
 -- CreateTable
-CREATE TABLE "DesignationPermission" (
+CREATE TABLE "DesignationOnMenu" (
     "designationId" INTEGER NOT NULL,
-    "permissionId" INTEGER NOT NULL,
+    "menuId" INTEGER NOT NULL,
+    "actions" "Action"[] DEFAULT ARRAY['VIEW']::"Action"[],
 
-    CONSTRAINT "DesignationPermission_pkey" PRIMARY KEY ("designationId","permissionId")
+    CONSTRAINT "DesignationOnMenu_pkey" PRIMARY KEY ("designationId","menuId")
 );
 
 -- CreateTable
@@ -199,16 +209,13 @@ CREATE INDEX "Employee_organizationId_idx" ON "Employee"("organizationId");
 CREATE INDEX "Employee_department_id_idx" ON "Employee"("department_id");
 
 -- CreateIndex
-CREATE INDEX "Employee_position_id_idx" ON "Employee"("position_id");
+CREATE INDEX "EmployeeOnPosition_employee_id_idx" ON "EmployeeOnPosition"("employee_id");
+
+-- CreateIndex
+CREATE INDEX "EmployeeOnPosition_position_id_idx" ON "EmployeeOnPosition"("position_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Image_fileKey_key" ON "Image"("fileKey");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Permission_menu_key" ON "Permission"("menu");
-
--- CreateIndex
-CREATE INDEX "PlanOnPermission_planId_idx" ON "PlanOnPermission"("planId");
 
 -- CreateIndex
 CREATE INDEX "Designation_organizationId_idx" ON "Designation"("organizationId");
@@ -217,7 +224,7 @@ CREATE INDEX "Designation_organizationId_idx" ON "Designation"("organizationId")
 CREATE UNIQUE INDEX "Designation_organizationId_name_key" ON "Designation"("organizationId", "name");
 
 -- CreateIndex
-CREATE INDEX "DesignationPermission_designationId_idx" ON "DesignationPermission"("designationId");
+CREATE INDEX "DesignationOnMenu_designationId_idx" ON "DesignationOnMenu"("designationId");
 
 -- AddForeignKey
 ALTER TABLE "Organization" ADD CONSTRAINT "Organization_planId_fkey" FOREIGN KEY ("planId") REFERENCES "Plan"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -241,25 +248,28 @@ ALTER TABLE "Employee" ADD CONSTRAINT "Employee_organizationId_fkey" FOREIGN KEY
 ALTER TABLE "Employee" ADD CONSTRAINT "Employee_department_id_fkey" FOREIGN KEY ("department_id") REFERENCES "Department"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Employee" ADD CONSTRAINT "Employee_position_id_fkey" FOREIGN KEY ("position_id") REFERENCES "Position"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EmployeeOnPosition" ADD CONSTRAINT "EmployeeOnPosition_position_id_fkey" FOREIGN KEY ("position_id") REFERENCES "Position"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EmployeeOnPosition" ADD CONSTRAINT "EmployeeOnPosition_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "Employee"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ID_Document" ADD CONSTRAINT "ID_Document_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "Employee"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PlanOnPermission" ADD CONSTRAINT "PlanOnPermission_planId_fkey" FOREIGN KEY ("planId") REFERENCES "Plan"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "PlanOnMenu" ADD CONSTRAINT "PlanOnMenu_planId_fkey" FOREIGN KEY ("planId") REFERENCES "Plan"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PlanOnPermission" ADD CONSTRAINT "PlanOnPermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "PlanOnMenu" ADD CONSTRAINT "PlanOnMenu_menuId_fkey" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Designation" ADD CONSTRAINT "Designation_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "DesignationPermission" ADD CONSTRAINT "DesignationPermission_designationId_fkey" FOREIGN KEY ("designationId") REFERENCES "Designation"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "DesignationOnMenu" ADD CONSTRAINT "DesignationOnMenu_designationId_fkey" FOREIGN KEY ("designationId") REFERENCES "Designation"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "DesignationPermission" ADD CONSTRAINT "DesignationPermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "DesignationOnMenu" ADD CONSTRAINT "DesignationOnMenu_menuId_fkey" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "DesignationOnEmployee" ADD CONSTRAINT "DesignationOnEmployee_designationId_fkey" FOREIGN KEY ("designationId") REFERENCES "Designation"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
