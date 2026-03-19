@@ -24,7 +24,7 @@ export const login = async (req: Request, res: Response) => {
         include: {
           plan: {
             include: {
-              menuPermission: true, // Plan က ပေးထားတဲ့ limit
+              menuPermission: false,
             },
           },
         },
@@ -37,7 +37,7 @@ export const login = async (req: Request, res: Response) => {
             include: {
               menuPermission: {
                 include: {
-                  menu: true, // ဘယ် Menu တွေ သုံးလို့ရလဲ
+                  menu: true,
                 },
               },
             },
@@ -103,13 +103,23 @@ export const refresh = async (req: Request, res: Response) => {
           include: {
             plan: {
               include: {
-                menuPermission: true,
+                menuPermission: {
+                  include: {
+                    menu: true,
+                  },
+                },
               },
             },
           },
         },
         department: true,
-        positions: true,
+        positions: {
+          include: {
+            position: {
+              include: {},
+            },
+          },
+        },
         designations: {
           include: {
             designation: {

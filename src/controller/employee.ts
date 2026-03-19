@@ -33,7 +33,7 @@ export async function getEmployees(req: Request, res: Response) {
         take: size,
         include: {
           department: true,
-          position: true,
+          positions: true,
         },
       }),
     ]);
@@ -62,7 +62,7 @@ export async function getEmployeeById(req: Request, res: Response) {
 
     const item = await prisma.employee.findUnique({
       where: { id },
-      include: { department: true, position: true, documents: true },
+      include: { department: true, positions: true, documents: true },
     });
 
     if (!item) return res.status(404).json({ message: "Employee not found" });
@@ -80,7 +80,7 @@ export async function createEmployee(req: Request, res: Response) {
 
     const item = await prisma.employee.create({
       data,
-      include: { department: true, position: true },
+      include: { department: true, positions: true },
     });
 
     res.status(201).json({ data: item });
@@ -105,7 +105,7 @@ export async function updateEmployee(req: Request, res: Response) {
     const item = await prisma.employee.update({
       where: { id },
       data: req.body,
-      include: { department: true, position: true, documents: true },
+      include: { department: true, positions: true, documents: true },
     });
 
     res.json({ data: item });
