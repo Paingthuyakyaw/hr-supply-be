@@ -1,3 +1,10 @@
 {
-  "routes": [{ "src": "/(.*)", "dest": "/api/index.ts" }]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
 }

@@ -15,7 +15,7 @@ const openApiSpec = {
     description:
       "API documentation for HR Supply - Auth, Employees, Departments, Positions",
   },
-  servers: [{ url: "http://localhost:3000", description: "Development" }],
+  servers: [{ url: "/", description: "Development" }],
   paths: {
     "/": {
       get: {
@@ -509,13 +509,29 @@ const openApiSpec = {
         summary: "List organizations",
         tags: ["Organization"],
         parameters: [
-          { name: "page", in: "query", schema: { type: "integer", default: 1 } },
-          { name: "size", in: "query", schema: { type: "integer", default: 20 } },
-          { name: "q", in: "query", schema: { type: "string" }, description: "Search by organization name" },
+          {
+            name: "page",
+            in: "query",
+            schema: { type: "integer", default: 1 },
+          },
+          {
+            name: "size",
+            in: "query",
+            schema: { type: "integer", default: 20 },
+          },
+          {
+            name: "q",
+            in: "query",
+            schema: { type: "string" },
+            description: "Search by organization name",
+          },
           {
             name: "status",
             in: "query",
-            schema: { type: "string", enum: ["PENDING", "APPROVED", "REJECTED", "SUSPENDED"] },
+            schema: {
+              type: "string",
+              enum: ["PENDING", "APPROVED", "REJECTED", "SUSPENDED"],
+            },
             description: "Filter by status",
           },
         ],
@@ -830,7 +846,10 @@ const openApiSpec = {
           name: { type: "string" },
           // Note: validator file uses `total_employment` but Prisma model uses `total_employees`.
           // We document the intended Prisma field, plus the current validator field for compatibility.
-          total_employees: { type: "integer", description: "Total employees limit/count" },
+          total_employees: {
+            type: "integer",
+            description: "Total employees limit/count",
+          },
           total_employment: {
             type: "integer",
             description:
