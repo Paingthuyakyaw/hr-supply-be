@@ -27,7 +27,7 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 app.use("/auth", authRouter);
 app.use("/employees", emRouter);
