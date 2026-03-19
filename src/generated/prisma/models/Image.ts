@@ -1057,6 +1057,11 @@ export type ImageFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Skip the first `n` Images.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Images.
+   */
   distinct?: Prisma.ImageScalarFieldEnum | Prisma.ImageScalarFieldEnum[]
 }
 

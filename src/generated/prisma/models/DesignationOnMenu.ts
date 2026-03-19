@@ -1219,6 +1219,11 @@ export type DesignationOnMenuFindManyArgs<ExtArgs extends runtime.Types.Extensio
    * Skip the first `n` DesignationOnMenus.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of DesignationOnMenus.
+   */
   distinct?: Prisma.DesignationOnMenuScalarFieldEnum | Prisma.DesignationOnMenuScalarFieldEnum[]
 }
 

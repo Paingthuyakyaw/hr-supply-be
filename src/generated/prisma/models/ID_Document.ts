@@ -1241,6 +1241,11 @@ export type ID_DocumentFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Skip the first `n` ID_Documents.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of ID_Documents.
+   */
   distinct?: Prisma.ID_DocumentScalarFieldEnum | Prisma.ID_DocumentScalarFieldEnum[]
 }
 

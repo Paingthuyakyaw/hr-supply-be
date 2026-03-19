@@ -17,8 +17,8 @@ import type * as Prisma from "./prismaNamespace"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.4.0",
-  "engineVersion": "ab56fe763f921d033a6c195e7ddeb3e255bdbb57",
+  "clientVersion": "7.5.0",
+  "engineVersion": "280c870be64f457428992c43c1f6d557fab6e29e",
   "activeProvider": "postgresql",
   "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Organization {\n  id              Int                @id @default(autoincrement())\n  name            String\n  total_employees Int\n  status          OrganizationStatus\n  expire_time     DateTime?\n\n  planId Int\n  plan   Plan @relation(fields: [planId], references: [id])\n\n  departments  Department[]\n  positions    Position[]\n  employees    Employee[]\n  designations Designation[]\n}\n\nmodel Plan {\n  id   Int      @id @default(autoincrement())\n  code PlanCode @default(FREE)\n  name String\n\n  organizations  Organization[]\n  menuPermission PlanOnMenu[]\n}\n\nmodel Department {\n  id               Int       @id @default(autoincrement())\n  name             String\n  is_active        Boolean\n  head_employee_id Int?      @unique\n  head_employee    Employee? @relation(\"DepartmentHead\", fields: [head_employee_id], references: [id])\n\n  employee_count Int\n  location       String\n  annual_budget  String?\n\n  startTime    DateTime  @db.Time(6)\n  endTime      DateTime  @db.Time(6)\n  working_days WeekDay[]\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  organizationId Int\n  organization   Organization @relation(fields: [organizationId], references: [id])\n\n  employees Employee[]\n  positions Position[]\n\n  @@unique([organizationId, name])\n  @@index([organizationId])\n}\n\nmodel Position {\n  id        Int     @id @default(autoincrement())\n  name      String\n  is_active Boolean\n\n  department_id Int\n  department    Department @relation(fields: [department_id], references: [id])\n\n  organizationId Int\n  organization   Organization         @relation(fields: [organizationId], references: [id])\n  employees      EmployeeOnPosition[]\n  avg_salary     Int?\n  min_salary     Int?\n  max_salary     Int?\n\n  @@unique([organizationId, name])\n  @@index([organizationId])\n  @@index([department_id])\n}\n\nmodel Employee {\n  id        Int     @id @default(autoincrement())\n  full_name String\n  avatar    String?\n\n  code        String  @unique\n  email       String? @unique\n  phoneNumber String? @unique\n  password    String?\n\n  dob             DateTime?\n  employment_type EmployeeType   @default(FULL_TIME)\n  status          EmployeeStatus @default(PENDING)\n\n  location    String\n  date_joined DateTime @default(now())\n  updated_at  DateTime @updatedAt\n\n  department_id Int\n  positions     EmployeeOnPosition[]\n\n  organizationId Int\n  organization   Organization @relation(fields: [organizationId], references: [id])\n\n  department Department @relation(fields: [department_id], references: [id])\n\n  documents ID_Document[]\n\n  head_employee Department? @relation(\"DepartmentHead\")\n\n  designations DesignationOnEmployee[]\n\n  @@index([organizationId])\n  @@index([department_id])\n}\n\nmodel EmployeeOnPosition {\n  position_id Int\n  employee_id Int\n\n  position    Position @relation(fields: [position_id], references: [id])\n  employee    Employee @relation(fields: [employee_id], references: [id])\n  assigned_at DateTime @default(now())\n\n  @@id([employee_id, position_id])\n  @@index([employee_id])\n  @@index([position_id])\n}\n\nmodel Image {\n  id        Int      @id @default(autoincrement())\n  url       String\n  fileKey   String?  @unique\n  folder    String?\n  mimeType  String?\n  size      Int?\n  createdAt DateTime @default(now())\n}\n\nmodel ID_Document {\n  id          Int       @id @default(autoincrement())\n  type        IDDocType\n  front_url   String?\n  back_url    String?\n  employee_id Int?\n\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  employee Employee? @relation(fields: [employee_id], references: [id])\n}\n\nmodel Menu {\n  id                    Int                 @id @default(autoincrement())\n  menu                  MenuCode\n  planPermissions       PlanOnMenu[]\n  designationPermission DesignationOnMenu[]\n}\n\nmodel PlanOnMenu {\n  planId  Int\n  menuId  Int\n  actions Action[] @default([VIEW])\n\n  plan Plan @relation(fields: [planId], references: [id])\n  menu Menu @relation(fields: [menuId], references: [id])\n\n  @@id([planId, menuId])\n}\n\nmodel Designation {\n  id             Int          @id @default(autoincrement())\n  name           String\n  organizationId Int\n  organization   Organization @relation(fields: [organizationId], references: [id])\n\n  menuPermission DesignationOnMenu[]\n  employees      DesignationOnEmployee[]\n\n  @@unique([organizationId, name])\n  @@index([organizationId])\n}\n\nmodel DesignationOnMenu {\n  designationId Int\n  menuId        Int\n  actions       Action[] @default([VIEW])\n\n  designation Designation @relation(fields: [designationId], references: [id])\n  menu        Menu        @relation(fields: [menuId], references: [id])\n\n  @@id([designationId, menuId])\n  @@index([designationId])\n}\n\nmodel DesignationOnEmployee {\n  designationId Int\n  employeeId    Int\n\n  designation Designation @relation(fields: [designationId], references: [id])\n  employee    Employee    @relation(fields: [employeeId], references: [id])\n\n  @@id([designationId, employeeId])\n}\n\nenum MenuCode {\n  DASHBOARD\n  EMPLOYEE\n  DEPARTMENT\n  POSITION\n  ORGANIZATION\n  PLAN_MANAGEMENT\n  ATTENDANCE\n  LEAVE_MANGEMENT\n  PAYROLL\n}\n\nenum Action {\n  CREATE\n  VIEW\n  UPDATE\n  DELETE\n}\n\nenum WeekDay {\n  MON\n  TUE\n  WED\n  THU\n  FRI\n  SAT\n  SUN\n}\n\nenum EmployeeType {\n  PART_TIME\n  FULL_TIME\n  HYBRID\n}\n\nenum EmployeeStatus {\n  ACTIVE\n  ON_PROBATION\n  PENDING\n  ON_LEAVE\n  SUSPENDED\n  RESIGNED\n  TERMINATED\n  RETIRED\n}\n\nenum IDDocType {\n  PASSPORT\n  DRIVER_LICENSE\n  NRC\n}\n\nenum OrganizationStatus {\n  PENDING\n  APPROVED\n  REJECTED\n  SUSPENDED\n}\n\nenum PlanCode {\n  FREE\n  PRO\n  ENTERPRISE\n  SUPER_ADMIN\n}\n",
   "runtimeDataModel": {
@@ -67,7 +67,9 @@ export interface PrismaClientConstructor {
    * Type-safe database client for TypeScript
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Organizations
    * const organizations = await prisma.organization.findMany()
    * ```
@@ -89,7 +91,9 @@ export interface PrismaClientConstructor {
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Organizations
  * const organizations = await prisma.organization.findMany()
  * ```
@@ -174,7 +178,7 @@ export interface PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 

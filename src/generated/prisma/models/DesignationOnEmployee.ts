@@ -1176,6 +1176,11 @@ export type DesignationOnEmployeeFindManyArgs<ExtArgs extends runtime.Types.Exte
    * Skip the first `n` DesignationOnEmployees.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of DesignationOnEmployees.
+   */
   distinct?: Prisma.DesignationOnEmployeeScalarFieldEnum | Prisma.DesignationOnEmployeeScalarFieldEnum[]
 }
 

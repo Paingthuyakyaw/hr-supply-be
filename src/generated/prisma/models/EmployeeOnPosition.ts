@@ -1216,6 +1216,11 @@ export type EmployeeOnPositionFindManyArgs<ExtArgs extends runtime.Types.Extensi
    * Skip the first `n` EmployeeOnPositions.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of EmployeeOnPositions.
+   */
   distinct?: Prisma.EmployeeOnPositionScalarFieldEnum | Prisma.EmployeeOnPositionScalarFieldEnum[]
 }
 

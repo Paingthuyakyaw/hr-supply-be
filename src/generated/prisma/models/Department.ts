@@ -1892,6 +1892,11 @@ export type DepartmentFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Skip the first `n` Departments.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Departments.
+   */
   distinct?: Prisma.DepartmentScalarFieldEnum | Prisma.DepartmentScalarFieldEnum[]
 }
 
