@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc && tsc-alias && node copyopenapi.cjs"
+    "dev": "tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "",
