@@ -12,7 +12,6 @@ import authRouter from "./router/auth";
 import orgRouter from "./router/organization";
 
 const app = express();
-const port = 3000;
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   max: 20,
@@ -28,12 +27,6 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Expose raw OpenAPI spec for debugging / tooling
-app.get("/openapi.json", (_req, res) => {
-  res.setHeader("Cache-Control", "no-store");
-  return res.json(openApiSpec);
-});
-
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 app.use("/auth", authRouter);
@@ -47,6 +40,5 @@ app.get("/", (req, res) =>
     message: "HELLO WORLD",
   }),
 );
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 export default app;
