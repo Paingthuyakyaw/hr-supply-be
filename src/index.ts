@@ -22,13 +22,20 @@ const limiter = rateLimit({
 });
 app.set("trust proxy", 1);
 app.use(compression());
-app.use(helmet());
+// Vercel/Swagger UI မှာ CSP ကြောင့် script/style မတက်တာတွေ ဖြစ်နိုင်လို့ CSP ကိုပိတ်ထားပါတယ်
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(morgan("dev"));
 app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve Swagger UI under /api/docs (so its assets resolve correctly on Vercel)
+// Swagger UI assets တွေက html fallback/cache ကိုယူပြီး MIME type error ဆက်ဖြစ်နိုင်လို့ no-store ထည့်ပါတယ်
+app.use("/api/docs", (_req, res, next) => {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
+  res.setHeader("Pragma", "no-cache");
+  next();
+});
 app.use(
   "/api/docs",
   swaggerUi.serve,
