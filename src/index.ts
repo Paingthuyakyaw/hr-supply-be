@@ -1,10 +1,10 @@
-import express from "express";
+import express, { type Request, type Response } from "express";
 import compression from "compression";
 import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
-import swaggerUi from "swagger-ui-express";
 import { openApiSpec } from "./swagger";
+import { getSwaggerUiHtml } from "./swaggerUiHtml";
 import deptRouter from "./router/department";
 import posRouter from "./router/position";
 import emRouter from "./router/employee";
@@ -29,22 +29,23 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve Swagger UI under /api/docs (so its assets resolve correctly on Vercel)
-// Swagger UI assets တွေက html fallback/cache ကိုယူပြီး MIME type error ဆက်ဖြစ်နိုင်လို့ no-store ထည့်ပါတယ်
-app.use("/api/docs", (_req, res, next) => {
+// OpenAPI spec (Swagger UI က browser ကနေ fetch လုပ်မယ်) — extension မသုံးပါ (routing/proxy မှာ .json ကြောင့် 404 ဖြစ်တတ်ပါတယ်)
+app.get("/api/openapi", (_req, res) => {
   res.setHeader("Cache-Control", "no-store, max-age=0");
   res.setHeader("Pragma", "no-cache");
-  next();
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  return res.json(openApiSpec);
 });
-app.use(
-  "/api/docs",
-  swaggerUi.serve,
-  swaggerUi.setup(openApiSpec, {
-    swaggerOptions: {
-      persistAuthorization: true,
-    },
-  }),
-);
+
+// Swagger UI — CDN assets (Vercel serverless မှာ swagger-ui-express local dist မအလုပ်ဖြစ်တာကိုရှောင်ပါတယ်)
+const sendSwaggerUi = (_req: Request, res: Response) => {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  return res.send(getSwaggerUiHtml());
+};
+app.get("/api/docs", sendSwaggerUi);
+app.get("/api/docs/", sendSwaggerUi);
 
 app.use("/api/auth", authRouter);
 app.use("/api/employees", authVerify, emRouter);

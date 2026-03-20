@@ -1,6 +1,6 @@
 /**
  * OpenAPI 3.0 spec for HR Supply Backend
- * Swagger UI: /api/docs
+ * Swagger UI: /api/docs  ·  Spec JSON: /api/openapi
  */
 
 function ref(s: string) {
