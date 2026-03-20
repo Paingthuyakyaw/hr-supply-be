@@ -15,7 +15,7 @@ const openApiSpec = {
     description:
       "API documentation for HR Supply - Auth, Employees, Departments, Positions",
   },
-  servers: [{ url: "/", description: "Development" }],
+  servers: [{ url: "/api", description: "API Base" }],
   paths: {
     "/": {
       get: {
@@ -89,6 +89,7 @@ const openApiSpec = {
       get: {
         summary: "List employees",
         tags: ["Employees"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "page",
@@ -130,6 +131,7 @@ const openApiSpec = {
       post: {
         summary: "Create employee",
         tags: ["Employees"],
+        security: [{ bearerAuth: [] }],
         requestBody: {
           required: true,
           content: {
@@ -155,6 +157,7 @@ const openApiSpec = {
       get: {
         summary: "Get employee by ID",
         tags: ["Employees"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -180,6 +183,7 @@ const openApiSpec = {
       put: {
         summary: "Update employee",
         tags: ["Employees"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -212,6 +216,7 @@ const openApiSpec = {
       delete: {
         summary: "Delete employee",
         tags: ["Employees"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -581,6 +586,13 @@ const openApiSpec = {
     },
   },
   components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
+    },
     schemas: {
       HelloResponse: {
         type: "object",
