@@ -1657,20 +1657,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'PlanCode'
- */
-export type EnumPlanCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanCode'>
-    
-
-
-/**
- * Reference to a field of type 'PlanCode[]'
- */
-export type ListEnumPlanCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanCode[]'>
-    
-
-
-/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>

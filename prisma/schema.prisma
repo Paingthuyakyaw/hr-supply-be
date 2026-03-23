@@ -26,7 +26,7 @@ model Organization {
 
 model Plan {
   id   Int      @id @default(autoincrement())
-  code PlanCode @default(FREE)
+  code String
   name String
 
   organizations Organization[]
@@ -268,9 +268,4 @@ enum OrganizationStatus {
   SUSPENDED
 }
 
-enum PlanCode {
-  FREE
-  PRO
-  ENTERPRISE
-  SUPER_ADMIN
-}
+

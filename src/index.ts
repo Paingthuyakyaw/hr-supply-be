@@ -11,6 +11,7 @@ import emRouter from "./router/employee";
 import authRouter from "./router/auth";
 import orgRouter from "./router/organization";
 import { authVerify } from "./middleware/auth";
+import planRouter from "./router/plan";
 
 const app = express();
 const limiter = rateLimit({
@@ -52,6 +53,7 @@ app.use("/api/employees", authVerify, emRouter);
 app.use("/api/departments", deptRouter);
 app.use("/api/positions", posRouter);
 app.use("/api/organization", orgRouter);
+app.use("/api/plan", planRouter);
 
 app.get("/", (req, res) =>
   res.json({

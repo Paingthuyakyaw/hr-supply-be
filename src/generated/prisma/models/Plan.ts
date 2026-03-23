@@ -36,13 +36,13 @@ export type PlanSumAggregateOutputType = {
 
 export type PlanMinAggregateOutputType = {
   id: number | null
-  code: $Enums.PlanCode | null
+  code: string | null
   name: string | null
 }
 
 export type PlanMaxAggregateOutputType = {
   id: number | null
-  code: $Enums.PlanCode | null
+  code: string | null
   name: string | null
 }
 
@@ -169,7 +169,7 @@ export type PlanGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type PlanGroupByOutputType = {
   id: number
-  code: $Enums.PlanCode
+  code: string
   name: string
   _count: PlanCountAggregateOutputType | null
   _avg: PlanAvgAggregateOutputType | null
@@ -198,7 +198,7 @@ export type PlanWhereInput = {
   OR?: Prisma.PlanWhereInput[]
   NOT?: Prisma.PlanWhereInput | Prisma.PlanWhereInput[]
   id?: Prisma.IntFilter<"Plan"> | number
-  code?: Prisma.EnumPlanCodeFilter<"Plan"> | $Enums.PlanCode
+  code?: Prisma.StringFilter<"Plan"> | string
   name?: Prisma.StringFilter<"Plan"> | string
   organizations?: Prisma.OrganizationListRelationFilter
   menuPermission?: Prisma.PlanOnMenuListRelationFilter
@@ -217,7 +217,7 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PlanWhereInput | Prisma.PlanWhereInput[]
   OR?: Prisma.PlanWhereInput[]
   NOT?: Prisma.PlanWhereInput | Prisma.PlanWhereInput[]
-  code?: Prisma.EnumPlanCodeFilter<"Plan"> | $Enums.PlanCode
+  code?: Prisma.StringFilter<"Plan"> | string
   name?: Prisma.StringFilter<"Plan"> | string
   organizations?: Prisma.OrganizationListRelationFilter
   menuPermission?: Prisma.PlanOnMenuListRelationFilter
@@ -239,12 +239,12 @@ export type PlanScalarWhereWithAggregatesInput = {
   OR?: Prisma.PlanScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PlanScalarWhereWithAggregatesInput | Prisma.PlanScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Plan"> | number
-  code?: Prisma.EnumPlanCodeWithAggregatesFilter<"Plan"> | $Enums.PlanCode
+  code?: Prisma.StringWithAggregatesFilter<"Plan"> | string
   name?: Prisma.StringWithAggregatesFilter<"Plan"> | string
 }
 
 export type PlanCreateInput = {
-  code?: $Enums.PlanCode
+  code: string
   name: string
   organizations?: Prisma.OrganizationCreateNestedManyWithoutPlanInput
   menuPermission?: Prisma.PlanOnMenuCreateNestedManyWithoutPlanInput
@@ -252,14 +252,14 @@ export type PlanCreateInput = {
 
 export type PlanUncheckedCreateInput = {
   id?: number
-  code?: $Enums.PlanCode
+  code: string
   name: string
   organizations?: Prisma.OrganizationUncheckedCreateNestedManyWithoutPlanInput
   menuPermission?: Prisma.PlanOnMenuUncheckedCreateNestedManyWithoutPlanInput
 }
 
 export type PlanUpdateInput = {
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   organizations?: Prisma.OrganizationUpdateManyWithoutPlanNestedInput
   menuPermission?: Prisma.PlanOnMenuUpdateManyWithoutPlanNestedInput
@@ -267,7 +267,7 @@ export type PlanUpdateInput = {
 
 export type PlanUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   organizations?: Prisma.OrganizationUncheckedUpdateManyWithoutPlanNestedInput
   menuPermission?: Prisma.PlanOnMenuUncheckedUpdateManyWithoutPlanNestedInput
@@ -275,18 +275,18 @@ export type PlanUncheckedUpdateInput = {
 
 export type PlanCreateManyInput = {
   id?: number
-  code?: $Enums.PlanCode
+  code: string
   name: string
 }
 
 export type PlanUpdateManyMutationInput = {
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PlanUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -335,10 +335,6 @@ export type PlanUpdateOneRequiredWithoutOrganizationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PlanUpdateToOneWithWhereWithoutOrganizationsInput, Prisma.PlanUpdateWithoutOrganizationsInput>, Prisma.PlanUncheckedUpdateWithoutOrganizationsInput>
 }
 
-export type EnumPlanCodeFieldUpdateOperationsInput = {
-  set?: $Enums.PlanCode
-}
-
 export type PlanCreateNestedOneWithoutMenuPermissionInput = {
   create?: Prisma.XOR<Prisma.PlanCreateWithoutMenuPermissionInput, Prisma.PlanUncheckedCreateWithoutMenuPermissionInput>
   connectOrCreate?: Prisma.PlanCreateOrConnectWithoutMenuPermissionInput
@@ -354,14 +350,14 @@ export type PlanUpdateOneRequiredWithoutMenuPermissionNestedInput = {
 }
 
 export type PlanCreateWithoutOrganizationsInput = {
-  code?: $Enums.PlanCode
+  code: string
   name: string
   menuPermission?: Prisma.PlanOnMenuCreateNestedManyWithoutPlanInput
 }
 
 export type PlanUncheckedCreateWithoutOrganizationsInput = {
   id?: number
-  code?: $Enums.PlanCode
+  code: string
   name: string
   menuPermission?: Prisma.PlanOnMenuUncheckedCreateNestedManyWithoutPlanInput
 }
@@ -383,27 +379,27 @@ export type PlanUpdateToOneWithWhereWithoutOrganizationsInput = {
 }
 
 export type PlanUpdateWithoutOrganizationsInput = {
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   menuPermission?: Prisma.PlanOnMenuUpdateManyWithoutPlanNestedInput
 }
 
 export type PlanUncheckedUpdateWithoutOrganizationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   menuPermission?: Prisma.PlanOnMenuUncheckedUpdateManyWithoutPlanNestedInput
 }
 
 export type PlanCreateWithoutMenuPermissionInput = {
-  code?: $Enums.PlanCode
+  code: string
   name: string
   organizations?: Prisma.OrganizationCreateNestedManyWithoutPlanInput
 }
 
 export type PlanUncheckedCreateWithoutMenuPermissionInput = {
   id?: number
-  code?: $Enums.PlanCode
+  code: string
   name: string
   organizations?: Prisma.OrganizationUncheckedCreateNestedManyWithoutPlanInput
 }
@@ -425,14 +421,14 @@ export type PlanUpdateToOneWithWhereWithoutMenuPermissionInput = {
 }
 
 export type PlanUpdateWithoutMenuPermissionInput = {
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   organizations?: Prisma.OrganizationUpdateManyWithoutPlanNestedInput
 }
 
 export type PlanUncheckedUpdateWithoutMenuPermissionInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   organizations?: Prisma.OrganizationUncheckedUpdateManyWithoutPlanNestedInput
 }
@@ -521,7 +517,7 @@ export type $PlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    code: $Enums.PlanCode
+    code: string
     name: string
   }, ExtArgs["result"]["plan"]>
   composites: {}
@@ -949,7 +945,7 @@ export interface Prisma__PlanClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface PlanFieldRefs {
   readonly id: Prisma.FieldRef<"Plan", 'Int'>
-  readonly code: Prisma.FieldRef<"Plan", 'PlanCode'>
+  readonly code: Prisma.FieldRef<"Plan", 'String'>
   readonly name: Prisma.FieldRef<"Plan", 'String'>
 }
     

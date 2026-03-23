@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx src/server.ts",
+    "dev:watch": "nodemon",
+    "dev:watch:tsx": "tsx watch --exclude 'node_modules/**' --exclude 'src/generated/**' src/server.ts"
   },
   "keywords": [],
   "author": "",

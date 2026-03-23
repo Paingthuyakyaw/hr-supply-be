@@ -2,7 +2,6 @@ import {
   PrismaClient,
   MenuCode,
   Action,
-  PlanCode,
   EmployeeType,
   WeekDay,
   OrganizationStatus,
@@ -29,15 +28,15 @@ async function main() {
   // 2️⃣ Create Plans (Including SUPER_ADMIN)
   // ============================
   const superPlan = await prisma.plan.create({
-    data: { name: "Super Admin Plan", code: PlanCode.SUPER_ADMIN },
+    data: { name: "Super Admin Plan", code: "ALL" },
   });
 
   const freePlan = await prisma.plan.create({
-    data: { name: "Free Plan", code: PlanCode.FREE },
+    data: { name: "Free Plan", code: "FREE" },
   });
 
   const proPlan = await prisma.plan.create({
-    data: { name: "Pro Plan", code: PlanCode.PRO },
+    data: { name: "Pro Plan", code: "PRO" },
   });
 
   // ============================

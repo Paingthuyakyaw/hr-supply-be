@@ -584,6 +584,23 @@ const openApiSpec = {
         },
       },
     },
+    "/plan": {
+      get: {
+        summary: "Plan Listing",
+        tags: ["Plan"],
+        responses: {
+          "200": {
+            description: "Plan Fetched",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PlanListResponse"),
+              },
+            },
+          },
+          "500": { description: "Something Wrong" },
+        },
+      },
+    },
   },
   components: {
     securitySchemes: {

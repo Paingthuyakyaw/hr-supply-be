@@ -19,31 +19,11 @@ export const login = async (req: Request, res: Response) => {
 
   const employee = await prisma.employee.findFirst({
     where: { email },
-    include: {
-      organization: {
-        include: {
-          plan: {
-            include: {
-              menuPermission: false,
-            },
-          },
-        },
-      },
-      department: true,
-      positions: true,
-      designations: {
-        include: {
-          designation: {
-            include: {
-              menuPermission: {
-                include: {
-                  menu: true,
-                },
-              },
-            },
-          },
-        },
-      },
+    select: {
+      email: true,
+      password: true,
+      id: true,
+      organizationId: true,
     },
   });
 

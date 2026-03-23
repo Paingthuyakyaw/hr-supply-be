@@ -87,13 +87,3 @@ export const OrganizationStatus = {
 } as const
 
 export type OrganizationStatus = (typeof OrganizationStatus)[keyof typeof OrganizationStatus]
-
-
-export const PlanCode = {
-  FREE: 'FREE',
-  PRO: 'PRO',
-  ENTERPRISE: 'ENTERPRISE',
-  SUPER_ADMIN: 'SUPER_ADMIN'
-} as const
-
-export type PlanCode = (typeof PlanCode)[keyof typeof PlanCode]
