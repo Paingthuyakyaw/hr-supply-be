@@ -41,14 +41,6 @@ export const payloadSchema = checkSchema(
           "Status must be one of PENDING, APPROVED, REJECTED, SUSPENDED",
       },
     },
-    expire_time: {
-      in: ["body"],
-      optional: true,
-      isISO8601: {
-        errorMessage: "expire_time must be a valid ISO date string",
-      },
-      toDate: true,
-    },
     planId: {
       in: ["body"],
       notEmpty: { errorMessage: "planId is required" },

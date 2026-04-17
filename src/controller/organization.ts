@@ -81,25 +81,24 @@ export const editOrganization = async (req: Request, res: Response) => {
 
   try {
     const { id } = req.params;
-    const { name, total_employment, status, expire_time, planId } = req.body;
+    const { name, total_employees, status, expire_time, planId } = req.body;
 
     const data = await prisma.organization.update({
       where: {
         id: Number(id),
       },
-      data: {},
+      data: {
+        name,
+        total_employees: total_employees,
+        status,
+        expire_time,
+        planId,
+      },
     });
 
     return res.status(201).json({
       message: "Organization Edit Successfully",
-      data: {
-        name,
-        total_employment,
-        status,
-        expire_time,
-        planId,
-        id,
-      },
+      data,
     });
   } catch (err) {
     return res.status(500).json({

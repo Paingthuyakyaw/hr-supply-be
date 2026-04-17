@@ -31,9 +31,19 @@ export async function getEmployees(req: Request, res: Response) {
         orderBy: { id: "desc" },
         skip: (page - 1) * size,
         take: size,
-        include: {
-          department: true,
-          positions: true,
+        select: {
+          id: true,
+          full_name: true,
+          avatar: true,
+          code: true,
+          email: true,
+          phoneNumber: true,
+          dob: true,
+          employment_type: true,
+          status: true,
+          location: true,
+          date_joined: true,
+          updated_at: true,
         },
       }),
     ]);
