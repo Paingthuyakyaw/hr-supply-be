@@ -6,13 +6,31 @@ import {
   getDepartments,
   updateDepartment,
 } from "../controller/department";
+import { requirePermission } from "../middleware/permission";
+import { Action, MenuCode } from "../generated/prisma/enums";
 
 const deptRouter = Router();
 
-deptRouter.get("/", getDepartments);
-deptRouter.get("/:id", getDepartmentById);
-deptRouter.post("/", createDepartment);
-deptRouter.put("/:id", updateDepartment);
-deptRouter.delete("/:id", deleteDepartment);
+deptRouter.get("/", requirePermission(MenuCode.DEPARTMENT, Action.VIEW), getDepartments);
+deptRouter.get(
+  "/:id",
+  requirePermission(MenuCode.DEPARTMENT, Action.VIEW),
+  getDepartmentById,
+);
+deptRouter.post(
+  "/",
+  requirePermission(MenuCode.DEPARTMENT, Action.CREATE),
+  createDepartment,
+);
+deptRouter.put(
+  "/:id",
+  requirePermission(MenuCode.DEPARTMENT, Action.UPDATE),
+  updateDepartment,
+);
+deptRouter.delete(
+  "/:id",
+  requirePermission(MenuCode.DEPARTMENT, Action.DELETE),
+  deleteDepartment,
+);
 
 export default deptRouter;
