@@ -44,6 +44,7 @@ export type OrganizationMinAggregateOutputType = {
   total_employees: number | null
   status: $Enums.OrganizationStatus | null
   expire_time: Date | null
+  code: string | null
   planId: number | null
 }
 
@@ -53,6 +54,7 @@ export type OrganizationMaxAggregateOutputType = {
   total_employees: number | null
   status: $Enums.OrganizationStatus | null
   expire_time: Date | null
+  code: string | null
   planId: number | null
 }
 
@@ -62,6 +64,7 @@ export type OrganizationCountAggregateOutputType = {
   total_employees: number
   status: number
   expire_time: number
+  code: number
   planId: number
   _all: number
 }
@@ -85,6 +88,7 @@ export type OrganizationMinAggregateInputType = {
   total_employees?: true
   status?: true
   expire_time?: true
+  code?: true
   planId?: true
 }
 
@@ -94,6 +98,7 @@ export type OrganizationMaxAggregateInputType = {
   total_employees?: true
   status?: true
   expire_time?: true
+  code?: true
   planId?: true
 }
 
@@ -103,6 +108,7 @@ export type OrganizationCountAggregateInputType = {
   total_employees?: true
   status?: true
   expire_time?: true
+  code?: true
   planId?: true
   _all?: true
 }
@@ -199,6 +205,7 @@ export type OrganizationGroupByOutputType = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time: Date | null
+  code: string | null
   planId: number
   _count: OrganizationCountAggregateOutputType | null
   _avg: OrganizationAvgAggregateOutputType | null
@@ -231,6 +238,7 @@ export type OrganizationWhereInput = {
   total_employees?: Prisma.IntFilter<"Organization"> | number
   status?: Prisma.EnumOrganizationStatusFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
+  code?: Prisma.StringNullableFilter<"Organization"> | string | null
   planId?: Prisma.IntFilter<"Organization"> | number
   plan?: Prisma.XOR<Prisma.PlanScalarRelationFilter, Prisma.PlanWhereInput>
   departments?: Prisma.DepartmentListRelationFilter
@@ -245,6 +253,7 @@ export type OrganizationOrderByWithRelationInput = {
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrderInput | Prisma.SortOrder
+  code?: Prisma.SortOrderInput | Prisma.SortOrder
   planId?: Prisma.SortOrder
   plan?: Prisma.PlanOrderByWithRelationInput
   departments?: Prisma.DepartmentOrderByRelationAggregateInput
@@ -255,6 +264,7 @@ export type OrganizationOrderByWithRelationInput = {
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  code?: string
   AND?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
   OR?: Prisma.OrganizationWhereInput[]
   NOT?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
@@ -268,7 +278,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   positions?: Prisma.PositionListRelationFilter
   employees?: Prisma.EmployeeListRelationFilter
   designations?: Prisma.DesignationListRelationFilter
-}, "id">
+}, "id" | "code">
 
 export type OrganizationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -276,6 +286,7 @@ export type OrganizationOrderByWithAggregationInput = {
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrderInput | Prisma.SortOrder
+  code?: Prisma.SortOrderInput | Prisma.SortOrder
   planId?: Prisma.SortOrder
   _count?: Prisma.OrganizationCountOrderByAggregateInput
   _avg?: Prisma.OrganizationAvgOrderByAggregateInput
@@ -293,6 +304,7 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   total_employees?: Prisma.IntWithAggregatesFilter<"Organization"> | number
   status?: Prisma.EnumOrganizationStatusWithAggregatesFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableWithAggregatesFilter<"Organization"> | Date | string | null
+  code?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   planId?: Prisma.IntWithAggregatesFilter<"Organization"> | number
 }
 
@@ -301,6 +313,7 @@ export type OrganizationCreateInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
@@ -314,6 +327,7 @@ export type OrganizationUncheckedCreateInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   planId: number
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
@@ -326,6 +340,7 @@ export type OrganizationUpdateInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
@@ -339,6 +354,7 @@ export type OrganizationUncheckedUpdateInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -352,6 +368,7 @@ export type OrganizationCreateManyInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   planId: number
 }
 
@@ -360,6 +377,7 @@ export type OrganizationUpdateManyMutationInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrganizationUncheckedUpdateManyInput = {
@@ -368,6 +386,7 @@ export type OrganizationUncheckedUpdateManyInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -377,6 +396,7 @@ export type OrganizationCountOrderByAggregateInput = {
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   planId?: Prisma.SortOrder
 }
 
@@ -392,6 +412,7 @@ export type OrganizationMaxOrderByAggregateInput = {
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   planId?: Prisma.SortOrder
 }
 
@@ -401,6 +422,7 @@ export type OrganizationMinOrderByAggregateInput = {
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   planId?: Prisma.SortOrder
 }
 
@@ -443,6 +465,10 @@ export type EnumOrganizationStatusFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type OrganizationCreateNestedManyWithoutPlanInput = {
@@ -548,6 +574,7 @@ export type OrganizationCreateWithoutPlanInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
@@ -560,6 +587,7 @@ export type OrganizationUncheckedCreateWithoutPlanInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
@@ -601,6 +629,7 @@ export type OrganizationScalarWhereInput = {
   total_employees?: Prisma.IntFilter<"Organization"> | number
   status?: Prisma.EnumOrganizationStatusFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
+  code?: Prisma.StringNullableFilter<"Organization"> | string | null
   planId?: Prisma.IntFilter<"Organization"> | number
 }
 
@@ -609,6 +638,7 @@ export type OrganizationCreateWithoutDepartmentsInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
@@ -621,6 +651,7 @@ export type OrganizationUncheckedCreateWithoutDepartmentsInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   planId: number
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
@@ -648,6 +679,7 @@ export type OrganizationUpdateWithoutDepartmentsInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
@@ -660,6 +692,7 @@ export type OrganizationUncheckedUpdateWithoutDepartmentsInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -671,6 +704,7 @@ export type OrganizationCreateWithoutPositionsInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
@@ -683,6 +717,7 @@ export type OrganizationUncheckedCreateWithoutPositionsInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   planId: number
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
@@ -710,6 +745,7 @@ export type OrganizationUpdateWithoutPositionsInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
@@ -722,6 +758,7 @@ export type OrganizationUncheckedUpdateWithoutPositionsInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -733,6 +770,7 @@ export type OrganizationCreateWithoutEmployeesInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
@@ -745,6 +783,7 @@ export type OrganizationUncheckedCreateWithoutEmployeesInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   planId: number
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
@@ -772,6 +811,7 @@ export type OrganizationUpdateWithoutEmployeesInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
@@ -784,6 +824,7 @@ export type OrganizationUncheckedUpdateWithoutEmployeesInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -795,6 +836,7 @@ export type OrganizationCreateWithoutDesignationsInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
@@ -807,6 +849,7 @@ export type OrganizationUncheckedCreateWithoutDesignationsInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
   planId: number
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
@@ -834,6 +877,7 @@ export type OrganizationUpdateWithoutDesignationsInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
@@ -846,6 +890,7 @@ export type OrganizationUncheckedUpdateWithoutDesignationsInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -858,6 +903,7 @@ export type OrganizationCreateManyPlanInput = {
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
+  code?: string | null
 }
 
 export type OrganizationUpdateWithoutPlanInput = {
@@ -865,6 +911,7 @@ export type OrganizationUpdateWithoutPlanInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
@@ -877,6 +924,7 @@ export type OrganizationUncheckedUpdateWithoutPlanInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -889,6 +937,7 @@ export type OrganizationUncheckedUpdateManyWithoutPlanInput = {
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -955,6 +1004,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
+  code?: boolean
   planId?: boolean
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
   departments?: boolean | Prisma.Organization$departmentsArgs<ExtArgs>
@@ -970,6 +1020,7 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
+  code?: boolean
   planId?: boolean
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
@@ -980,6 +1031,7 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
+  code?: boolean
   planId?: boolean
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
@@ -990,10 +1042,11 @@ export type OrganizationSelectScalar = {
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
+  code?: boolean
   planId?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "total_employees" | "status" | "expire_time" | "planId", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "total_employees" | "status" | "expire_time" | "code" | "planId", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
   departments?: boolean | Prisma.Organization$departmentsArgs<ExtArgs>
@@ -1024,6 +1077,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     total_employees: number
     status: $Enums.OrganizationStatus
     expire_time: Date | null
+    code: string | null
     planId: number
   }, ExtArgs["result"]["organization"]>
   composites: {}
@@ -1458,6 +1512,7 @@ export interface OrganizationFieldRefs {
   readonly total_employees: Prisma.FieldRef<"Organization", 'Int'>
   readonly status: Prisma.FieldRef<"Organization", 'OrganizationStatus'>
   readonly expire_time: Prisma.FieldRef<"Organization", 'DateTime'>
+  readonly code: Prisma.FieldRef<"Organization", 'String'>
   readonly planId: Prisma.FieldRef<"Organization", 'Int'>
 }
     

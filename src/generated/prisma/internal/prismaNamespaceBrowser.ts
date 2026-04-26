@@ -63,7 +63,8 @@ export const ModelName = {
   PlanOnMenu: 'PlanOnMenu',
   Designation: 'Designation',
   DesignationOnMenu: 'DesignationOnMenu',
-  DesignationOnEmployee: 'DesignationOnEmployee'
+  DesignationOnEmployee: 'DesignationOnEmployee',
+  CodeCounter: 'CodeCounter'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -88,6 +89,7 @@ export const OrganizationScalarFieldEnum = {
   total_employees: 'total_employees',
   status: 'status',
   expire_time: 'expire_time',
+  code: 'code',
   planId: 'planId'
 } as const
 
@@ -233,6 +235,14 @@ export const DesignationOnEmployeeScalarFieldEnum = {
 } as const
 
 export type DesignationOnEmployeeScalarFieldEnum = (typeof DesignationOnEmployeeScalarFieldEnum)[keyof typeof DesignationOnEmployeeScalarFieldEnum]
+
+
+export const CodeCounterScalarFieldEnum = {
+  key: 'key',
+  value: 'value'
+} as const
+
+export type CodeCounterScalarFieldEnum = (typeof CodeCounterScalarFieldEnum)[keyof typeof CodeCounterScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -86,7 +86,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/employees", authVerify, emRouter);
 app.use("/api/departments", authVerify, deptRouter);
 app.use("/api/positions", authVerify, posRouter);
-app.use("/api/organization", authVerify, orgRouter);
+app.use("/api/organization", orgRouter);
 app.use("/api/plan", planRouter);
 
 app.get("/", (req, res) =>

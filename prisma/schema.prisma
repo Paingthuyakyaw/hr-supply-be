@@ -14,7 +14,7 @@ model Organization {
   total_employees Int
   status          OrganizationStatus
   expire_time     DateTime?
-
+  code String? @unique
   planId Int
   plan   Plan @relation(fields: [planId], references: [id])
 
@@ -207,6 +207,11 @@ model DesignationOnEmployee {
   employee    Employee    @relation(fields: [employeeId], references: [id])
 
   @@id([designationId, employeeId])
+}
+
+model CodeCounter {
+  key String @id
+  value Int
 }
 
 enum MenuCode {

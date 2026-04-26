@@ -104,3 +104,8 @@ export type DesignationOnMenu = Prisma.DesignationOnMenuModel
  * 
  */
 export type DesignationOnEmployee = Prisma.DesignationOnEmployeeModel
+/**
+ * Model CodeCounter
+ * 
+ */
+export type CodeCounter = Prisma.CodeCounterModel

@@ -11,17 +11,21 @@ import { Action, MenuCode } from "../generated/prisma/enums";
 
 const orgRouter = Router();
 
-orgRouter.get("/", requirePermission(MenuCode.ORGANIZATION, Action.VIEW), getAllOrg);
+orgRouter.get(
+  "/",
+  //  requirePermission(MenuCode.ORGANIZATION, Action.VIEW),
+  getAllOrg,
+);
 orgRouter.post(
   "/",
-  requirePermission(MenuCode.ORGANIZATION, Action.CREATE),
+  // requirePermission(MenuCode.ORGANIZATION, Action.CREATE),
   payloadSchema,
   validateRequest,
   createOrg,
 );
 orgRouter.put(
   "/:id",
-  requirePermission(MenuCode.ORGANIZATION, Action.UPDATE),
+  // requirePermission(MenuCode.ORGANIZATION, Action.UPDATE),
   editOrganization,
 );
 

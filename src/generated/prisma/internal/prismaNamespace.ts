@@ -396,7 +396,8 @@ export const ModelName = {
   PlanOnMenu: 'PlanOnMenu',
   Designation: 'Designation',
   DesignationOnMenu: 'DesignationOnMenu',
-  DesignationOnEmployee: 'DesignationOnEmployee'
+  DesignationOnEmployee: 'DesignationOnEmployee',
+  CodeCounter: 'CodeCounter'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee"
+    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee" | "codeCounter"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1378,6 +1379,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CodeCounter: {
+      payload: Prisma.$CodeCounterPayload<ExtArgs>
+      fields: Prisma.CodeCounterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CodeCounterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CodeCounterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>
+        }
+        findFirst: {
+          args: Prisma.CodeCounterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CodeCounterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>
+        }
+        findMany: {
+          args: Prisma.CodeCounterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>[]
+        }
+        create: {
+          args: Prisma.CodeCounterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>
+        }
+        createMany: {
+          args: Prisma.CodeCounterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CodeCounterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>[]
+        }
+        delete: {
+          args: Prisma.CodeCounterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>
+        }
+        update: {
+          args: Prisma.CodeCounterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>
+        }
+        deleteMany: {
+          args: Prisma.CodeCounterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CodeCounterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CodeCounterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>[]
+        }
+        upsert: {
+          args: Prisma.CodeCounterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodeCounterPayload>
+        }
+        aggregate: {
+          args: Prisma.CodeCounterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCodeCounter>
+        }
+        groupBy: {
+          args: Prisma.CodeCounterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CodeCounterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CodeCounterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CodeCounterCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1423,6 +1498,7 @@ export const OrganizationScalarFieldEnum = {
   total_employees: 'total_employees',
   status: 'status',
   expire_time: 'expire_time',
+  code: 'code',
   planId: 'planId'
 } as const
 
@@ -1568,6 +1644,14 @@ export const DesignationOnEmployeeScalarFieldEnum = {
 } as const
 
 export type DesignationOnEmployeeScalarFieldEnum = (typeof DesignationOnEmployeeScalarFieldEnum)[keyof typeof DesignationOnEmployeeScalarFieldEnum]
+
+
+export const CodeCounterScalarFieldEnum = {
+  key: 'key',
+  value: 'value'
+} as const
+
+export type CodeCounterScalarFieldEnum = (typeof CodeCounterScalarFieldEnum)[keyof typeof CodeCounterScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1868,6 +1952,7 @@ export type GlobalOmitConfig = {
   designation?: Prisma.DesignationOmit
   designationOnMenu?: Prisma.DesignationOnMenuOmit
   designationOnEmployee?: Prisma.DesignationOnEmployeeOmit
+  codeCounter?: Prisma.CodeCounterOmit
 }
 
 /* Types for Logging */

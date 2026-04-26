@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
 import type { OrganizationStatus } from "../generated/prisma/enums";
+import { formatCode } from "../utils/format";
 
 export const getAllOrg = async (req: Request, res: Response) => {
   try {
@@ -19,6 +20,20 @@ export const getAllOrg = async (req: Request, res: Response) => {
       prisma.organization.count({ where }),
       prisma.organization.findMany({
         where,
+        select: {
+          id: true,
+          name: true,
+          total_employees: true,
+          status: true,
+          expire_time: true,
+          code: true,
+          plan: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
         orderBy: { id: "desc" },
         skip: (page - 1) * size,
         take: size,
@@ -54,19 +69,28 @@ export const createOrg = async (req: Request, res: Response) => {
           ? Number(v.total_employment)
           : undefined;
 
-    const org = await prisma.organization.create({
-      data: {
-        name: v.name,
-        total_employees: totalEmployees ?? 0,
-        status: v.status,
-        expire_time: v.expire_time ?? undefined,
-        planId: v.planId,
-      },
+    const data = await prisma.$transaction(async (tx) => {
+      const counter = await tx.codeCounter.upsert({
+        where: { key: "Organization" },
+        create: { key: "Organization", value: 1 },
+        update: { value: { increment: 1 } },
+      });
+
+      return await tx.organization.create({
+        data: {
+          name: v.name,
+          code: formatCode("ORG", counter.value),
+          total_employees: totalEmployees ?? 0,
+          status: v.status,
+          expire_time: v.expire_time ?? undefined,
+          planId: v.planId,
+        },
+      });
     });
 
     return res.status(201).json({
       message: "Organization Created",
-      data: org,
+      data,
     });
   } catch (err) {
     return res.status(500).json({
@@ -82,6 +106,11 @@ export const editOrganization = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { name, total_employees, status, expire_time, planId } = req.body;
+
+    const existing = await prisma.organization.findUnique({
+      where: { id: Number(id) },
+      select: { id: true },
+    });
 
     const data = await prisma.organization.update({
       where: {
