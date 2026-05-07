@@ -13,6 +13,7 @@ import authRouter from "./router/auth";
 import orgRouter from "./router/organization";
 import { authVerify } from "./middleware/auth";
 import planRouter from "./router/plan";
+import designationRouter from "./router/designation";
 
 const app = express();
 const configuredOrigins = (process.env.CORS_ORIGINS ?? "")
@@ -88,6 +89,7 @@ app.use("/api/departments", authVerify, deptRouter);
 app.use("/api/positions", authVerify, posRouter);
 app.use("/api/organization", orgRouter);
 app.use("/api/plan", planRouter);
+app.use("/api/designation", designationRouter);
 
 app.get("/", (req, res) =>
   res.json({
