@@ -1,5 +1,8 @@
 import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
+import bcrypt from "bcrypt";
+import { randomBytes } from "node:crypto";
+import { sendEmployeeCreatedOnboardingWebhook } from "../utils/onboardingWebhook";
 
 export async function getEmployees(req: Request, res: Response) {
   try {
@@ -86,12 +89,36 @@ export async function getEmployeeById(req: Request, res: Response) {
 
 export async function createEmployee(req: Request, res: Response) {
   try {
-    const data = req.body;
+    const data = req.body as any;
+
+    const generatedTempPassword = data.password
+      ? null
+      : randomBytes(9).toString("base64url");
+    const rawPassword = data.password ?? generatedTempPassword;
+    const hashedPassword = rawPassword ? await bcrypt.hash(rawPassword, 10) : null;
 
     const item = await prisma.employee.create({
-      data,
+      data: {
+        ...data,
+        password: hashedPassword,
+      },
       include: { department: true, positions: true },
     });
+
+    try {
+      await sendEmployeeCreatedOnboardingWebhook({
+        employeeId: item.id,
+        organizationId: item.organizationId,
+        departmentId: item.department_id,
+        fullName: item.full_name,
+        email: item.email,
+        code: item.code,
+        dateJoined: item.date_joined,
+        tempPassword: generatedTempPassword,
+      });
+    } catch (webhookError) {
+      console.error("Failed to send onboarding webhook", webhookError);
+    }
 
     res.status(201).json({ data: item });
   } catch (err) {

@@ -11,25 +11,29 @@ import { Action, MenuCode } from "../generated/prisma/enums";
 
 const emRouter = Router();
 
-emRouter.get("/", requirePermission(MenuCode.EMPLOYEE, Action.VIEW), getEmployees);
+emRouter.get(
+  "/",
+  // requirePermission(MenuCode.EMPLOYEE, Action.VIEW),
+  getEmployees,
+);
 emRouter.get(
   "/:id",
-  requirePermission(MenuCode.EMPLOYEE, Action.VIEW),
+  // requirePermission(MenuCode.EMPLOYEE, Action.VIEW),
   getEmployeeById,
 );
 emRouter.post(
   "/",
-  requirePermission(MenuCode.EMPLOYEE, Action.CREATE),
+  // requirePermission(MenuCode.EMPLOYEE, Action.CREATE),
   createEmployee,
 );
 emRouter.put(
   "/:id",
-  requirePermission(MenuCode.EMPLOYEE, Action.UPDATE),
+  // requirePermission(MenuCode.EMPLOYEE, Action.UPDATE),
   updateEmployee,
 );
 emRouter.delete(
   "/:id",
-  requirePermission(MenuCode.EMPLOYEE, Action.DELETE),
+  // requirePermission(MenuCode.EMPLOYEE, Action.DELETE),
   deleteEmployee,
 );
 
