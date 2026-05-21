@@ -67,6 +67,56 @@ export const getDesignation = async (req: Request, res: Response) => {
   }
 };
 
+export const getDesignationDetail = async (req: Request, res: Response) => {
+  try {
+    const designationId = Number(req.params.id);
+    if (!Number.isFinite(designationId)) {
+      return res.status(400).json({ message: "Invalid designation id" });
+    }
+
+    const designation = await prisma.designation.findUnique({
+      where: { id: designationId },
+      select: {
+        id: true,
+        name: true,
+        organizationId: true,
+        menuPermission: {
+          select: {
+            actions: true,
+            menu: {
+              select: {
+                menu: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!designation) {
+      return res.status(404).json({ message: "Designation not found" });
+    }
+
+    return res.status(200).json({
+      message: "Designation detail",
+      data: {
+        id: designation.id,
+        name: designation.name,
+        organizationId: designation.organizationId,
+        permissions: designation.menuPermission.map((item) => ({
+          menu: item.menu.menu,
+          actions: item.actions,
+        })),
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Server Error",
+      error: err,
+    });
+  }
+};
+
 export const createDesignation = async (req: Request, res: Response) => {
   try {
     const {

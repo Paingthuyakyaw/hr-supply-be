@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createDesignation,
+  getDesignationDetail,
   getDesignation,
   updateDesignation,
 } from "../controller/designation";
@@ -8,6 +9,7 @@ import {
 const designationRouter = Router();
 
 designationRouter.get(`/`, getDesignation);
+designationRouter.get(`/:id`, getDesignationDetail);
 designationRouter.post(`/`, createDesignation);
 designationRouter.put(`/:id`, updateDesignation);
 
