@@ -76,7 +76,7 @@ describe("designation integration", () => {
     prismaMock.designation.count = async () => 1;
 
     const res = await request(app)
-      .get("/api/designation?page=1&size=10")
+      .get("/api/admin/designation?page=1&size=10")
       .set(authHeader);
 
     assert.equal(res.status, 200);
@@ -88,7 +88,7 @@ describe("designation integration", () => {
   test("GET /api/designation/:id returns 404 when missing", async () => {
     prismaMock.designation.findFirst = async () => null;
 
-    const res = await request(app).get("/api/designation/999").set(authHeader);
+    const res = await request(app).get("/api/admin/designation/999").set(authHeader);
 
     assert.equal(res.status, 404);
     assert.equal(res.body.data, null);
@@ -96,7 +96,7 @@ describe("designation integration", () => {
   });
 
   test("GET /api/designation/:id validates id parameter", async () => {
-    const res = await request(app).get("/api/designation/abc").set(authHeader);
+    const res = await request(app).get("/api/admin/designation/abc").set(authHeader);
 
     assert.equal(res.status, 400);
     assert.equal(res.body.message, "Validation Error");
@@ -106,7 +106,7 @@ describe("designation integration", () => {
   test("POST /api/designation denies without CREATE permission", async () => {
     allowActions([Action.VIEW]);
 
-    const res = await request(app).post("/api/designation").set(authHeader).send({
+    const res = await request(app).post("/api/admin/designation").set(authHeader).send({
       name: "Assistant",
       permissions: [],
       employeeIds: [],
@@ -131,7 +131,7 @@ describe("designation integration", () => {
       ],
     });
 
-    const res = await request(app).post("/api/designation").set(authHeader).send({
+    const res = await request(app).post("/api/admin/designation").set(authHeader).send({
       name: "Assistant",
       permissions: [{ menu: "EMPLOYEE", actions: ["VIEW", "CREATE"] }],
       employeeIds: [11],
@@ -170,7 +170,7 @@ describe("designation integration", () => {
         },
       });
 
-    const res = await request(app).put("/api/designation/1").set(authHeader).send({
+    const res = await request(app).put("/api/admin/designation/1").set(authHeader).send({
       name: "Updated Name",
       permissions: [{ menu: "EMPLOYEE", actions: ["VIEW"] }],
       employeeIds: [12],

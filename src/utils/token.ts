@@ -3,10 +3,21 @@ import jwt from "jsonwebtoken";
 const ACCESS_TOKEN_EXPIRES_IN = "60m";
 const REFRESH_TOKEN_EXPIRES_IN = "7d";
 
-const ACCESS_SECRET =
-  process.env.JWT_ACCESS_SECRET ?? "dev-access-secret-change-me";
-const REFRESH_SECRET =
-  process.env.JWT_REFRESH_SECRET ?? "dev-refresh-secret-change-me";
+const getSecret = (
+  key: "JWT_ACCESS_SECRET" | "JWT_REFRESH_SECRET",
+  testFallback: string,
+) => {
+  const value = process.env[key];
+  if (value && value.trim().length > 0) {
+    return value;
+  }
+
+  if (process.env.NODE_ENV === "test") {
+    return testFallback;
+  }
+
+  throw new Error(`${key} is required`);
+};
 
 export interface AuthTokenPayload {
   sub: number;
@@ -15,21 +26,37 @@ export interface AuthTokenPayload {
 }
 
 export function signAccessToken(payload: AuthTokenPayload) {
-  return jwt.sign(payload, ACCESS_SECRET, {
+  const accessSecret = getSecret(
+    "JWT_ACCESS_SECRET",
+    "test-access-secret-change-me",
+  );
+  return jwt.sign(payload, accessSecret, {
     expiresIn: ACCESS_TOKEN_EXPIRES_IN,
   });
 }
 
 export function signRefreshToken(payload: AuthTokenPayload) {
-  return jwt.sign(payload, REFRESH_SECRET, {
+  const refreshSecret = getSecret(
+    "JWT_REFRESH_SECRET",
+    "test-refresh-secret-change-me",
+  );
+  return jwt.sign(payload, refreshSecret, {
     expiresIn: REFRESH_TOKEN_EXPIRES_IN,
   });
 }
 
 export function verifyAccessToken(token: string): AuthTokenPayload {
-  return jwt.verify(token, ACCESS_SECRET) as any;
+  const accessSecret = getSecret(
+    "JWT_ACCESS_SECRET",
+    "test-access-secret-change-me",
+  );
+  return jwt.verify(token, accessSecret) as any;
 }
 
 export function verifyRefreshToken(token: string): AuthTokenPayload {
-  return jwt.verify(token, REFRESH_SECRET) as any;
+  const refreshSecret = getSecret(
+    "JWT_REFRESH_SECRET",
+    "test-refresh-secret-change-me",
+  );
+  return jwt.verify(token, refreshSecret) as any;
 }

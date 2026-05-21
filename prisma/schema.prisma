@@ -14,14 +14,28 @@ model Organization {
   total_employees Int
   status          OrganizationStatus
   expire_time     DateTime?
-  code String? @unique
-  planId Int
-  plan   Plan @relation(fields: [planId], references: [id])
+  code            String?        @unique
+  planId          Int
+  plan            Plan           @relation(fields: [planId], references: [id])
+  working_days    WeekDay[]      @default([MON, TUE, WED, THU, FRI])
+  off_days        WeekDay[]      @default([SAT, SUN])
 
   departments  Department[]
   positions    Position[]
   employees    Employee[]
   designations Designation[]
+  schedules    OrganizationSchedule[]
+  approvals    ApprovalRequest[]
+  attendancePolicies AttendancePolicy[]
+  attendanceShifts AttendanceShift[]
+  attendanceRecords AttendanceRecord[]
+  leaveTypes LeaveType[]
+  leaveBalances LeaveBalance[]
+  leaveRequests LeaveRequest[]
+  holidays HolidayCalendar[]
+  payrollComponents PayrollComponent[]
+  payrollRuns PayrollRun[]
+  payrollItems PayrollItem[]
 }
 
 model Plan {
@@ -85,6 +99,7 @@ model Employee {
   id        Int    @id @default(autoincrement())
   full_name String
   avatar    String?
+  contracts String[] @default([])
 
   code        String  @unique
   email       String? @unique
@@ -110,13 +125,76 @@ model Employee {
   department Department @relation(fields: [department_id], references: [id])
 
   documents ID_Document[]
+  contractRecords EmployeeContract[]
 
   head_employee Department? @relation("DepartmentHead")
 
   designations DesignationOnEmployee[]
+  requestedApprovals ApprovalRequest[] @relation("ApprovalRequester")
+  approvalSteps ApprovalStep[] @relation("ApprovalAssignee")
+  attendanceRecords AttendanceRecord[]
+  leaveBalances LeaveBalance[]
+  leaveRequests LeaveRequest[] @relation("LeaveRequester")
+  reviewedLeaveRequests LeaveRequest[] @relation("LeaveReviewer")
+  payrollItems PayrollItem[]
+  createdPayrollRuns PayrollRun[] @relation("PayrollRunCreator")
 
   @@index([organizationId])
   @@index([department_id])
+}
+
+model EmployeeContract {
+  id           Int            @id @default(autoincrement())
+  employeeId   Int
+  employee     Employee       @relation(fields: [employeeId], references: [id])
+  fileUrl      String
+  version      Int            @default(1)
+  status       ContractStatus @default(ACTIVE)
+  expiresAt    DateTime?
+  reminderDays Int?
+  notes        String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([employeeId])
+  @@unique([employeeId, version])
+}
+
+model ApprovalRequest {
+  id               Int            @id @default(autoincrement())
+  organizationId   Int
+  organization     Organization   @relation(fields: [organizationId], references: [id])
+  type             ApprovalType
+  status           ApprovalStatus @default(PENDING)
+  requesterId      Int
+  requester        Employee         @relation("ApprovalRequester", fields: [requesterId], references: [id])
+  targetEmployeeId Int?
+  payload          Json?
+  currentStep      Int            @default(1)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  steps            ApprovalStep[]
+
+  @@index([organizationId])
+  @@index([requesterId])
+}
+
+model ApprovalStep {
+  id         Int                @id @default(autoincrement())
+  requestId  Int
+  request    ApprovalRequest    @relation(fields: [requestId], references: [id])
+  stepOrder  Int
+  approverId Int
+  approver   Employee           @relation("ApprovalAssignee", fields: [approverId], references: [id])
+  status     ApprovalStepStatus @default(PENDING)
+  comment    String?
+  actedAt    DateTime?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  @@index([requestId, stepOrder])
+  @@index([approverId])
+  @@unique([requestId, stepOrder])
 }
 
 model EmployeeOnPosition {
@@ -214,6 +292,215 @@ model CodeCounter {
   value Int
 }
 
+model OrganizationSchedule {
+  id             Int      @id @default(autoincrement())
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  weekday        WeekDay
+  isOpen         Boolean  @default(false)
+  startTime      DateTime? @db.Time(6)
+  endTime        DateTime? @db.Time(6)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, weekday])
+  @@index([organizationId])
+}
+
+model AttendancePolicy {
+  id                     Int          @id @default(autoincrement())
+  organizationId         Int
+  organization           Organization @relation(fields: [organizationId], references: [id])
+  defaultStartTime       DateTime     @db.Time(6)
+  defaultEndTime         DateTime     @db.Time(6)
+  lateGraceMinutes       Int          @default(10)
+  earlyLeaveGraceMinutes Int          @default(10)
+  minHalfDayMinutes      Int          @default(240)
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+
+  @@unique([organizationId])
+  @@index([organizationId])
+}
+
+model AttendanceShift {
+  id                     Int          @id @default(autoincrement())
+  organizationId         Int
+  organization           Organization @relation(fields: [organizationId], references: [id])
+  name                   String
+  weekdays               WeekDay[]
+  startTime              DateTime     @db.Time(6)
+  endTime                DateTime     @db.Time(6)
+  lateGraceMinutes       Int          @default(10)
+  earlyLeaveGraceMinutes Int          @default(10)
+  isActive               Boolean      @default(true)
+  isDefault              Boolean      @default(false)
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+  records                AttendanceRecord[]
+
+  @@index([organizationId])
+  @@index([organizationId, isActive])
+  @@unique([organizationId, name])
+}
+
+model AttendanceRecord {
+  id               Int                   @id @default(autoincrement())
+  organizationId   Int
+  organization     Organization          @relation(fields: [organizationId], references: [id])
+  employeeId       Int
+  employee         Employee              @relation(fields: [employeeId], references: [id])
+  shiftId          Int?
+  shift            AttendanceShift?      @relation(fields: [shiftId], references: [id])
+  workDate         DateTime              @db.Date
+  checkInAt        DateTime?
+  checkOutAt       DateTime?
+  lateMinutes      Int                   @default(0)
+  earlyLeaveMinutes Int                  @default(0)
+  workedMinutes    Int                   @default(0)
+  status           AttendanceWorkStatus  @default(PRESENT)
+  recordState      AttendanceRecordState @default(OPEN)
+  notes            String?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+
+  @@index([organizationId, employeeId, workDate])
+  @@index([employeeId, workDate])
+}
+
+model LeaveType {
+  id                Int          @id @default(autoincrement())
+  organizationId    Int
+  organization      Organization @relation(fields: [organizationId], references: [id])
+  code              String
+  name              String
+  annualQuotaDays   Int          @default(0)
+  carryForwardLimit Int          @default(0)
+  requiresApproval  Boolean      @default(true)
+  isActive          Boolean      @default(true)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  balances          LeaveBalance[]
+  requests          LeaveRequest[]
+
+  @@index([organizationId])
+  @@unique([organizationId, code])
+}
+
+model LeaveBalance {
+  id             Int          @id @default(autoincrement())
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  employeeId     Int
+  employee       Employee     @relation(fields: [employeeId], references: [id])
+  leaveTypeId    Int
+  leaveType      LeaveType    @relation(fields: [leaveTypeId], references: [id])
+  year           Int
+  entitledDays   Int          @default(0)
+  carriedDays    Int          @default(0)
+  usedDays       Int          @default(0)
+  remainingDays  Int          @default(0)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId, employeeId])
+  @@index([organizationId, leaveTypeId])
+  @@unique([employeeId, leaveTypeId, year])
+}
+
+model LeaveRequest {
+  id             Int                @id @default(autoincrement())
+  organizationId Int
+  organization   Organization       @relation(fields: [organizationId], references: [id])
+  employeeId     Int
+  employee       Employee           @relation("LeaveRequester", fields: [employeeId], references: [id])
+  leaveTypeId    Int
+  leaveType      LeaveType          @relation(fields: [leaveTypeId], references: [id])
+  startDate      DateTime           @db.Date
+  endDate        DateTime           @db.Date
+  totalDays      Int
+  reason         String?
+  status         LeaveRequestStatus @default(PENDING)
+  reviewedById   Int?
+  reviewedBy     Employee?          @relation("LeaveReviewer", fields: [reviewedById], references: [id])
+  reviewedAt     DateTime?
+  reviewComment  String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([organizationId, employeeId, startDate])
+  @@index([organizationId, status])
+}
+
+model HolidayCalendar {
+  id             Int          @id @default(autoincrement())
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  date           DateTime     @db.Date
+  name           String
+  isOptional     Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId, date])
+  @@unique([organizationId, date, name])
+}
+
+model PayrollComponent {
+  id             Int                  @id @default(autoincrement())
+  organizationId Int
+  organization   Organization         @relation(fields: [organizationId], references: [id])
+  code           String
+  name           String
+  type           PayrollComponentType
+  calculationType PayrollCalculationType @default(FIXED)
+  value          Decimal              @db.Decimal(12, 2)
+  isTaxable      Boolean              @default(false)
+  isActive       Boolean              @default(true)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  items          PayrollItem[]
+
+  @@index([organizationId])
+  @@unique([organizationId, code])
+}
+
+model PayrollRun {
+  id             Int               @id @default(autoincrement())
+  organizationId Int
+  organization   Organization      @relation(fields: [organizationId], references: [id])
+  month          String
+  status         PayrollRunStatus  @default(DRAFT)
+  notes          String?
+  createdById    Int
+  createdBy      Employee          @relation("PayrollRunCreator", fields: [createdById], references: [id])
+  processedAt    DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  items          PayrollItem[]
+
+  @@index([organizationId, month])
+  @@unique([organizationId, month])
+}
+
+model PayrollItem {
+  id             Int          @id @default(autoincrement())
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  payrollRunId   Int
+  payrollRun     PayrollRun   @relation(fields: [payrollRunId], references: [id])
+  employeeId     Int
+  employee       Employee     @relation(fields: [employeeId], references: [id])
+  componentId    Int
+  component      PayrollComponent @relation(fields: [componentId], references: [id])
+  amount         Decimal      @db.Decimal(12, 2)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId, employeeId])
+  @@index([organizationId, payrollRunId])
+}
+
 enum MenuCode {
   DASHBOARD
   EMPLOYEE
@@ -272,6 +559,66 @@ enum OrganizationStatus {
   APPROVED
   REJECTED
   SUSPENDED
+}
+
+enum ContractStatus {
+  ACTIVE
+  EXPIRED
+  TERMINATED
+}
+
+enum ApprovalType {
+  LEAVE
+  OVERTIME
+  PAYROLL_ADJUSTMENT
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum ApprovalStepStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AttendanceRecordState {
+  OPEN
+  CLOSED
+  MISSED_CHECK_OUT
+}
+
+enum AttendanceWorkStatus {
+  PRESENT
+  HALF_DAY
+  ABSENT
+}
+
+enum LeaveRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum PayrollComponentType {
+  EARNING
+  DEDUCTION
+}
+
+enum PayrollCalculationType {
+  FIXED
+  PERCENTAGE
+}
+
+enum PayrollRunStatus {
+  DRAFT
+  FINALIZED
+  EXPORTED
 }
 
 

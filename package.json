@@ -4,16 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsx --test src/**/*.test.ts",
+    "test": "NODE_ENV=test tsx --test src/**/*.test.ts",
     "dev": "tsx src/server.ts",
     "dev:watch": "nodemon",
     "dev:watch:tsx": "tsx watch --exclude 'node_modules/**' --exclude 'src/generated/**' src/server.ts",
+    "db:seed": "tsx prisma/seed.ts",
     "n8n:local": "npx n8n"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1051.0",
+    "@aws-sdk/s3-request-presigner": "^3.1051.0",
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.6.0",
     "bcrypt": "^6.0.0",

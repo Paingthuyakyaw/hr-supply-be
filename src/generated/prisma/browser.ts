@@ -43,6 +43,21 @@ export type Position = Prisma.PositionModel
  */
 export type Employee = Prisma.EmployeeModel
 /**
+ * Model EmployeeContract
+ * 
+ */
+export type EmployeeContract = Prisma.EmployeeContractModel
+/**
+ * Model ApprovalRequest
+ * 
+ */
+export type ApprovalRequest = Prisma.ApprovalRequestModel
+/**
+ * Model ApprovalStep
+ * 
+ */
+export type ApprovalStep = Prisma.ApprovalStepModel
+/**
  * Model EmployeeOnPosition
  * 
  */
@@ -87,3 +102,58 @@ export type DesignationOnEmployee = Prisma.DesignationOnEmployeeModel
  * 
  */
 export type CodeCounter = Prisma.CodeCounterModel
+/**
+ * Model OrganizationSchedule
+ * 
+ */
+export type OrganizationSchedule = Prisma.OrganizationScheduleModel
+/**
+ * Model AttendancePolicy
+ * 
+ */
+export type AttendancePolicy = Prisma.AttendancePolicyModel
+/**
+ * Model AttendanceShift
+ * 
+ */
+export type AttendanceShift = Prisma.AttendanceShiftModel
+/**
+ * Model AttendanceRecord
+ * 
+ */
+export type AttendanceRecord = Prisma.AttendanceRecordModel
+/**
+ * Model LeaveType
+ * 
+ */
+export type LeaveType = Prisma.LeaveTypeModel
+/**
+ * Model LeaveBalance
+ * 
+ */
+export type LeaveBalance = Prisma.LeaveBalanceModel
+/**
+ * Model LeaveRequest
+ * 
+ */
+export type LeaveRequest = Prisma.LeaveRequestModel
+/**
+ * Model HolidayCalendar
+ * 
+ */
+export type HolidayCalendar = Prisma.HolidayCalendarModel
+/**
+ * Model PayrollComponent
+ * 
+ */
+export type PayrollComponent = Prisma.PayrollComponentModel
+/**
+ * Model PayrollRun
+ * 
+ */
+export type PayrollRun = Prisma.PayrollRunModel
+/**
+ * Model PayrollItem
+ * 
+ */
+export type PayrollItem = Prisma.PayrollItemModel

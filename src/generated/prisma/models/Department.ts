@@ -503,14 +503,6 @@ export type DepartmentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type EnumWeekDayNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel> | null
-  has?: $Enums.WeekDay | Prisma.EnumWeekDayFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
 export type DepartmentOrganizationIdNameCompoundUniqueInput = {
   organizationId: number
   name: string

@@ -14,6 +14,12 @@ import orgRouter from "./router/organization";
 import { authVerify } from "./middleware/auth";
 import planRouter from "./router/plan";
 import designationRouter from "./router/designation";
+import uploadRouter from "./router/upload";
+import approvalRouter from "./router/approval";
+import adminAttendanceRouter from "./router/adminAttendance";
+import leaveRouter from "./router/leave";
+import adminLeaveRouter from "./router/adminLeave";
+import adminPayrollRouter from "./router/adminPayroll";
 
 const app = express();
 const configuredOrigins = (process.env.CORS_ORIGINS ?? "")
@@ -84,12 +90,18 @@ app.get("/api/docs", sendSwaggerUi);
 app.get("/api/docs/", sendSwaggerUi);
 
 app.use("/api/auth", authRouter);
-app.use("/api/employees", emRouter);
-app.use("/api/departments", authVerify, deptRouter);
-app.use("/api/positions", authVerify, posRouter);
-app.use("/api/organization", orgRouter);
-app.use("/api/plan", planRouter);
-app.use("/api/designation", authVerify, designationRouter);
+app.use("/api/admin/employees", authVerify, emRouter);
+app.use("/api/admin/departments", authVerify, deptRouter);
+app.use("/api/admin/positions", authVerify, posRouter);
+app.use("/api/admin/organization", authVerify, orgRouter);
+app.use("/api/admin/plan", authVerify, planRouter);
+app.use("/api/admin/designation", authVerify, designationRouter);
+app.use("/api/admin/uploads", authVerify, uploadRouter);
+app.use("/api/attendance", authVerify, approvalRouter);
+app.use("/api/admin/attendance", authVerify, adminAttendanceRouter);
+app.use("/api/leave", authVerify, leaveRouter);
+app.use("/api/admin/leave", authVerify, adminLeaveRouter);
+app.use("/api/admin/payroll", authVerify, adminPayrollRouter);
 
 app.get("/", (req, res) =>
   res.json({

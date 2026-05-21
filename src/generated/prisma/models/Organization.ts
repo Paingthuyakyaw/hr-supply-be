@@ -66,6 +66,8 @@ export type OrganizationCountAggregateOutputType = {
   expire_time: number
   code: number
   planId: number
+  working_days: number
+  off_days: number
   _all: number
 }
 
@@ -110,6 +112,8 @@ export type OrganizationCountAggregateInputType = {
   expire_time?: true
   code?: true
   planId?: true
+  working_days?: true
+  off_days?: true
   _all?: true
 }
 
@@ -207,6 +211,8 @@ export type OrganizationGroupByOutputType = {
   expire_time: Date | null
   code: string | null
   planId: number
+  working_days: $Enums.WeekDay[]
+  off_days: $Enums.WeekDay[]
   _count: OrganizationCountAggregateOutputType | null
   _avg: OrganizationAvgAggregateOutputType | null
   _sum: OrganizationSumAggregateOutputType | null
@@ -240,11 +246,25 @@ export type OrganizationWhereInput = {
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   code?: Prisma.StringNullableFilter<"Organization"> | string | null
   planId?: Prisma.IntFilter<"Organization"> | number
+  working_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
+  off_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
   plan?: Prisma.XOR<Prisma.PlanScalarRelationFilter, Prisma.PlanWhereInput>
   departments?: Prisma.DepartmentListRelationFilter
   positions?: Prisma.PositionListRelationFilter
   employees?: Prisma.EmployeeListRelationFilter
   designations?: Prisma.DesignationListRelationFilter
+  schedules?: Prisma.OrganizationScheduleListRelationFilter
+  approvals?: Prisma.ApprovalRequestListRelationFilter
+  attendancePolicies?: Prisma.AttendancePolicyListRelationFilter
+  attendanceShifts?: Prisma.AttendanceShiftListRelationFilter
+  attendanceRecords?: Prisma.AttendanceRecordListRelationFilter
+  leaveTypes?: Prisma.LeaveTypeListRelationFilter
+  leaveBalances?: Prisma.LeaveBalanceListRelationFilter
+  leaveRequests?: Prisma.LeaveRequestListRelationFilter
+  holidays?: Prisma.HolidayCalendarListRelationFilter
+  payrollComponents?: Prisma.PayrollComponentListRelationFilter
+  payrollRuns?: Prisma.PayrollRunListRelationFilter
+  payrollItems?: Prisma.PayrollItemListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -255,11 +275,25 @@ export type OrganizationOrderByWithRelationInput = {
   expire_time?: Prisma.SortOrderInput | Prisma.SortOrder
   code?: Prisma.SortOrderInput | Prisma.SortOrder
   planId?: Prisma.SortOrder
+  working_days?: Prisma.SortOrder
+  off_days?: Prisma.SortOrder
   plan?: Prisma.PlanOrderByWithRelationInput
   departments?: Prisma.DepartmentOrderByRelationAggregateInput
   positions?: Prisma.PositionOrderByRelationAggregateInput
   employees?: Prisma.EmployeeOrderByRelationAggregateInput
   designations?: Prisma.DesignationOrderByRelationAggregateInput
+  schedules?: Prisma.OrganizationScheduleOrderByRelationAggregateInput
+  approvals?: Prisma.ApprovalRequestOrderByRelationAggregateInput
+  attendancePolicies?: Prisma.AttendancePolicyOrderByRelationAggregateInput
+  attendanceShifts?: Prisma.AttendanceShiftOrderByRelationAggregateInput
+  attendanceRecords?: Prisma.AttendanceRecordOrderByRelationAggregateInput
+  leaveTypes?: Prisma.LeaveTypeOrderByRelationAggregateInput
+  leaveBalances?: Prisma.LeaveBalanceOrderByRelationAggregateInput
+  leaveRequests?: Prisma.LeaveRequestOrderByRelationAggregateInput
+  holidays?: Prisma.HolidayCalendarOrderByRelationAggregateInput
+  payrollComponents?: Prisma.PayrollComponentOrderByRelationAggregateInput
+  payrollRuns?: Prisma.PayrollRunOrderByRelationAggregateInput
+  payrollItems?: Prisma.PayrollItemOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -273,11 +307,25 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumOrganizationStatusFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   planId?: Prisma.IntFilter<"Organization"> | number
+  working_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
+  off_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
   plan?: Prisma.XOR<Prisma.PlanScalarRelationFilter, Prisma.PlanWhereInput>
   departments?: Prisma.DepartmentListRelationFilter
   positions?: Prisma.PositionListRelationFilter
   employees?: Prisma.EmployeeListRelationFilter
   designations?: Prisma.DesignationListRelationFilter
+  schedules?: Prisma.OrganizationScheduleListRelationFilter
+  approvals?: Prisma.ApprovalRequestListRelationFilter
+  attendancePolicies?: Prisma.AttendancePolicyListRelationFilter
+  attendanceShifts?: Prisma.AttendanceShiftListRelationFilter
+  attendanceRecords?: Prisma.AttendanceRecordListRelationFilter
+  leaveTypes?: Prisma.LeaveTypeListRelationFilter
+  leaveBalances?: Prisma.LeaveBalanceListRelationFilter
+  leaveRequests?: Prisma.LeaveRequestListRelationFilter
+  holidays?: Prisma.HolidayCalendarListRelationFilter
+  payrollComponents?: Prisma.PayrollComponentListRelationFilter
+  payrollRuns?: Prisma.PayrollRunListRelationFilter
+  payrollItems?: Prisma.PayrollItemListRelationFilter
 }, "id" | "code">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -288,6 +336,8 @@ export type OrganizationOrderByWithAggregationInput = {
   expire_time?: Prisma.SortOrderInput | Prisma.SortOrder
   code?: Prisma.SortOrderInput | Prisma.SortOrder
   planId?: Prisma.SortOrder
+  working_days?: Prisma.SortOrder
+  off_days?: Prisma.SortOrder
   _count?: Prisma.OrganizationCountOrderByAggregateInput
   _avg?: Prisma.OrganizationAvgOrderByAggregateInput
   _max?: Prisma.OrganizationMaxOrderByAggregateInput
@@ -306,6 +356,8 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   expire_time?: Prisma.DateTimeNullableWithAggregatesFilter<"Organization"> | Date | string | null
   code?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   planId?: Prisma.IntWithAggregatesFilter<"Organization"> | number
+  working_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
+  off_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
 }
 
 export type OrganizationCreateInput = {
@@ -314,11 +366,25 @@ export type OrganizationCreateInput = {
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -329,10 +395,24 @@ export type OrganizationUncheckedCreateInput = {
   expire_time?: Date | string | null
   code?: string | null
   planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -341,11 +421,25 @@ export type OrganizationUpdateInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -356,10 +450,24 @@ export type OrganizationUncheckedUpdateInput = {
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -370,6 +478,8 @@ export type OrganizationCreateManyInput = {
   expire_time?: Date | string | null
   code?: string | null
   planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
 }
 
 export type OrganizationUpdateManyMutationInput = {
@@ -378,6 +488,8 @@ export type OrganizationUpdateManyMutationInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
 }
 
 export type OrganizationUncheckedUpdateManyInput = {
@@ -388,6 +500,16 @@ export type OrganizationUncheckedUpdateManyInput = {
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+}
+
+export type EnumWeekDayNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel> | null
+  has?: $Enums.WeekDay | Prisma.EnumWeekDayFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type OrganizationCountOrderByAggregateInput = {
@@ -398,6 +520,8 @@ export type OrganizationCountOrderByAggregateInput = {
   expire_time?: Prisma.SortOrder
   code?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  working_days?: Prisma.SortOrder
+  off_days?: Prisma.SortOrder
 }
 
 export type OrganizationAvgOrderByAggregateInput = {
@@ -447,6 +571,14 @@ export type OrganizationScalarRelationFilter = {
   isNot?: Prisma.OrganizationWhereInput
 }
 
+export type OrganizationCreateworking_daysInput = {
+  set: $Enums.WeekDay[]
+}
+
+export type OrganizationCreateoff_daysInput = {
+  set: $Enums.WeekDay[]
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -469,6 +601,16 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type OrganizationUpdateworking_daysInput = {
+  set?: $Enums.WeekDay[]
+  push?: $Enums.WeekDay | $Enums.WeekDay[]
+}
+
+export type OrganizationUpdateoff_daysInput = {
+  set?: $Enums.WeekDay[]
+  push?: $Enums.WeekDay | $Enums.WeekDay[]
 }
 
 export type OrganizationCreateNestedManyWithoutPlanInput = {
@@ -555,6 +697,20 @@ export type OrganizationUpdateOneRequiredWithoutEmployeesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutEmployeesInput, Prisma.OrganizationUpdateWithoutEmployeesInput>, Prisma.OrganizationUncheckedUpdateWithoutEmployeesInput>
 }
 
+export type OrganizationCreateNestedOneWithoutApprovalsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutApprovalsInput, Prisma.OrganizationUncheckedCreateWithoutApprovalsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutApprovalsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutApprovalsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutApprovalsInput, Prisma.OrganizationUncheckedCreateWithoutApprovalsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutApprovalsInput
+  upsert?: Prisma.OrganizationUpsertWithoutApprovalsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutApprovalsInput, Prisma.OrganizationUpdateWithoutApprovalsInput>, Prisma.OrganizationUncheckedUpdateWithoutApprovalsInput>
+}
+
 export type OrganizationCreateNestedOneWithoutDesignationsInput = {
   create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDesignationsInput, Prisma.OrganizationUncheckedCreateWithoutDesignationsInput>
   connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDesignationsInput
@@ -569,16 +725,184 @@ export type OrganizationUpdateOneRequiredWithoutDesignationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDesignationsInput, Prisma.OrganizationUpdateWithoutDesignationsInput>, Prisma.OrganizationUncheckedUpdateWithoutDesignationsInput>
 }
 
+export type OrganizationCreateNestedOneWithoutSchedulesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutSchedulesInput, Prisma.OrganizationUncheckedCreateWithoutSchedulesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutSchedulesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutSchedulesInput, Prisma.OrganizationUncheckedCreateWithoutSchedulesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutSchedulesInput
+  upsert?: Prisma.OrganizationUpsertWithoutSchedulesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutSchedulesInput, Prisma.OrganizationUpdateWithoutSchedulesInput>, Prisma.OrganizationUncheckedUpdateWithoutSchedulesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutAttendancePoliciesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendancePoliciesInput, Prisma.OrganizationUncheckedCreateWithoutAttendancePoliciesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAttendancePoliciesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutAttendancePoliciesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendancePoliciesInput, Prisma.OrganizationUncheckedCreateWithoutAttendancePoliciesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAttendancePoliciesInput
+  upsert?: Prisma.OrganizationUpsertWithoutAttendancePoliciesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutAttendancePoliciesInput, Prisma.OrganizationUpdateWithoutAttendancePoliciesInput>, Prisma.OrganizationUncheckedUpdateWithoutAttendancePoliciesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutAttendanceShiftsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceShiftsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceShiftsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAttendanceShiftsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutAttendanceShiftsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceShiftsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceShiftsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAttendanceShiftsInput
+  upsert?: Prisma.OrganizationUpsertWithoutAttendanceShiftsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutAttendanceShiftsInput, Prisma.OrganizationUpdateWithoutAttendanceShiftsInput>, Prisma.OrganizationUncheckedUpdateWithoutAttendanceShiftsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutAttendanceRecordsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceRecordsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceRecordsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAttendanceRecordsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutAttendanceRecordsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceRecordsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceRecordsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAttendanceRecordsInput
+  upsert?: Prisma.OrganizationUpsertWithoutAttendanceRecordsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutAttendanceRecordsInput, Prisma.OrganizationUpdateWithoutAttendanceRecordsInput>, Prisma.OrganizationUncheckedUpdateWithoutAttendanceRecordsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutLeaveTypesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveTypesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveTypesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutLeaveTypesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutLeaveTypesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveTypesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveTypesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutLeaveTypesInput
+  upsert?: Prisma.OrganizationUpsertWithoutLeaveTypesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutLeaveTypesInput, Prisma.OrganizationUpdateWithoutLeaveTypesInput>, Prisma.OrganizationUncheckedUpdateWithoutLeaveTypesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutLeaveBalancesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveBalancesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveBalancesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutLeaveBalancesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutLeaveBalancesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveBalancesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveBalancesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutLeaveBalancesInput
+  upsert?: Prisma.OrganizationUpsertWithoutLeaveBalancesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutLeaveBalancesInput, Prisma.OrganizationUpdateWithoutLeaveBalancesInput>, Prisma.OrganizationUncheckedUpdateWithoutLeaveBalancesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutLeaveRequestsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveRequestsInput, Prisma.OrganizationUncheckedCreateWithoutLeaveRequestsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutLeaveRequestsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutLeaveRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveRequestsInput, Prisma.OrganizationUncheckedCreateWithoutLeaveRequestsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutLeaveRequestsInput
+  upsert?: Prisma.OrganizationUpsertWithoutLeaveRequestsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutLeaveRequestsInput, Prisma.OrganizationUpdateWithoutLeaveRequestsInput>, Prisma.OrganizationUncheckedUpdateWithoutLeaveRequestsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutHolidaysInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutHolidaysInput, Prisma.OrganizationUncheckedCreateWithoutHolidaysInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutHolidaysInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutHolidaysNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutHolidaysInput, Prisma.OrganizationUncheckedCreateWithoutHolidaysInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutHolidaysInput
+  upsert?: Prisma.OrganizationUpsertWithoutHolidaysInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutHolidaysInput, Prisma.OrganizationUpdateWithoutHolidaysInput>, Prisma.OrganizationUncheckedUpdateWithoutHolidaysInput>
+}
+
+export type OrganizationCreateNestedOneWithoutPayrollComponentsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollComponentsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollComponentsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPayrollComponentsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutPayrollComponentsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollComponentsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollComponentsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPayrollComponentsInput
+  upsert?: Prisma.OrganizationUpsertWithoutPayrollComponentsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPayrollComponentsInput, Prisma.OrganizationUpdateWithoutPayrollComponentsInput>, Prisma.OrganizationUncheckedUpdateWithoutPayrollComponentsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutPayrollRunsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollRunsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollRunsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPayrollRunsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutPayrollRunsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollRunsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollRunsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPayrollRunsInput
+  upsert?: Prisma.OrganizationUpsertWithoutPayrollRunsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPayrollRunsInput, Prisma.OrganizationUpdateWithoutPayrollRunsInput>, Prisma.OrganizationUncheckedUpdateWithoutPayrollRunsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutPayrollItemsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollItemsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollItemsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPayrollItemsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutPayrollItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollItemsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollItemsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPayrollItemsInput
+  upsert?: Prisma.OrganizationUpsertWithoutPayrollItemsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPayrollItemsInput, Prisma.OrganizationUpdateWithoutPayrollItemsInput>, Prisma.OrganizationUncheckedUpdateWithoutPayrollItemsInput>
+}
+
 export type OrganizationCreateWithoutPlanInput = {
   name: string
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPlanInput = {
@@ -588,10 +912,24 @@ export type OrganizationUncheckedCreateWithoutPlanInput = {
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPlanInput = {
@@ -631,6 +969,8 @@ export type OrganizationScalarWhereInput = {
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   code?: Prisma.StringNullableFilter<"Organization"> | string | null
   planId?: Prisma.IntFilter<"Organization"> | number
+  working_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
+  off_days?: Prisma.EnumWeekDayNullableListFilter<"Organization">
 }
 
 export type OrganizationCreateWithoutDepartmentsInput = {
@@ -639,10 +979,24 @@ export type OrganizationCreateWithoutDepartmentsInput = {
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutDepartmentsInput = {
@@ -653,9 +1007,23 @@ export type OrganizationUncheckedCreateWithoutDepartmentsInput = {
   expire_time?: Date | string | null
   code?: string | null
   planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutDepartmentsInput = {
@@ -680,10 +1048,24 @@ export type OrganizationUpdateWithoutDepartmentsInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutDepartmentsInput = {
@@ -694,9 +1076,23 @@ export type OrganizationUncheckedUpdateWithoutDepartmentsInput = {
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPositionsInput = {
@@ -705,10 +1101,24 @@ export type OrganizationCreateWithoutPositionsInput = {
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPositionsInput = {
@@ -719,9 +1129,23 @@ export type OrganizationUncheckedCreateWithoutPositionsInput = {
   expire_time?: Date | string | null
   code?: string | null
   planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPositionsInput = {
@@ -746,10 +1170,24 @@ export type OrganizationUpdateWithoutPositionsInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPositionsInput = {
@@ -760,9 +1198,23 @@ export type OrganizationUncheckedUpdateWithoutPositionsInput = {
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutEmployeesInput = {
@@ -771,10 +1223,24 @@ export type OrganizationCreateWithoutEmployeesInput = {
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutEmployeesInput = {
@@ -785,9 +1251,23 @@ export type OrganizationUncheckedCreateWithoutEmployeesInput = {
   expire_time?: Date | string | null
   code?: string | null
   planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
   designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutEmployeesInput = {
@@ -812,10 +1292,24 @@ export type OrganizationUpdateWithoutEmployeesInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutEmployeesInput = {
@@ -826,9 +1320,145 @@ export type OrganizationUncheckedUpdateWithoutEmployeesInput = {
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutApprovalsInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutApprovalsInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutApprovalsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutApprovalsInput, Prisma.OrganizationUncheckedCreateWithoutApprovalsInput>
+}
+
+export type OrganizationUpsertWithoutApprovalsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutApprovalsInput, Prisma.OrganizationUncheckedUpdateWithoutApprovalsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutApprovalsInput, Prisma.OrganizationUncheckedCreateWithoutApprovalsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutApprovalsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutApprovalsInput, Prisma.OrganizationUncheckedUpdateWithoutApprovalsInput>
+}
+
+export type OrganizationUpdateWithoutApprovalsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutApprovalsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutDesignationsInput = {
@@ -837,10 +1467,24 @@ export type OrganizationCreateWithoutDesignationsInput = {
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
   departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutDesignationsInput = {
@@ -851,9 +1495,23 @@ export type OrganizationUncheckedCreateWithoutDesignationsInput = {
   expire_time?: Date | string | null
   code?: string | null
   planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
   positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
   employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutDesignationsInput = {
@@ -878,10 +1536,24 @@ export type OrganizationUpdateWithoutDesignationsInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutDesignationsInput = {
@@ -892,9 +1564,1365 @@ export type OrganizationUncheckedUpdateWithoutDesignationsInput = {
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutSchedulesInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutSchedulesInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutSchedulesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutSchedulesInput, Prisma.OrganizationUncheckedCreateWithoutSchedulesInput>
+}
+
+export type OrganizationUpsertWithoutSchedulesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutSchedulesInput, Prisma.OrganizationUncheckedUpdateWithoutSchedulesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutSchedulesInput, Prisma.OrganizationUncheckedCreateWithoutSchedulesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutSchedulesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutSchedulesInput, Prisma.OrganizationUncheckedUpdateWithoutSchedulesInput>
+}
+
+export type OrganizationUpdateWithoutSchedulesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutSchedulesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutAttendancePoliciesInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutAttendancePoliciesInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutAttendancePoliciesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendancePoliciesInput, Prisma.OrganizationUncheckedCreateWithoutAttendancePoliciesInput>
+}
+
+export type OrganizationUpsertWithoutAttendancePoliciesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutAttendancePoliciesInput, Prisma.OrganizationUncheckedUpdateWithoutAttendancePoliciesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendancePoliciesInput, Prisma.OrganizationUncheckedCreateWithoutAttendancePoliciesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutAttendancePoliciesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutAttendancePoliciesInput, Prisma.OrganizationUncheckedUpdateWithoutAttendancePoliciesInput>
+}
+
+export type OrganizationUpdateWithoutAttendancePoliciesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutAttendancePoliciesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutAttendanceShiftsInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutAttendanceShiftsInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutAttendanceShiftsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceShiftsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceShiftsInput>
+}
+
+export type OrganizationUpsertWithoutAttendanceShiftsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutAttendanceShiftsInput, Prisma.OrganizationUncheckedUpdateWithoutAttendanceShiftsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceShiftsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceShiftsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutAttendanceShiftsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutAttendanceShiftsInput, Prisma.OrganizationUncheckedUpdateWithoutAttendanceShiftsInput>
+}
+
+export type OrganizationUpdateWithoutAttendanceShiftsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutAttendanceShiftsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutAttendanceRecordsInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutAttendanceRecordsInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutAttendanceRecordsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceRecordsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceRecordsInput>
+}
+
+export type OrganizationUpsertWithoutAttendanceRecordsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutAttendanceRecordsInput, Prisma.OrganizationUncheckedUpdateWithoutAttendanceRecordsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAttendanceRecordsInput, Prisma.OrganizationUncheckedCreateWithoutAttendanceRecordsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutAttendanceRecordsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutAttendanceRecordsInput, Prisma.OrganizationUncheckedUpdateWithoutAttendanceRecordsInput>
+}
+
+export type OrganizationUpdateWithoutAttendanceRecordsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutAttendanceRecordsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutLeaveTypesInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutLeaveTypesInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutLeaveTypesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveTypesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveTypesInput>
+}
+
+export type OrganizationUpsertWithoutLeaveTypesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutLeaveTypesInput, Prisma.OrganizationUncheckedUpdateWithoutLeaveTypesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveTypesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveTypesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutLeaveTypesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutLeaveTypesInput, Prisma.OrganizationUncheckedUpdateWithoutLeaveTypesInput>
+}
+
+export type OrganizationUpdateWithoutLeaveTypesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutLeaveTypesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutLeaveBalancesInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutLeaveBalancesInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutLeaveBalancesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveBalancesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveBalancesInput>
+}
+
+export type OrganizationUpsertWithoutLeaveBalancesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutLeaveBalancesInput, Prisma.OrganizationUncheckedUpdateWithoutLeaveBalancesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveBalancesInput, Prisma.OrganizationUncheckedCreateWithoutLeaveBalancesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutLeaveBalancesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutLeaveBalancesInput, Prisma.OrganizationUncheckedUpdateWithoutLeaveBalancesInput>
+}
+
+export type OrganizationUpdateWithoutLeaveBalancesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutLeaveBalancesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutLeaveRequestsInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutLeaveRequestsInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutLeaveRequestsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveRequestsInput, Prisma.OrganizationUncheckedCreateWithoutLeaveRequestsInput>
+}
+
+export type OrganizationUpsertWithoutLeaveRequestsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutLeaveRequestsInput, Prisma.OrganizationUncheckedUpdateWithoutLeaveRequestsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutLeaveRequestsInput, Prisma.OrganizationUncheckedCreateWithoutLeaveRequestsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutLeaveRequestsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutLeaveRequestsInput, Prisma.OrganizationUncheckedUpdateWithoutLeaveRequestsInput>
+}
+
+export type OrganizationUpdateWithoutLeaveRequestsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutLeaveRequestsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutHolidaysInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutHolidaysInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutHolidaysInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutHolidaysInput, Prisma.OrganizationUncheckedCreateWithoutHolidaysInput>
+}
+
+export type OrganizationUpsertWithoutHolidaysInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutHolidaysInput, Prisma.OrganizationUncheckedUpdateWithoutHolidaysInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutHolidaysInput, Prisma.OrganizationUncheckedCreateWithoutHolidaysInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutHolidaysInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutHolidaysInput, Prisma.OrganizationUncheckedUpdateWithoutHolidaysInput>
+}
+
+export type OrganizationUpdateWithoutHolidaysInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutHolidaysInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutPayrollComponentsInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutPayrollComponentsInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutPayrollComponentsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollComponentsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollComponentsInput>
+}
+
+export type OrganizationUpsertWithoutPayrollComponentsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutPayrollComponentsInput, Prisma.OrganizationUncheckedUpdateWithoutPayrollComponentsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollComponentsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollComponentsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutPayrollComponentsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutPayrollComponentsInput, Prisma.OrganizationUncheckedUpdateWithoutPayrollComponentsInput>
+}
+
+export type OrganizationUpdateWithoutPayrollComponentsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutPayrollComponentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutPayrollRunsInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutPayrollRunsInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutPayrollRunsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollRunsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollRunsInput>
+}
+
+export type OrganizationUpsertWithoutPayrollRunsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutPayrollRunsInput, Prisma.OrganizationUncheckedUpdateWithoutPayrollRunsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollRunsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollRunsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutPayrollRunsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutPayrollRunsInput, Prisma.OrganizationUncheckedUpdateWithoutPayrollRunsInput>
+}
+
+export type OrganizationUpdateWithoutPayrollRunsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutPayrollRunsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutPayrollItemsInput = {
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutPayrollItemsInput = {
+  id?: number
+  name: string
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutPayrollItemsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollItemsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollItemsInput>
+}
+
+export type OrganizationUpsertWithoutPayrollItemsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutPayrollItemsInput, Prisma.OrganizationUncheckedUpdateWithoutPayrollItemsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPayrollItemsInput, Prisma.OrganizationUncheckedCreateWithoutPayrollItemsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutPayrollItemsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutPayrollItemsInput, Prisma.OrganizationUncheckedUpdateWithoutPayrollItemsInput>
+}
+
+export type OrganizationUpdateWithoutPayrollItemsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutPayrollItemsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyPlanInput = {
@@ -904,6 +2932,8 @@ export type OrganizationCreateManyPlanInput = {
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
   code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
 }
 
 export type OrganizationUpdateWithoutPlanInput = {
@@ -912,10 +2942,24 @@ export type OrganizationUpdateWithoutPlanInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPlanInput = {
@@ -925,10 +2969,24 @@ export type OrganizationUncheckedUpdateWithoutPlanInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
   departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
   positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
   employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
   designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateManyWithoutPlanInput = {
@@ -938,6 +2996,8 @@ export type OrganizationUncheckedUpdateManyWithoutPlanInput = {
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
 }
 
 
@@ -950,6 +3010,18 @@ export type OrganizationCountOutputType = {
   positions: number
   employees: number
   designations: number
+  schedules: number
+  approvals: number
+  attendancePolicies: number
+  attendanceShifts: number
+  attendanceRecords: number
+  leaveTypes: number
+  leaveBalances: number
+  leaveRequests: number
+  holidays: number
+  payrollComponents: number
+  payrollRuns: number
+  payrollItems: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -957,6 +3029,18 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   positions?: boolean | OrganizationCountOutputTypeCountPositionsArgs
   employees?: boolean | OrganizationCountOutputTypeCountEmployeesArgs
   designations?: boolean | OrganizationCountOutputTypeCountDesignationsArgs
+  schedules?: boolean | OrganizationCountOutputTypeCountSchedulesArgs
+  approvals?: boolean | OrganizationCountOutputTypeCountApprovalsArgs
+  attendancePolicies?: boolean | OrganizationCountOutputTypeCountAttendancePoliciesArgs
+  attendanceShifts?: boolean | OrganizationCountOutputTypeCountAttendanceShiftsArgs
+  attendanceRecords?: boolean | OrganizationCountOutputTypeCountAttendanceRecordsArgs
+  leaveTypes?: boolean | OrganizationCountOutputTypeCountLeaveTypesArgs
+  leaveBalances?: boolean | OrganizationCountOutputTypeCountLeaveBalancesArgs
+  leaveRequests?: boolean | OrganizationCountOutputTypeCountLeaveRequestsArgs
+  holidays?: boolean | OrganizationCountOutputTypeCountHolidaysArgs
+  payrollComponents?: boolean | OrganizationCountOutputTypeCountPayrollComponentsArgs
+  payrollRuns?: boolean | OrganizationCountOutputTypeCountPayrollRunsArgs
+  payrollItems?: boolean | OrganizationCountOutputTypeCountPayrollItemsArgs
 }
 
 /**
@@ -997,6 +3081,90 @@ export type OrganizationCountOutputTypeCountDesignationsArgs<ExtArgs extends run
   where?: Prisma.DesignationWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationScheduleWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountApprovalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ApprovalRequestWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountAttendancePoliciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendancePolicyWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountAttendanceShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendanceShiftWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountAttendanceRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendanceRecordWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountLeaveTypesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeaveTypeWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountLeaveBalancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeaveBalanceWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountLeaveRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeaveRequestWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountHolidaysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HolidayCalendarWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountPayrollComponentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PayrollComponentWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountPayrollRunsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PayrollRunWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountPayrollItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PayrollItemWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1006,11 +3174,25 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   expire_time?: boolean
   code?: boolean
   planId?: boolean
+  working_days?: boolean
+  off_days?: boolean
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
   departments?: boolean | Prisma.Organization$departmentsArgs<ExtArgs>
   positions?: boolean | Prisma.Organization$positionsArgs<ExtArgs>
   employees?: boolean | Prisma.Organization$employeesArgs<ExtArgs>
   designations?: boolean | Prisma.Organization$designationsArgs<ExtArgs>
+  schedules?: boolean | Prisma.Organization$schedulesArgs<ExtArgs>
+  approvals?: boolean | Prisma.Organization$approvalsArgs<ExtArgs>
+  attendancePolicies?: boolean | Prisma.Organization$attendancePoliciesArgs<ExtArgs>
+  attendanceShifts?: boolean | Prisma.Organization$attendanceShiftsArgs<ExtArgs>
+  attendanceRecords?: boolean | Prisma.Organization$attendanceRecordsArgs<ExtArgs>
+  leaveTypes?: boolean | Prisma.Organization$leaveTypesArgs<ExtArgs>
+  leaveBalances?: boolean | Prisma.Organization$leaveBalancesArgs<ExtArgs>
+  leaveRequests?: boolean | Prisma.Organization$leaveRequestsArgs<ExtArgs>
+  holidays?: boolean | Prisma.Organization$holidaysArgs<ExtArgs>
+  payrollComponents?: boolean | Prisma.Organization$payrollComponentsArgs<ExtArgs>
+  payrollRuns?: boolean | Prisma.Organization$payrollRunsArgs<ExtArgs>
+  payrollItems?: boolean | Prisma.Organization$payrollItemsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -1022,6 +3204,8 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   expire_time?: boolean
   code?: boolean
   planId?: boolean
+  working_days?: boolean
+  off_days?: boolean
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -1033,6 +3217,8 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   expire_time?: boolean
   code?: boolean
   planId?: boolean
+  working_days?: boolean
+  off_days?: boolean
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -1044,15 +3230,29 @@ export type OrganizationSelectScalar = {
   expire_time?: boolean
   code?: boolean
   planId?: boolean
+  working_days?: boolean
+  off_days?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "total_employees" | "status" | "expire_time" | "code" | "planId", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "total_employees" | "status" | "expire_time" | "code" | "planId" | "working_days" | "off_days", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
   departments?: boolean | Prisma.Organization$departmentsArgs<ExtArgs>
   positions?: boolean | Prisma.Organization$positionsArgs<ExtArgs>
   employees?: boolean | Prisma.Organization$employeesArgs<ExtArgs>
   designations?: boolean | Prisma.Organization$designationsArgs<ExtArgs>
+  schedules?: boolean | Prisma.Organization$schedulesArgs<ExtArgs>
+  approvals?: boolean | Prisma.Organization$approvalsArgs<ExtArgs>
+  attendancePolicies?: boolean | Prisma.Organization$attendancePoliciesArgs<ExtArgs>
+  attendanceShifts?: boolean | Prisma.Organization$attendanceShiftsArgs<ExtArgs>
+  attendanceRecords?: boolean | Prisma.Organization$attendanceRecordsArgs<ExtArgs>
+  leaveTypes?: boolean | Prisma.Organization$leaveTypesArgs<ExtArgs>
+  leaveBalances?: boolean | Prisma.Organization$leaveBalancesArgs<ExtArgs>
+  leaveRequests?: boolean | Prisma.Organization$leaveRequestsArgs<ExtArgs>
+  holidays?: boolean | Prisma.Organization$holidaysArgs<ExtArgs>
+  payrollComponents?: boolean | Prisma.Organization$payrollComponentsArgs<ExtArgs>
+  payrollRuns?: boolean | Prisma.Organization$payrollRunsArgs<ExtArgs>
+  payrollItems?: boolean | Prisma.Organization$payrollItemsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1070,6 +3270,18 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     positions: Prisma.$PositionPayload<ExtArgs>[]
     employees: Prisma.$EmployeePayload<ExtArgs>[]
     designations: Prisma.$DesignationPayload<ExtArgs>[]
+    schedules: Prisma.$OrganizationSchedulePayload<ExtArgs>[]
+    approvals: Prisma.$ApprovalRequestPayload<ExtArgs>[]
+    attendancePolicies: Prisma.$AttendancePolicyPayload<ExtArgs>[]
+    attendanceShifts: Prisma.$AttendanceShiftPayload<ExtArgs>[]
+    attendanceRecords: Prisma.$AttendanceRecordPayload<ExtArgs>[]
+    leaveTypes: Prisma.$LeaveTypePayload<ExtArgs>[]
+    leaveBalances: Prisma.$LeaveBalancePayload<ExtArgs>[]
+    leaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
+    holidays: Prisma.$HolidayCalendarPayload<ExtArgs>[]
+    payrollComponents: Prisma.$PayrollComponentPayload<ExtArgs>[]
+    payrollRuns: Prisma.$PayrollRunPayload<ExtArgs>[]
+    payrollItems: Prisma.$PayrollItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1079,6 +3291,8 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     expire_time: Date | null
     code: string | null
     planId: number
+    working_days: $Enums.WeekDay[]
+    off_days: $Enums.WeekDay[]
   }, ExtArgs["result"]["organization"]>
   composites: {}
 }
@@ -1478,6 +3692,18 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   positions<T extends Prisma.Organization$positionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$positionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PositionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   employees<T extends Prisma.Organization$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   designations<T extends Prisma.Organization$designationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$designationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DesignationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  schedules<T extends Prisma.Organization$schedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$schedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  approvals<T extends Prisma.Organization$approvalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$approvalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApprovalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendancePolicies<T extends Prisma.Organization$attendancePoliciesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$attendancePoliciesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePolicyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendanceShifts<T extends Prisma.Organization$attendanceShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$attendanceShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendanceShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendanceRecords<T extends Prisma.Organization$attendanceRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$attendanceRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leaveTypes<T extends Prisma.Organization$leaveTypesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$leaveTypesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leaveBalances<T extends Prisma.Organization$leaveBalancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$leaveBalancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveBalancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leaveRequests<T extends Prisma.Organization$leaveRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$leaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  holidays<T extends Prisma.Organization$holidaysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$holidaysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HolidayCalendarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payrollComponents<T extends Prisma.Organization$payrollComponentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$payrollComponentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollComponentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payrollRuns<T extends Prisma.Organization$payrollRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$payrollRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payrollItems<T extends Prisma.Organization$payrollItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$payrollItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1514,6 +3740,8 @@ export interface OrganizationFieldRefs {
   readonly expire_time: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly code: Prisma.FieldRef<"Organization", 'String'>
   readonly planId: Prisma.FieldRef<"Organization", 'Int'>
+  readonly working_days: Prisma.FieldRef<"Organization", 'WeekDay[]'>
+  readonly off_days: Prisma.FieldRef<"Organization", 'WeekDay[]'>
 }
     
 
@@ -2008,6 +4236,294 @@ export type Organization$designationsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.DesignationScalarFieldEnum | Prisma.DesignationScalarFieldEnum[]
+}
+
+/**
+ * Organization.schedules
+ */
+export type Organization$schedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationSchedule
+   */
+  select?: Prisma.OrganizationScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationSchedule
+   */
+  omit?: Prisma.OrganizationScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationScheduleInclude<ExtArgs> | null
+  where?: Prisma.OrganizationScheduleWhereInput
+  orderBy?: Prisma.OrganizationScheduleOrderByWithRelationInput | Prisma.OrganizationScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationScheduleScalarFieldEnum | Prisma.OrganizationScheduleScalarFieldEnum[]
+}
+
+/**
+ * Organization.approvals
+ */
+export type Organization$approvalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ApprovalRequest
+   */
+  select?: Prisma.ApprovalRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ApprovalRequest
+   */
+  omit?: Prisma.ApprovalRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApprovalRequestInclude<ExtArgs> | null
+  where?: Prisma.ApprovalRequestWhereInput
+  orderBy?: Prisma.ApprovalRequestOrderByWithRelationInput | Prisma.ApprovalRequestOrderByWithRelationInput[]
+  cursor?: Prisma.ApprovalRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ApprovalRequestScalarFieldEnum | Prisma.ApprovalRequestScalarFieldEnum[]
+}
+
+/**
+ * Organization.attendancePolicies
+ */
+export type Organization$attendancePoliciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AttendancePolicy
+   */
+  select?: Prisma.AttendancePolicySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AttendancePolicy
+   */
+  omit?: Prisma.AttendancePolicyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendancePolicyInclude<ExtArgs> | null
+  where?: Prisma.AttendancePolicyWhereInput
+  orderBy?: Prisma.AttendancePolicyOrderByWithRelationInput | Prisma.AttendancePolicyOrderByWithRelationInput[]
+  cursor?: Prisma.AttendancePolicyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendancePolicyScalarFieldEnum | Prisma.AttendancePolicyScalarFieldEnum[]
+}
+
+/**
+ * Organization.attendanceShifts
+ */
+export type Organization$attendanceShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AttendanceShift
+   */
+  select?: Prisma.AttendanceShiftSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AttendanceShift
+   */
+  omit?: Prisma.AttendanceShiftOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceShiftInclude<ExtArgs> | null
+  where?: Prisma.AttendanceShiftWhereInput
+  orderBy?: Prisma.AttendanceShiftOrderByWithRelationInput | Prisma.AttendanceShiftOrderByWithRelationInput[]
+  cursor?: Prisma.AttendanceShiftWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendanceShiftScalarFieldEnum | Prisma.AttendanceShiftScalarFieldEnum[]
+}
+
+/**
+ * Organization.attendanceRecords
+ */
+export type Organization$attendanceRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AttendanceRecord
+   */
+  select?: Prisma.AttendanceRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AttendanceRecord
+   */
+  omit?: Prisma.AttendanceRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceRecordInclude<ExtArgs> | null
+  where?: Prisma.AttendanceRecordWhereInput
+  orderBy?: Prisma.AttendanceRecordOrderByWithRelationInput | Prisma.AttendanceRecordOrderByWithRelationInput[]
+  cursor?: Prisma.AttendanceRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendanceRecordScalarFieldEnum | Prisma.AttendanceRecordScalarFieldEnum[]
+}
+
+/**
+ * Organization.leaveTypes
+ */
+export type Organization$leaveTypesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeaveType
+   */
+  select?: Prisma.LeaveTypeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeaveType
+   */
+  omit?: Prisma.LeaveTypeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeaveTypeInclude<ExtArgs> | null
+  where?: Prisma.LeaveTypeWhereInput
+  orderBy?: Prisma.LeaveTypeOrderByWithRelationInput | Prisma.LeaveTypeOrderByWithRelationInput[]
+  cursor?: Prisma.LeaveTypeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeaveTypeScalarFieldEnum | Prisma.LeaveTypeScalarFieldEnum[]
+}
+
+/**
+ * Organization.leaveBalances
+ */
+export type Organization$leaveBalancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeaveBalance
+   */
+  select?: Prisma.LeaveBalanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeaveBalance
+   */
+  omit?: Prisma.LeaveBalanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeaveBalanceInclude<ExtArgs> | null
+  where?: Prisma.LeaveBalanceWhereInput
+  orderBy?: Prisma.LeaveBalanceOrderByWithRelationInput | Prisma.LeaveBalanceOrderByWithRelationInput[]
+  cursor?: Prisma.LeaveBalanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeaveBalanceScalarFieldEnum | Prisma.LeaveBalanceScalarFieldEnum[]
+}
+
+/**
+ * Organization.leaveRequests
+ */
+export type Organization$leaveRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeaveRequest
+   */
+  select?: Prisma.LeaveRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeaveRequest
+   */
+  omit?: Prisma.LeaveRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeaveRequestInclude<ExtArgs> | null
+  where?: Prisma.LeaveRequestWhereInput
+  orderBy?: Prisma.LeaveRequestOrderByWithRelationInput | Prisma.LeaveRequestOrderByWithRelationInput[]
+  cursor?: Prisma.LeaveRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeaveRequestScalarFieldEnum | Prisma.LeaveRequestScalarFieldEnum[]
+}
+
+/**
+ * Organization.holidays
+ */
+export type Organization$holidaysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HolidayCalendar
+   */
+  select?: Prisma.HolidayCalendarSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HolidayCalendar
+   */
+  omit?: Prisma.HolidayCalendarOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HolidayCalendarInclude<ExtArgs> | null
+  where?: Prisma.HolidayCalendarWhereInput
+  orderBy?: Prisma.HolidayCalendarOrderByWithRelationInput | Prisma.HolidayCalendarOrderByWithRelationInput[]
+  cursor?: Prisma.HolidayCalendarWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HolidayCalendarScalarFieldEnum | Prisma.HolidayCalendarScalarFieldEnum[]
+}
+
+/**
+ * Organization.payrollComponents
+ */
+export type Organization$payrollComponentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayrollComponent
+   */
+  select?: Prisma.PayrollComponentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayrollComponent
+   */
+  omit?: Prisma.PayrollComponentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayrollComponentInclude<ExtArgs> | null
+  where?: Prisma.PayrollComponentWhereInput
+  orderBy?: Prisma.PayrollComponentOrderByWithRelationInput | Prisma.PayrollComponentOrderByWithRelationInput[]
+  cursor?: Prisma.PayrollComponentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PayrollComponentScalarFieldEnum | Prisma.PayrollComponentScalarFieldEnum[]
+}
+
+/**
+ * Organization.payrollRuns
+ */
+export type Organization$payrollRunsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayrollRun
+   */
+  select?: Prisma.PayrollRunSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayrollRun
+   */
+  omit?: Prisma.PayrollRunOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayrollRunInclude<ExtArgs> | null
+  where?: Prisma.PayrollRunWhereInput
+  orderBy?: Prisma.PayrollRunOrderByWithRelationInput | Prisma.PayrollRunOrderByWithRelationInput[]
+  cursor?: Prisma.PayrollRunWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PayrollRunScalarFieldEnum | Prisma.PayrollRunScalarFieldEnum[]
+}
+
+/**
+ * Organization.payrollItems
+ */
+export type Organization$payrollItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayrollItem
+   */
+  select?: Prisma.PayrollItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayrollItem
+   */
+  omit?: Prisma.PayrollItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayrollItemInclude<ExtArgs> | null
+  where?: Prisma.PayrollItemWhereInput
+  orderBy?: Prisma.PayrollItemOrderByWithRelationInput | Prisma.PayrollItemOrderByWithRelationInput[]
+  cursor?: Prisma.PayrollItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PayrollItemScalarFieldEnum | Prisma.PayrollItemScalarFieldEnum[]
 }
 
 /**
