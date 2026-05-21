@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
 import type { OrganizationStatus } from "../generated/prisma/enums";
 import { formatCode } from "../utils/format";
+import { sendError, sendSuccess } from "../utils/httpResponse";
 
 export const getAllOrg = async (req: Request, res: Response) => {
   try {
@@ -40,7 +41,7 @@ export const getAllOrg = async (req: Request, res: Response) => {
       }),
     ]);
 
-    return res.status(200).json({
+    return sendSuccess(res, {
       message: "Organization Fetched",
       data: items,
       meta: {
@@ -51,7 +52,7 @@ export const getAllOrg = async (req: Request, res: Response) => {
       },
     });
   } catch (err) {
-    return res.status(500).json({
+    return sendError(res, {
       message: "Something Wrong",
       error: err,
     });
@@ -88,12 +89,13 @@ export const createOrg = async (req: Request, res: Response) => {
       });
     });
 
-    return res.status(201).json({
+    return sendSuccess(res, {
+      status: 201,
       message: "Organization Created",
       data,
     });
   } catch (err) {
-    return res.status(500).json({
+    return sendError(res, {
       message: "Something Wrong",
       error: err,
     });
@@ -101,8 +103,6 @@ export const createOrg = async (req: Request, res: Response) => {
 };
 
 export const editOrganization = async (req: Request, res: Response) => {
-  console.log(req.params);
-
   try {
     const { id } = req.params;
     const { name, total_employees, status, expire_time, planId } = req.body;
@@ -111,6 +111,12 @@ export const editOrganization = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       select: { id: true },
     });
+    if (!existing) {
+      return sendError(res, {
+        status: 404,
+        message: "Organization not found",
+      });
+    }
 
     const data = await prisma.organization.update({
       where: {
@@ -125,12 +131,13 @@ export const editOrganization = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(201).json({
+    return sendSuccess(res, {
+      status: 200,
       message: "Organization Edit Successfully",
       data,
     });
   } catch (err) {
-    return res.status(500).json({
+    return sendError(res, {
       message: "Something Wrong",
       error: err,
     });

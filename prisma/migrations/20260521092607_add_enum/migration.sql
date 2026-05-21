@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "MenuCode" ADD VALUE 'DESIGNATION';

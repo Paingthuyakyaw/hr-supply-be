@@ -14,11 +14,16 @@ export const validate =
       if (error instanceof ZodError) {
         return res.status(400).json({
           message: "Validation Error",
-          errors: error,
+          data: null,
+          meta: null,
+          error: error.flatten(),
         });
       }
       return res.status(500).json({
         message: "Something went wrong during validation",
+        data: null,
+        meta: null,
+        error: null,
       });
     }
   };

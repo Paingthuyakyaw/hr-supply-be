@@ -89,7 +89,7 @@ app.use("/api/departments", authVerify, deptRouter);
 app.use("/api/positions", authVerify, posRouter);
 app.use("/api/organization", orgRouter);
 app.use("/api/plan", planRouter);
-app.use("/api/designation", designationRouter);
+app.use("/api/designation", authVerify, designationRouter);
 
 app.get("/", (req, res) =>
   res.json({

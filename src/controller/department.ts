@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
+import { sendError, sendSuccess } from "../utils/httpResponse";
 
 export async function getDepartments(req: Request, res: Response) {
   try {
@@ -30,7 +31,8 @@ export async function getDepartments(req: Request, res: Response) {
       }),
     ]);
 
-    res.json({
+    return sendSuccess(res, {
+      message: "Departments fetched",
       data: items,
       meta: {
         page,
@@ -41,7 +43,7 @@ export async function getDepartments(req: Request, res: Response) {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to fetch departments" });
+    return sendError(res, { message: "Failed to fetch departments", error: err });
   }
 }
 
@@ -49,7 +51,7 @@ export async function getDepartmentById(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
     if (!Number.isFinite(id)) {
-      return res.status(400).json({ message: "Invalid id" });
+      return sendError(res, { status: 400, message: "Invalid id" });
     }
 
     const item = await prisma.department.findUnique({
@@ -59,12 +61,14 @@ export async function getDepartmentById(req: Request, res: Response) {
         employees: true,
       },
     });
-    if (!item) return res.status(404).json({ message: "Department not found" });
+    if (!item) {
+      return sendError(res, { status: 404, message: "Department not found" });
+    }
 
-    res.json({ data: item });
+    return sendSuccess(res, { message: "Department fetched", data: item });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to fetch department" });
+    return sendError(res, { message: "Failed to fetch department", error: err });
   }
 }
 
@@ -80,10 +84,14 @@ export async function createDepartment(req: Request, res: Response) {
       },
     });
 
-    res.status(201).json({ data: item });
+    return sendSuccess(res, {
+      status: 201,
+      message: "Department created",
+      data: item,
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to create department" });
+    return sendError(res, { message: "Failed to create department", error: err });
   }
 }
 
@@ -91,12 +99,12 @@ export async function updateDepartment(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
     if (!Number.isFinite(id)) {
-      return res.status(400).json({ message: "Invalid id" });
+      return sendError(res, { status: 400, message: "Invalid id" });
     }
 
     const exists = await prisma.department.findUnique({ where: { id } });
     if (!exists) {
-      return res.status(404).json({ message: "Department not found" });
+      return sendError(res, { status: 404, message: "Department not found" });
     }
 
     const item = await prisma.department.update({
@@ -108,10 +116,10 @@ export async function updateDepartment(req: Request, res: Response) {
       },
     });
 
-    res.json({ data: item });
+    return sendSuccess(res, { message: "Department updated", data: item });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to update department" });
+    return sendError(res, { message: "Failed to update department", error: err });
   }
 }
 
@@ -119,19 +127,22 @@ export async function deleteDepartment(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
     if (!Number.isFinite(id)) {
-      return res.status(400).json({ message: "Invalid id" });
+      return sendError(res, { status: 400, message: "Invalid id" });
     }
 
     const exists = await prisma.department.findUnique({ where: { id } });
     if (!exists) {
-      return res.status(404).json({ message: "Department not found" });
+      return sendError(res, { status: 404, message: "Department not found" });
     }
 
     await prisma.department.delete({ where: { id } });
 
-    res.status(204).send();
+    return sendSuccess(res, {
+      message: "Department deleted",
+      data: { id },
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to delete department" });
+    return sendError(res, { message: "Failed to delete department", error: err });
   }
 }

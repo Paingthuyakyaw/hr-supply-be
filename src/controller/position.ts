@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
+import { sendError, sendSuccess } from "../utils/httpResponse";
 
 export async function getPositions(req: Request, res: Response) {
   try {
@@ -32,7 +33,8 @@ export async function getPositions(req: Request, res: Response) {
       }),
     ]);
 
-    res.json({
+    return sendSuccess(res, {
+      message: "Positions fetched",
       data: items,
       meta: {
         page,
@@ -43,7 +45,7 @@ export async function getPositions(req: Request, res: Response) {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to fetch positions" });
+    return sendError(res, { message: "Failed to fetch positions", error: err });
   }
 }
 
@@ -51,7 +53,7 @@ export async function getPositionById(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
     if (!Number.isFinite(id)) {
-      return res.status(400).json({ message: "Invalid id" });
+      return sendError(res, { status: 400, message: "Invalid id" });
     }
 
     const item = await prisma.position.findUnique({
@@ -59,12 +61,14 @@ export async function getPositionById(req: Request, res: Response) {
       include: { department: true, employees: true },
     });
 
-    if (!item) return res.status(404).json({ message: "Position not found" });
+    if (!item) {
+      return sendError(res, { status: 404, message: "Position not found" });
+    }
 
-    res.json({ data: item });
+    return sendSuccess(res, { message: "Position fetched", data: item });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to fetch position" });
+    return sendError(res, { message: "Failed to fetch position", error: err });
   }
 }
 
@@ -80,10 +84,14 @@ export async function createPosition(req: Request, res: Response) {
       },
     });
 
-    res.status(201).json({ data: item });
+    return sendSuccess(res, {
+      status: 201,
+      message: "Position created",
+      data: item,
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to create position" });
+    return sendError(res, { message: "Failed to create position", error: err });
   }
 }
 
@@ -91,12 +99,12 @@ export async function updatePosition(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
     if (!Number.isFinite(id)) {
-      return res.status(400).json({ message: "Invalid id" });
+      return sendError(res, { status: 400, message: "Invalid id" });
     }
 
     const exists = await prisma.position.findUnique({ where: { id } });
     if (!exists) {
-      return res.status(404).json({ message: "Position not found" });
+      return sendError(res, { status: 404, message: "Position not found" });
     }
 
     const item = await prisma.position.update({
@@ -105,10 +113,10 @@ export async function updatePosition(req: Request, res: Response) {
       include: { department: true, employees: true },
     });
 
-    res.json({ data: item });
+    return sendSuccess(res, { message: "Position updated", data: item });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to update position" });
+    return sendError(res, { message: "Failed to update position", error: err });
   }
 }
 
@@ -116,19 +124,22 @@ export async function deletePosition(req: Request, res: Response) {
   try {
     const id = Number(req.params.id);
     if (!Number.isFinite(id)) {
-      return res.status(400).json({ message: "Invalid id" });
+      return sendError(res, { status: 400, message: "Invalid id" });
     }
 
     const exists = await prisma.position.findUnique({ where: { id } });
     if (!exists) {
-      return res.status(404).json({ message: "Position not found" });
+      return sendError(res, { status: 404, message: "Position not found" });
     }
 
     await prisma.position.delete({ where: { id } });
 
-    res.status(204).send();
+    return sendSuccess(res, {
+      message: "Position deleted",
+      data: { id },
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to delete position" });
+    return sendError(res, { message: "Failed to delete position", error: err });
   }
 }

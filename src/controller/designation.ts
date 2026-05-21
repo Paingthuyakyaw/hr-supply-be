@@ -1,66 +1,118 @@
 import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
 import { Action, MenuCode } from "../generated/prisma/enums";
+import { sendError, sendSuccess } from "../utils/httpResponse";
 
-type DesignationPermissionInput = {
-  menu: MenuCode;
-  actions: Action[];
+type JwtUser = {
+  sub: number;
+  orgId: number;
+  email: string;
 };
+
+type RequestWithUser = Request & {
+  user?: JwtUser;
+};
+
+const DEFAULT_PAGE = 1;
+const DEFAULT_SIZE = 10;
+const MAX_PAGE_SIZE = 100;
+
+const getUserOrgId = (req: Request): number | null => {
+  const orgId = (req as RequestWithUser).user?.orgId;
+  if (!Number.isFinite(orgId)) {
+    return null;
+  }
+  return Number(orgId);
+};
+
+const toUniqueActions = (actions: Action[]) => Array.from(new Set(actions));
+
+const parsePageValue = (value: unknown, fallback: number) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
+};
+
+const formatDesignationPermissions = (
+  permissions: Array<{
+    actions: Action[];
+    menu: {
+      menu: MenuCode;
+    };
+  }>,
+) =>
+  permissions.map((item) => ({
+    menu: item.menu.menu,
+    actions: item.actions,
+  }));
 
 export const getDesignation = async (req: Request, res: Response) => {
   try {
-    const { search, page = 1, size = 10 } = req.query;
+    const userOrgId = getUserOrgId(req);
+    if (userOrgId === null) {
+      return sendError(res, { status: 401, message: "Unauthorized" });
+    }
 
-    const skip = (Number(page) - 1) * Number(size);
-    const limit = Number(size);
+    const search = String(req.query.search ?? "").trim();
+    const page = parsePageValue(req.query.page, DEFAULT_PAGE);
+    const size = Math.min(
+      parsePageValue(req.query.size, DEFAULT_SIZE),
+      MAX_PAGE_SIZE,
+    );
+    const skip = (page - 1) * size;
 
-    const designation = await prisma.designation.findMany({
-      where: {
-        name: {
-          contains: search?.toString(),
-          mode: "insensitive",
-        },
-      },
-      include: {
-        _count: {
-          select: { menuPermission: true },
-        },
-        organization: {
-          select: {
-            name: true,
+    const where = {
+      organizationId: userOrgId,
+      ...(search
+        ? {
+            name: {
+              contains: search,
+              mode: "insensitive" as const,
+            },
+          }
+        : {}),
+    };
+
+    const [designation, totalItems] = await Promise.all([
+      prisma.designation.findMany({
+        where,
+        select: {
+          id: true,
+          name: true,
+          organizationId: true,
+          _count: {
+            select: { menuPermission: true },
+          },
+          organization: {
+            select: {
+              name: true,
+            },
           },
         },
-      },
-      skip,
-      take: limit,
-    });
+        orderBy: { id: "desc" },
+        skip,
+        take: size,
+      }),
+      prisma.designation.count({ where }),
+    ]);
 
-    const totalItems = await prisma.designation.count({
-      where: {
-        name: {
-          contains: search?.toString(),
-          mode: "insensitive",
-        },
-      },
-    });
-
-    return res.status(200).json({
-      message: "Designation Fetch all",
+    return sendSuccess(res, {
+      message: "Designation fetched",
       data: designation.map((da) => ({
         id: da.id,
         name: da.name,
+        organizationId: da.organizationId,
         menuPermission: da._count.menuPermission,
         organization: da.organization,
-        organizationId: da.organizationId,
       })),
       meta: {
         totalItems,
-        totalPages: Math.ceil(totalItems / limit),
-        page: Number(page),
+        totalPages: Math.ceil(totalItems / size),
+        page,
+        size,
       },
     });
   } catch (err) {
-    return res.status(500).json({
+    return sendError(res, {
       message: "Server Error",
       error: err,
     });
@@ -70,12 +122,20 @@ export const getDesignation = async (req: Request, res: Response) => {
 export const getDesignationDetail = async (req: Request, res: Response) => {
   try {
     const designationId = Number(req.params.id);
-    if (!Number.isFinite(designationId)) {
-      return res.status(400).json({ message: "Invalid designation id" });
+    const userOrgId = getUserOrgId(req);
+    if (userOrgId === null) {
+      return sendError(res, { status: 401, message: "Unauthorized" });
     }
 
-    const designation = await prisma.designation.findUnique({
-      where: { id: designationId },
+    if (!Number.isFinite(designationId)) {
+      return sendError(res, { status: 400, message: "Invalid designation id" });
+    }
+
+    const designation = await prisma.designation.findFirst({
+      where: {
+        id: designationId,
+        organizationId: userOrgId,
+      },
       select: {
         id: true,
         name: true,
@@ -94,23 +154,20 @@ export const getDesignationDetail = async (req: Request, res: Response) => {
     });
 
     if (!designation) {
-      return res.status(404).json({ message: "Designation not found" });
+      return sendError(res, { status: 404, message: "Designation not found" });
     }
 
-    return res.status(200).json({
+    return sendSuccess(res, {
       message: "Designation detail",
       data: {
         id: designation.id,
         name: designation.name,
         organizationId: designation.organizationId,
-        permissions: designation.menuPermission.map((item) => ({
-          menu: item.menu.menu,
-          actions: item.actions,
-        })),
+        permissions: formatDesignationPermissions(designation.menuPermission),
       },
     });
   } catch (err) {
-    return res.status(500).json({
+    return sendError(res, {
       message: "Server Error",
       error: err,
     });
@@ -119,125 +176,196 @@ export const getDesignationDetail = async (req: Request, res: Response) => {
 
 export const createDesignation = async (req: Request, res: Response) => {
   try {
-    const {
-      name,
-      organizationId,
-      permissions = [],
-      employeeIds = [],
-    } = req.body;
+    const userOrgId = getUserOrgId(req);
+    if (userOrgId === null) {
+      return sendError(res, { status: 401, message: "Unauthorized" });
+    }
+
+    const { name, permissions = [], employeeIds = [] } = req.body as {
+      name: string;
+      permissions?: Array<{ menu: MenuCode; actions: Action[] }>;
+      employeeIds?: Array<string | number>;
+    };
+    const normalizedEmployeeIds = Array.from(
+      new Set(employeeIds as Array<string | number>),
+    ).map((id) => Number(id));
 
     const menus = await prisma.menu.findMany({
-      where: { menu: { in: permissions.map((p: any) => p.menu) } },
+      where: { menu: { in: permissions.map((p) => p.menu) } },
       select: {
         id: true,
         menu: true,
       },
     });
+    if (menus.length !== permissions.length) {
+      return sendError(res, {
+        status: 400,
+        message: "Some permissions contain invalid menu code",
+      });
+    }
 
     const menuIdByCode = new Map(menus.map((m) => [m.menu, m.id]));
+
+    if (normalizedEmployeeIds.length) {
+      const validEmployees = await prisma.employee.findMany({
+        where: {
+          id: { in: normalizedEmployeeIds },
+          organizationId: userOrgId,
+        },
+        select: { id: true },
+      });
+
+      if (validEmployees.length !== normalizedEmployeeIds.length) {
+        return sendError(res, {
+          status: 400,
+          message: "Some employees do not belong to your organization",
+        });
+      }
+    }
 
     const created = await prisma.designation.create({
       data: {
         name,
-        organizationId: Number(organizationId),
+        organizationId: userOrgId,
         menuPermission: {
           create: permissions
-            .filter((p: any) => menuIdByCode.has(p.menu))
-            .map((p: any) => ({
+            .filter((p) => menuIdByCode.has(p.menu))
+            .map((p) => ({
               menuId: menuIdByCode.get(p.menu)!,
-              actions: [...new Set(p.actions)],
+              actions: toUniqueActions(p.actions),
             })),
         },
         employees: {
-          create: Array.from(
-            new Set(employeeIds as Array<string | number>),
-          ).map((id) => ({
-            employeeId: Number(id),
+          create: normalizedEmployeeIds.map((id) => ({
+            employeeId: id,
           })),
         },
       },
-      include: {
-        organization: true,
-        menuPermission: { include: { menu: true } },
-        employees: { include: { employee: true } },
+      select: {
+        id: true,
+        name: true,
+        organizationId: true,
+        menuPermission: {
+          select: {
+            actions: true,
+            menu: { select: { menu: true } },
+          },
+        },
       },
     });
 
-    return res.status(201).json({ message: "Created", data: created });
+    return sendSuccess(res, {
+      status: 201,
+      message: "Designation created",
+      data: {
+        id: created.id,
+        name: created.name,
+        organizationId: created.organizationId,
+        permissions: formatDesignationPermissions(created.menuPermission),
+      },
+    });
   } catch (err) {
-    return res.status(500).json({ message: "Server Error", error: err });
+    return sendError(res, { message: "Server Error", error: err });
   }
 };
 
 export const updateDesignation = async (req: Request, res: Response) => {
   try {
     const designationId = Number(req.params.id);
-    if (!Number.isFinite(designationId)) {
-      return res.status(400).json({ message: "Invalid designation id" });
+    const userOrgId = getUserOrgId(req);
+    if (userOrgId === null) {
+      return sendError(res, { status: 401, message: "Unauthorized" });
     }
 
-    const {
-      name,
-      organizationId,
-      permissions = [],
-      employeeIds = [],
-    } = req.body;
+    if (!Number.isFinite(designationId)) {
+      return sendError(res, { status: 400, message: "Invalid designation id" });
+    }
 
-    const existingDesignation = await prisma.designation.findUnique({
-      where: { id: designationId },
-      select: { id: true, organizationId: true },
+    const { name, permissions, employeeIds } = req.body as {
+      name?: string;
+      permissions?: Array<{ menu: MenuCode; actions: Action[] }>;
+      employeeIds?: Array<string | number>;
+    };
+    const shouldReplacePermissions = Array.isArray(permissions);
+    const shouldReplaceEmployees = Array.isArray(employeeIds);
+    const normalizedPermissions = shouldReplacePermissions ? permissions : [];
+    const normalizedEmployeeIds = Array.from(
+      new Set((employeeIds ?? []) as Array<string | number>),
+    ).map((id) => Number(id));
+
+    const existingDesignation = await prisma.designation.findFirst({
+      where: {
+        id: designationId,
+        organizationId: userOrgId,
+      },
+      select: { id: true },
     });
 
     if (!existingDesignation) {
-      return res.status(404).json({ message: "Designation not found" });
+      return sendError(res, { status: 404, message: "Designation not found" });
     }
 
-    const orgId = organizationId
-      ? Number(organizationId)
-      : existingDesignation.organizationId;
-
-    const menus = await prisma.menu.findMany({
-      where: { menu: { in: permissions.map((p: any) => p.menu) } },
-      select: {
-        id: true,
-        menu: true,
-      },
-    });
+    const menus = shouldReplacePermissions
+      ? await prisma.menu.findMany({
+          where: { menu: { in: normalizedPermissions.map((p) => p.menu) } },
+          select: {
+            id: true,
+            menu: true,
+          },
+        })
+      : [];
+    if (shouldReplacePermissions && menus.length !== normalizedPermissions.length) {
+      return sendError(res, {
+        status: 400,
+        message: "Some permissions contain invalid menu code",
+      });
+    }
     const menuIdByCode = new Map(menus.map((m) => [m.menu, m.id]));
 
-    const normalizedEmployeeIds = Array.from(
-      new Set(employeeIds as Array<string | number>),
-    ).map((id) => Number(id));
+    if (shouldReplaceEmployees && normalizedEmployeeIds.length) {
+      const validEmployees = await prisma.employee.findMany({
+        where: {
+          id: { in: normalizedEmployeeIds },
+          organizationId: userOrgId,
+        },
+        select: { id: true },
+      });
+
+      if (validEmployees.length !== normalizedEmployeeIds.length) {
+        return sendError(res, {
+          status: 400,
+          message: "Some employees do not belong to your organization",
+        });
+      }
+    }
 
     const updated = await prisma.$transaction(async (tx) => {
       await tx.designation.update({
         where: { id: designationId },
         data: {
-          ...(name ? { name } : {}),
-          organizationId: orgId,
+          ...(typeof name === "string" ? { name } : {}),
         },
       });
 
-      await tx.designationOnMenu.deleteMany({
-        where: { designationId },
-      });
-      await tx.designationOnEmployee.deleteMany({
-        where: { designationId },
-      });
-
-      if (permissions.length) {
+      if (shouldReplacePermissions) {
+        await tx.designationOnMenu.deleteMany({
+          where: { designationId },
+        });
         await tx.designationOnMenu.createMany({
-          data: permissions
-            .filter((p: any) => menuIdByCode.has(p.menu))
-            .map((p: any) => ({
+          data: normalizedPermissions
+            .filter((p) => menuIdByCode.has(p.menu))
+            .map((p) => ({
               designationId,
               menuId: menuIdByCode.get(p.menu)!,
-              actions: [...new Set(p.actions)],
+              actions: toUniqueActions(p.actions),
             })),
         });
       }
 
-      if (normalizedEmployeeIds.length) {
+      if (shouldReplaceEmployees) {
+        await tx.designationOnEmployee.deleteMany({
+          where: { designationId },
+        });
         await tx.designationOnEmployee.createMany({
           data: normalizedEmployeeIds.map((employeeId) => ({
             designationId,
@@ -249,56 +377,39 @@ export const updateDesignation = async (req: Request, res: Response) => {
 
       return tx.designation.findUnique({
         where: { id: designationId },
-        include: {
-          organization: true,
-          menuPermission: { include: { menu: true } },
-          employees: { include: { employee: true } },
+        select: {
+          id: true,
+          name: true,
+          organizationId: true,
+          menuPermission: {
+            select: {
+              actions: true,
+              menu: {
+                select: {
+                  menu: true,
+                },
+              },
+            },
+          },
         },
       });
     });
 
-    return res.status(200).json({ message: "Updated", data: updated });
-  } catch (err) {
-    return res.status(500).json({ message: "Server Error", error: err });
-  }
-};
-export const updateDesignations = async (req: Request, res: Response) => {
-  try {
-    const designationId = req.params.id;
-
-    const {
-      name,
-      organizationId,
-      permissions = [],
-      employeeIds = [],
-    } = req.body;
-
-    const exitDesignation = await prisma.designation.findUnique({
-      where: { id: Number(designationId) },
-      select: {
-        id: true,
-        organizationId: true,
-      },
-    });
-
-    if (!exitDesignation) {
-      return res.status(400).json({ message: "Not Found Designation" });
+    if (!updated || updated.organizationId !== userOrgId) {
+      return sendError(res, { status: 404, message: "Designation not found" });
     }
 
-    const menus = await prisma.menu.findMany({
-      where: { menu: { in: permissions.map((p: any) => p.menu) } },
-      select: {
-        id: true,
-        menu: true,
+    return sendSuccess(res, {
+      message: "Designation updated",
+      data: {
+        id: updated.id,
+        name: updated.name,
+        organizationId: updated.organizationId,
+        permissions: formatDesignationPermissions(updated.menuPermission),
       },
     });
-
-    const menuIdByCode = new Map(menus.map((m) => [m.menu, m.id]));
   } catch (err) {
-    return res.status(500).json({
-      message: "Server Error",
-      error: err,
-    });
+    return sendError(res, { message: "Server Error", error: err });
   }
 };
 

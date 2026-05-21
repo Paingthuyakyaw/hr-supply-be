@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
 import { Action, MenuCode } from "../generated/prisma/enums";
+import { sendError, sendSuccess } from "../utils/httpResponse";
 
 type PlanPermissionInput = {
   menu: MenuCode;
@@ -52,7 +53,7 @@ export const getAllPlan = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(200).json({
+    return sendSuccess(res, {
       message: "Fetched Successfully",
       data: plan.map((item) => ({
         id: item.id,
@@ -62,7 +63,7 @@ export const getAllPlan = async (req: Request, res: Response) => {
       })),
     });
   } catch (err) {
-    return res.status(500).json({
+    return sendError(res, {
       message: "Something went wrong",
     });
   }
@@ -88,7 +89,8 @@ export const createPlan = async (req: Request, res: Response) => {
       const menuId = await resolveMenuIdByCode(item.menu);
 
       if (!menuId) {
-        return res.status(400).json({
+        return sendError(res, {
+          status: 400,
           message: `Menu not found for code ${item.menu}`,
         });
       }
@@ -131,14 +133,14 @@ export const createPlan = async (req: Request, res: Response) => {
       });
     });
 
-    return res.status(200).json({
+    return sendSuccess(res, {
       message: "Created Successfully",
       data: data ? formatPlanResponse(data as PlanWithPermissions) : null,
     });
   } catch (err) {
     console.log(err);
 
-    return res.status(500).json({
+    return sendError(res, {
       message: "Something went wrong",
     });
   }
@@ -165,7 +167,8 @@ export const editPlan = async (req: Request, res: Response) => {
     for (const item of permission) {
       const menuId = await resolveMenuIdByCode(item.menu);
       if (!menuId) {
-        return res.status(400).json({
+        return sendError(res, {
+          status: 400,
           message: `Menu not found for code: ${item.menu}`,
         });
       }
@@ -221,17 +224,19 @@ export const editPlan = async (req: Request, res: Response) => {
     });
 
     if (!data) {
-      return res.status(404).json({
+      return sendError(res, {
+        status: 404,
         message: "Plan not found",
       });
     }
 
-    return res.status(201).json({
+    return sendSuccess(res, {
+      status: 200,
       message: "Edit Successfully",
       data: formatPlanResponse(data as PlanWithPermissions),
     });
   } catch (err) {
-    return res.status(500).json({
+    return sendError(res, {
       message: "Something went wrong",
     });
   }

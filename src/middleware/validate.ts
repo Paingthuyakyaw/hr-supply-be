@@ -6,7 +6,9 @@ export function validateRequest(req: Request, res: Response, next: NextFunction)
   if (!result.isEmpty()) {
     return res.status(400).json({
       message: "Validation Error",
-      errors: result.array({ onlyFirstError: true }),
+      data: null,
+      meta: null,
+      error: result.array({ onlyFirstError: true }),
     });
   }
 

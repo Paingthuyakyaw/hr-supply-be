@@ -224,6 +224,7 @@ enum MenuCode {
   ATTENDANCE
   LEAVE_MANGEMENT
   PAYROLL
+  DESIGNATION
 }
 
 enum Action {
