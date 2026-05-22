@@ -21,14 +21,18 @@ export const requirePermission = (menu: MenuCode, action: Action) => {
     try {
       const user = (req as RequestWithUser).user;
       if (
+        user?.adminScope === "SUPERADMIN" &&
+        user.actorType === "platform" &&
+        Number.isFinite(user.sub)
+      ) {
+        return next();
+      }
+      if (
         !user?.sub ||
         !Number.isFinite(user.sub) ||
         !Number.isFinite(user.orgId)
       ) {
         return res.status(401).json({ message: "Unauthorized" });
-      }
-      if (user.adminScope === "SUPERADMIN" && user.actorType === "platform") {
-        return next();
       }
 
       const employee = await prisma.employee.findUnique({

@@ -22,6 +22,7 @@ import leaveRouter from "./router/leave";
 import adminLeaveRouter from "./router/adminLeave";
 import adminPayrollRouter from "./router/adminPayroll";
 import adminPlatformUserRouter from "./router/adminPlatformUser";
+import adminPlatformOrganizationRouter from "./router/adminPlatformOrganization";
 
 const app = express();
 const configuredOrigins = (process.env.CORS_ORIGINS ?? "")
@@ -105,6 +106,11 @@ app.use("/api/leave", authVerifyMobile, leaveRouter);
 app.use("/api/admin/leave", authVerifyAdmin, requireOwnAdminScope, adminLeaveRouter);
 app.use("/api/admin/payroll", authVerifyAdmin, requireOwnAdminScope, adminPayrollRouter);
 app.use("/api/admin/platform-users", authVerifyAdmin, adminPlatformUserRouter);
+app.use(
+  "/api/admin/platform/organizations",
+  authVerifyAdmin,
+  adminPlatformOrganizationRouter,
+);
 
 app.get("/", (req, res) =>
   res.json({

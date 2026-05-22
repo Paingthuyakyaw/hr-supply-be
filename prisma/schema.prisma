@@ -11,6 +11,7 @@ datasource db {
 model Organization {
   id              Int            @id @default(autoincrement())
   name            String
+  ownerEmail      String?
   total_employees Int
   status          OrganizationStatus
   expire_time     DateTime?
@@ -37,6 +38,7 @@ model Organization {
   payrollRuns PayrollRun[]
   payrollItems PayrollItem[]
   payrollEmployeeSummaries PayrollEmployeeSummary[]
+  onboardingTokens OrganizationOnboardingToken[]
 }
 
 model Plan {
@@ -140,9 +142,28 @@ model Employee {
   payrollItems PayrollItem[]
   createdPayrollRuns PayrollRun[] @relation("PayrollRunCreator")
   payrollSummaries PayrollEmployeeSummary[]
+  onboardingTokens OrganizationOnboardingToken[]
 
   @@index([organizationId])
   @@index([department_id])
+}
+
+model OrganizationOnboardingToken {
+  id             Int      @id @default(autoincrement())
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  employeeId     Int
+  employee       Employee @relation(fields: [employeeId], references: [id])
+  email          String
+  tokenHash      String   @unique
+  expiresAt      DateTime
+  usedAt         DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, email])
+  @@index([employeeId])
+  @@index([expiresAt])
 }
 
 model EmployeeContract {

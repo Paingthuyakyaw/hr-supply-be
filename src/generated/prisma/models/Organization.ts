@@ -41,6 +41,7 @@ export type OrganizationSumAggregateOutputType = {
 export type OrganizationMinAggregateOutputType = {
   id: number | null
   name: string | null
+  ownerEmail: string | null
   total_employees: number | null
   status: $Enums.OrganizationStatus | null
   expire_time: Date | null
@@ -51,6 +52,7 @@ export type OrganizationMinAggregateOutputType = {
 export type OrganizationMaxAggregateOutputType = {
   id: number | null
   name: string | null
+  ownerEmail: string | null
   total_employees: number | null
   status: $Enums.OrganizationStatus | null
   expire_time: Date | null
@@ -61,6 +63,7 @@ export type OrganizationMaxAggregateOutputType = {
 export type OrganizationCountAggregateOutputType = {
   id: number
   name: number
+  ownerEmail: number
   total_employees: number
   status: number
   expire_time: number
@@ -87,6 +90,7 @@ export type OrganizationSumAggregateInputType = {
 export type OrganizationMinAggregateInputType = {
   id?: true
   name?: true
+  ownerEmail?: true
   total_employees?: true
   status?: true
   expire_time?: true
@@ -97,6 +101,7 @@ export type OrganizationMinAggregateInputType = {
 export type OrganizationMaxAggregateInputType = {
   id?: true
   name?: true
+  ownerEmail?: true
   total_employees?: true
   status?: true
   expire_time?: true
@@ -107,6 +112,7 @@ export type OrganizationMaxAggregateInputType = {
 export type OrganizationCountAggregateInputType = {
   id?: true
   name?: true
+  ownerEmail?: true
   total_employees?: true
   status?: true
   expire_time?: true
@@ -206,6 +212,7 @@ export type OrganizationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type OrganizationGroupByOutputType = {
   id: number
   name: string
+  ownerEmail: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time: Date | null
@@ -241,6 +248,7 @@ export type OrganizationWhereInput = {
   NOT?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
   id?: Prisma.IntFilter<"Organization"> | number
   name?: Prisma.StringFilter<"Organization"> | string
+  ownerEmail?: Prisma.StringNullableFilter<"Organization"> | string | null
   total_employees?: Prisma.IntFilter<"Organization"> | number
   status?: Prisma.EnumOrganizationStatusFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
@@ -266,11 +274,13 @@ export type OrganizationWhereInput = {
   payrollRuns?: Prisma.PayrollRunListRelationFilter
   payrollItems?: Prisma.PayrollItemListRelationFilter
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryListRelationFilter
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ownerEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -296,6 +306,7 @@ export type OrganizationOrderByWithRelationInput = {
   payrollRuns?: Prisma.PayrollRunOrderByRelationAggregateInput
   payrollItems?: Prisma.PayrollItemOrderByRelationAggregateInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryOrderByRelationAggregateInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -305,6 +316,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OrganizationWhereInput[]
   NOT?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
   name?: Prisma.StringFilter<"Organization"> | string
+  ownerEmail?: Prisma.StringNullableFilter<"Organization"> | string | null
   total_employees?: Prisma.IntFilter<"Organization"> | number
   status?: Prisma.EnumOrganizationStatusFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
@@ -329,11 +341,13 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   payrollRuns?: Prisma.PayrollRunListRelationFilter
   payrollItems?: Prisma.PayrollItemListRelationFilter
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryListRelationFilter
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenListRelationFilter
 }, "id" | "code">
 
 export type OrganizationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ownerEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -354,6 +368,7 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   NOT?: Prisma.OrganizationScalarWhereWithAggregatesInput | Prisma.OrganizationScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Organization"> | number
   name?: Prisma.StringWithAggregatesFilter<"Organization"> | string
+  ownerEmail?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   total_employees?: Prisma.IntWithAggregatesFilter<"Organization"> | number
   status?: Prisma.EnumOrganizationStatusWithAggregatesFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableWithAggregatesFilter<"Organization"> | Date | string | null
@@ -365,6 +380,7 @@ export type OrganizationScalarWhereWithAggregatesInput = {
 
 export type OrganizationCreateInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -389,11 +405,13 @@ export type OrganizationCreateInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -418,10 +436,12 @@ export type OrganizationUncheckedCreateInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -446,11 +466,13 @@ export type OrganizationUpdateInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -475,11 +497,13 @@ export type OrganizationUncheckedUpdateInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -491,6 +515,7 @@ export type OrganizationCreateManyInput = {
 
 export type OrganizationUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -502,6 +527,7 @@ export type OrganizationUpdateManyMutationInput = {
 export type OrganizationUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -522,6 +548,7 @@ export type EnumWeekDayNullableListFilter<$PrismaModel = never> = {
 export type OrganizationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ownerEmail?: Prisma.SortOrder
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrder
@@ -540,6 +567,7 @@ export type OrganizationAvgOrderByAggregateInput = {
 export type OrganizationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ownerEmail?: Prisma.SortOrder
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrder
@@ -550,6 +578,7 @@ export type OrganizationMaxOrderByAggregateInput = {
 export type OrganizationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ownerEmail?: Prisma.SortOrder
   total_employees?: Prisma.SortOrder
   status?: Prisma.SortOrder
   expire_time?: Prisma.SortOrder
@@ -590,6 +619,10 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -604,10 +637,6 @@ export type EnumOrganizationStatusFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type OrganizationUpdateworking_daysInput = {
@@ -702,6 +731,20 @@ export type OrganizationUpdateOneRequiredWithoutEmployeesNestedInput = {
   upsert?: Prisma.OrganizationUpsertWithoutEmployeesInput
   connect?: Prisma.OrganizationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutEmployeesInput, Prisma.OrganizationUpdateWithoutEmployeesInput>, Prisma.OrganizationUncheckedUpdateWithoutEmployeesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutOnboardingTokensInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutOnboardingTokensInput, Prisma.OrganizationUncheckedCreateWithoutOnboardingTokensInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutOnboardingTokensInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutOnboardingTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutOnboardingTokensInput, Prisma.OrganizationUncheckedCreateWithoutOnboardingTokensInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutOnboardingTokensInput
+  upsert?: Prisma.OrganizationUpsertWithoutOnboardingTokensInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutOnboardingTokensInput, Prisma.OrganizationUpdateWithoutOnboardingTokensInput>, Prisma.OrganizationUncheckedUpdateWithoutOnboardingTokensInput>
 }
 
 export type OrganizationCreateNestedOneWithoutApprovalsInput = {
@@ -902,6 +945,7 @@ export type OrganizationUpdateOneRequiredWithoutPayrollEmployeeSummariesNestedIn
 
 export type OrganizationCreateWithoutPlanInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -925,11 +969,13 @@ export type OrganizationCreateWithoutPlanInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPlanInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -953,6 +999,7 @@ export type OrganizationUncheckedCreateWithoutPlanInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPlanInput = {
@@ -987,6 +1034,7 @@ export type OrganizationScalarWhereInput = {
   NOT?: Prisma.OrganizationScalarWhereInput | Prisma.OrganizationScalarWhereInput[]
   id?: Prisma.IntFilter<"Organization"> | number
   name?: Prisma.StringFilter<"Organization"> | string
+  ownerEmail?: Prisma.StringNullableFilter<"Organization"> | string | null
   total_employees?: Prisma.IntFilter<"Organization"> | number
   status?: Prisma.EnumOrganizationStatusFilter<"Organization"> | $Enums.OrganizationStatus
   expire_time?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
@@ -998,6 +1046,7 @@ export type OrganizationScalarWhereInput = {
 
 export type OrganizationCreateWithoutDepartmentsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1021,11 +1070,13 @@ export type OrganizationCreateWithoutDepartmentsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutDepartmentsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1049,6 +1100,7 @@ export type OrganizationUncheckedCreateWithoutDepartmentsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutDepartmentsInput = {
@@ -1069,6 +1121,7 @@ export type OrganizationUpdateToOneWithWhereWithoutDepartmentsInput = {
 
 export type OrganizationUpdateWithoutDepartmentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1092,11 +1145,13 @@ export type OrganizationUpdateWithoutDepartmentsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutDepartmentsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1120,10 +1175,12 @@ export type OrganizationUncheckedUpdateWithoutDepartmentsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPositionsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1147,11 +1204,13 @@ export type OrganizationCreateWithoutPositionsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPositionsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1175,6 +1234,7 @@ export type OrganizationUncheckedCreateWithoutPositionsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPositionsInput = {
@@ -1195,6 +1255,7 @@ export type OrganizationUpdateToOneWithWhereWithoutPositionsInput = {
 
 export type OrganizationUpdateWithoutPositionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1218,11 +1279,13 @@ export type OrganizationUpdateWithoutPositionsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPositionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1246,10 +1309,12 @@ export type OrganizationUncheckedUpdateWithoutPositionsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutEmployeesInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1273,11 +1338,13 @@ export type OrganizationCreateWithoutEmployeesInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutEmployeesInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1301,6 +1368,7 @@ export type OrganizationUncheckedCreateWithoutEmployeesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutEmployeesInput = {
@@ -1321,6 +1389,7 @@ export type OrganizationUpdateToOneWithWhereWithoutEmployeesInput = {
 
 export type OrganizationUpdateWithoutEmployeesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1344,11 +1413,13 @@ export type OrganizationUpdateWithoutEmployeesInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutEmployeesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1372,10 +1443,146 @@ export type OrganizationUncheckedUpdateWithoutEmployeesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutOnboardingTokensInput = {
+  name: string
+  ownerEmail?: string | null
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  plan: Prisma.PlanCreateNestedOneWithoutOrganizationsInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+  payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutOnboardingTokensInput = {
+  id?: number
+  name: string
+  ownerEmail?: string | null
+  total_employees: number
+  status: $Enums.OrganizationStatus
+  expire_time?: Date | string | null
+  code?: string | null
+  planId: number
+  working_days?: Prisma.OrganizationCreateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationCreateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutOrganizationInput
+  positions?: Prisma.PositionUncheckedCreateNestedManyWithoutOrganizationInput
+  employees?: Prisma.EmployeeUncheckedCreateNestedManyWithoutOrganizationInput
+  designations?: Prisma.DesignationUncheckedCreateNestedManyWithoutOrganizationInput
+  schedules?: Prisma.OrganizationScheduleUncheckedCreateNestedManyWithoutOrganizationInput
+  approvals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedCreateNestedManyWithoutOrganizationInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutOrganizationInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutOrganizationInput
+  holidays?: Prisma.HolidayCalendarUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+  payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutOnboardingTokensInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutOnboardingTokensInput, Prisma.OrganizationUncheckedCreateWithoutOnboardingTokensInput>
+}
+
+export type OrganizationUpsertWithoutOnboardingTokensInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutOnboardingTokensInput, Prisma.OrganizationUncheckedUpdateWithoutOnboardingTokensInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutOnboardingTokensInput, Prisma.OrganizationUncheckedCreateWithoutOnboardingTokensInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutOnboardingTokensInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutOnboardingTokensInput, Prisma.OrganizationUncheckedUpdateWithoutOnboardingTokensInput>
+}
+
+export type OrganizationUpdateWithoutOnboardingTokensInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  plan?: Prisma.PlanUpdateOneRequiredWithoutOrganizationsNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+  payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutOnboardingTokensInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  total_employees?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  working_days?: Prisma.OrganizationUpdateworking_daysInput | $Enums.WeekDay[]
+  off_days?: Prisma.OrganizationUpdateoff_daysInput | $Enums.WeekDay[]
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  positions?: Prisma.PositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  employees?: Prisma.EmployeeUncheckedUpdateManyWithoutOrganizationNestedInput
+  designations?: Prisma.DesignationUncheckedUpdateManyWithoutOrganizationNestedInput
+  schedules?: Prisma.OrganizationScheduleUncheckedUpdateManyWithoutOrganizationNestedInput
+  approvals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendancePolicies?: Prisma.AttendancePolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceShifts?: Prisma.AttendanceShiftUncheckedUpdateManyWithoutOrganizationNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveTypes?: Prisma.LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutOrganizationNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutOrganizationNestedInput
+  holidays?: Prisma.HolidayCalendarUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutApprovalsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1399,11 +1606,13 @@ export type OrganizationCreateWithoutApprovalsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutApprovalsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1427,6 +1636,7 @@ export type OrganizationUncheckedCreateWithoutApprovalsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutApprovalsInput = {
@@ -1447,6 +1657,7 @@ export type OrganizationUpdateToOneWithWhereWithoutApprovalsInput = {
 
 export type OrganizationUpdateWithoutApprovalsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1470,11 +1681,13 @@ export type OrganizationUpdateWithoutApprovalsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutApprovalsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1498,10 +1711,12 @@ export type OrganizationUncheckedUpdateWithoutApprovalsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutDesignationsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1525,11 +1740,13 @@ export type OrganizationCreateWithoutDesignationsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutDesignationsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1553,6 +1770,7 @@ export type OrganizationUncheckedCreateWithoutDesignationsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutDesignationsInput = {
@@ -1573,6 +1791,7 @@ export type OrganizationUpdateToOneWithWhereWithoutDesignationsInput = {
 
 export type OrganizationUpdateWithoutDesignationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1596,11 +1815,13 @@ export type OrganizationUpdateWithoutDesignationsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutDesignationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1624,10 +1845,12 @@ export type OrganizationUncheckedUpdateWithoutDesignationsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSchedulesInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1651,11 +1874,13 @@ export type OrganizationCreateWithoutSchedulesInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSchedulesInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1679,6 +1904,7 @@ export type OrganizationUncheckedCreateWithoutSchedulesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSchedulesInput = {
@@ -1699,6 +1925,7 @@ export type OrganizationUpdateToOneWithWhereWithoutSchedulesInput = {
 
 export type OrganizationUpdateWithoutSchedulesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1722,11 +1949,13 @@ export type OrganizationUpdateWithoutSchedulesInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSchedulesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1750,10 +1979,12 @@ export type OrganizationUncheckedUpdateWithoutSchedulesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAttendancePoliciesInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1777,11 +2008,13 @@ export type OrganizationCreateWithoutAttendancePoliciesInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAttendancePoliciesInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1805,6 +2038,7 @@ export type OrganizationUncheckedCreateWithoutAttendancePoliciesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAttendancePoliciesInput = {
@@ -1825,6 +2059,7 @@ export type OrganizationUpdateToOneWithWhereWithoutAttendancePoliciesInput = {
 
 export type OrganizationUpdateWithoutAttendancePoliciesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1848,11 +2083,13 @@ export type OrganizationUpdateWithoutAttendancePoliciesInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAttendancePoliciesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1876,10 +2113,12 @@ export type OrganizationUncheckedUpdateWithoutAttendancePoliciesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAttendanceShiftsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1903,11 +2142,13 @@ export type OrganizationCreateWithoutAttendanceShiftsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAttendanceShiftsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -1931,6 +2172,7 @@ export type OrganizationUncheckedCreateWithoutAttendanceShiftsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAttendanceShiftsInput = {
@@ -1951,6 +2193,7 @@ export type OrganizationUpdateToOneWithWhereWithoutAttendanceShiftsInput = {
 
 export type OrganizationUpdateWithoutAttendanceShiftsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1974,11 +2217,13 @@ export type OrganizationUpdateWithoutAttendanceShiftsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAttendanceShiftsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2002,10 +2247,12 @@ export type OrganizationUncheckedUpdateWithoutAttendanceShiftsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAttendanceRecordsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2029,11 +2276,13 @@ export type OrganizationCreateWithoutAttendanceRecordsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAttendanceRecordsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2057,6 +2306,7 @@ export type OrganizationUncheckedCreateWithoutAttendanceRecordsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAttendanceRecordsInput = {
@@ -2077,6 +2327,7 @@ export type OrganizationUpdateToOneWithWhereWithoutAttendanceRecordsInput = {
 
 export type OrganizationUpdateWithoutAttendanceRecordsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2100,11 +2351,13 @@ export type OrganizationUpdateWithoutAttendanceRecordsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAttendanceRecordsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2128,10 +2381,12 @@ export type OrganizationUncheckedUpdateWithoutAttendanceRecordsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLeaveTypesInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2155,11 +2410,13 @@ export type OrganizationCreateWithoutLeaveTypesInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLeaveTypesInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2183,6 +2440,7 @@ export type OrganizationUncheckedCreateWithoutLeaveTypesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLeaveTypesInput = {
@@ -2203,6 +2461,7 @@ export type OrganizationUpdateToOneWithWhereWithoutLeaveTypesInput = {
 
 export type OrganizationUpdateWithoutLeaveTypesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2226,11 +2485,13 @@ export type OrganizationUpdateWithoutLeaveTypesInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLeaveTypesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2254,10 +2515,12 @@ export type OrganizationUncheckedUpdateWithoutLeaveTypesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLeaveBalancesInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2281,11 +2544,13 @@ export type OrganizationCreateWithoutLeaveBalancesInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLeaveBalancesInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2309,6 +2574,7 @@ export type OrganizationUncheckedCreateWithoutLeaveBalancesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLeaveBalancesInput = {
@@ -2329,6 +2595,7 @@ export type OrganizationUpdateToOneWithWhereWithoutLeaveBalancesInput = {
 
 export type OrganizationUpdateWithoutLeaveBalancesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2352,11 +2619,13 @@ export type OrganizationUpdateWithoutLeaveBalancesInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLeaveBalancesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2380,10 +2649,12 @@ export type OrganizationUncheckedUpdateWithoutLeaveBalancesInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLeaveRequestsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2407,11 +2678,13 @@ export type OrganizationCreateWithoutLeaveRequestsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLeaveRequestsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2435,6 +2708,7 @@ export type OrganizationUncheckedCreateWithoutLeaveRequestsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLeaveRequestsInput = {
@@ -2455,6 +2729,7 @@ export type OrganizationUpdateToOneWithWhereWithoutLeaveRequestsInput = {
 
 export type OrganizationUpdateWithoutLeaveRequestsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2478,11 +2753,13 @@ export type OrganizationUpdateWithoutLeaveRequestsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLeaveRequestsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2506,10 +2783,12 @@ export type OrganizationUncheckedUpdateWithoutLeaveRequestsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutHolidaysInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2533,11 +2812,13 @@ export type OrganizationCreateWithoutHolidaysInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutHolidaysInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2561,6 +2842,7 @@ export type OrganizationUncheckedCreateWithoutHolidaysInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutHolidaysInput = {
@@ -2581,6 +2863,7 @@ export type OrganizationUpdateToOneWithWhereWithoutHolidaysInput = {
 
 export type OrganizationUpdateWithoutHolidaysInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2604,11 +2887,13 @@ export type OrganizationUpdateWithoutHolidaysInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutHolidaysInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2632,10 +2917,12 @@ export type OrganizationUncheckedUpdateWithoutHolidaysInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPayrollComponentsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2659,11 +2946,13 @@ export type OrganizationCreateWithoutPayrollComponentsInput = {
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPayrollComponentsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2687,6 +2976,7 @@ export type OrganizationUncheckedCreateWithoutPayrollComponentsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPayrollComponentsInput = {
@@ -2707,6 +2997,7 @@ export type OrganizationUpdateToOneWithWhereWithoutPayrollComponentsInput = {
 
 export type OrganizationUpdateWithoutPayrollComponentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2730,11 +3021,13 @@ export type OrganizationUpdateWithoutPayrollComponentsInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPayrollComponentsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2758,10 +3051,12 @@ export type OrganizationUncheckedUpdateWithoutPayrollComponentsInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPayrollRunsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2785,11 +3080,13 @@ export type OrganizationCreateWithoutPayrollRunsInput = {
   payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPayrollRunsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2813,6 +3110,7 @@ export type OrganizationUncheckedCreateWithoutPayrollRunsInput = {
   payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPayrollRunsInput = {
@@ -2833,6 +3131,7 @@ export type OrganizationUpdateToOneWithWhereWithoutPayrollRunsInput = {
 
 export type OrganizationUpdateWithoutPayrollRunsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2856,11 +3155,13 @@ export type OrganizationUpdateWithoutPayrollRunsInput = {
   payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPayrollRunsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2884,10 +3185,12 @@ export type OrganizationUncheckedUpdateWithoutPayrollRunsInput = {
   payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPayrollItemsInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2911,11 +3214,13 @@ export type OrganizationCreateWithoutPayrollItemsInput = {
   payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPayrollItemsInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -2939,6 +3244,7 @@ export type OrganizationUncheckedCreateWithoutPayrollItemsInput = {
   payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPayrollItemsInput = {
@@ -2959,6 +3265,7 @@ export type OrganizationUpdateToOneWithWhereWithoutPayrollItemsInput = {
 
 export type OrganizationUpdateWithoutPayrollItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2982,11 +3289,13 @@ export type OrganizationUpdateWithoutPayrollItemsInput = {
   payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPayrollItemsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3010,10 +3319,12 @@ export type OrganizationUncheckedUpdateWithoutPayrollItemsInput = {
   payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPayrollEmployeeSummariesInput = {
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -3037,11 +3348,13 @@ export type OrganizationCreateWithoutPayrollEmployeeSummariesInput = {
   payrollComponents?: Prisma.PayrollComponentCreateNestedManyWithoutOrganizationInput
   payrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPayrollEmployeeSummariesInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -3065,6 +3378,7 @@ export type OrganizationUncheckedCreateWithoutPayrollEmployeeSummariesInput = {
   payrollComponents?: Prisma.PayrollComponentUncheckedCreateNestedManyWithoutOrganizationInput
   payrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutOrganizationInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutOrganizationInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPayrollEmployeeSummariesInput = {
@@ -3085,6 +3399,7 @@ export type OrganizationUpdateToOneWithWhereWithoutPayrollEmployeeSummariesInput
 
 export type OrganizationUpdateWithoutPayrollEmployeeSummariesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3108,11 +3423,13 @@ export type OrganizationUpdateWithoutPayrollEmployeeSummariesInput = {
   payrollComponents?: Prisma.PayrollComponentUpdateManyWithoutOrganizationNestedInput
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPayrollEmployeeSummariesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3136,11 +3453,13 @@ export type OrganizationUncheckedUpdateWithoutPayrollEmployeeSummariesInput = {
   payrollComponents?: Prisma.PayrollComponentUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyPlanInput = {
   id?: number
   name: string
+  ownerEmail?: string | null
   total_employees: number
   status: $Enums.OrganizationStatus
   expire_time?: Date | string | null
@@ -3151,6 +3470,7 @@ export type OrganizationCreateManyPlanInput = {
 
 export type OrganizationUpdateWithoutPlanInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3174,11 +3494,13 @@ export type OrganizationUpdateWithoutPlanInput = {
   payrollRuns?: Prisma.PayrollRunUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPlanInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3202,11 +3524,13 @@ export type OrganizationUncheckedUpdateWithoutPlanInput = {
   payrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutOrganizationNestedInput
   payrollEmployeeSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateManyWithoutPlanInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   total_employees?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
   expire_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3238,6 +3562,7 @@ export type OrganizationCountOutputType = {
   payrollRuns: number
   payrollItems: number
   payrollEmployeeSummaries: number
+  onboardingTokens: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3258,6 +3583,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   payrollRuns?: boolean | OrganizationCountOutputTypeCountPayrollRunsArgs
   payrollItems?: boolean | OrganizationCountOutputTypeCountPayrollItemsArgs
   payrollEmployeeSummaries?: boolean | OrganizationCountOutputTypeCountPayrollEmployeeSummariesArgs
+  onboardingTokens?: boolean | OrganizationCountOutputTypeCountOnboardingTokensArgs
 }
 
 /**
@@ -3389,10 +3715,18 @@ export type OrganizationCountOutputTypeCountPayrollEmployeeSummariesArgs<ExtArgs
   where?: Prisma.PayrollEmployeeSummaryWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountOnboardingTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationOnboardingTokenWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  ownerEmail?: boolean
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
@@ -3418,12 +3752,14 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   payrollRuns?: boolean | Prisma.Organization$payrollRunsArgs<ExtArgs>
   payrollItems?: boolean | Prisma.Organization$payrollItemsArgs<ExtArgs>
   payrollEmployeeSummaries?: boolean | Prisma.Organization$payrollEmployeeSummariesArgs<ExtArgs>
+  onboardingTokens?: boolean | Prisma.Organization$onboardingTokensArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
 export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  ownerEmail?: boolean
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
@@ -3437,6 +3773,7 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  ownerEmail?: boolean
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
@@ -3450,6 +3787,7 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type OrganizationSelectScalar = {
   id?: boolean
   name?: boolean
+  ownerEmail?: boolean
   total_employees?: boolean
   status?: boolean
   expire_time?: boolean
@@ -3459,7 +3797,7 @@ export type OrganizationSelectScalar = {
   off_days?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "total_employees" | "status" | "expire_time" | "code" | "planId" | "working_days" | "off_days", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "ownerEmail" | "total_employees" | "status" | "expire_time" | "code" | "planId" | "working_days" | "off_days", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
   departments?: boolean | Prisma.Organization$departmentsArgs<ExtArgs>
@@ -3479,6 +3817,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   payrollRuns?: boolean | Prisma.Organization$payrollRunsArgs<ExtArgs>
   payrollItems?: boolean | Prisma.Organization$payrollItemsArgs<ExtArgs>
   payrollEmployeeSummaries?: boolean | Prisma.Organization$payrollEmployeeSummariesArgs<ExtArgs>
+  onboardingTokens?: boolean | Prisma.Organization$onboardingTokensArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3509,10 +3848,12 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     payrollRuns: Prisma.$PayrollRunPayload<ExtArgs>[]
     payrollItems: Prisma.$PayrollItemPayload<ExtArgs>[]
     payrollEmployeeSummaries: Prisma.$PayrollEmployeeSummaryPayload<ExtArgs>[]
+    onboardingTokens: Prisma.$OrganizationOnboardingTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
+    ownerEmail: string | null
     total_employees: number
     status: $Enums.OrganizationStatus
     expire_time: Date | null
@@ -3932,6 +4273,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   payrollRuns<T extends Prisma.Organization$payrollRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$payrollRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payrollItems<T extends Prisma.Organization$payrollItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$payrollItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payrollEmployeeSummaries<T extends Prisma.Organization$payrollEmployeeSummariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$payrollEmployeeSummariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollEmployeeSummaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  onboardingTokens<T extends Prisma.Organization$onboardingTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$onboardingTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationOnboardingTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3963,6 +4305,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
 export interface OrganizationFieldRefs {
   readonly id: Prisma.FieldRef<"Organization", 'Int'>
   readonly name: Prisma.FieldRef<"Organization", 'String'>
+  readonly ownerEmail: Prisma.FieldRef<"Organization", 'String'>
   readonly total_employees: Prisma.FieldRef<"Organization", 'Int'>
   readonly status: Prisma.FieldRef<"Organization", 'OrganizationStatus'>
   readonly expire_time: Prisma.FieldRef<"Organization", 'DateTime'>
@@ -4776,6 +5119,30 @@ export type Organization$payrollEmployeeSummariesArgs<ExtArgs extends runtime.Ty
   take?: number
   skip?: number
   distinct?: Prisma.PayrollEmployeeSummaryScalarFieldEnum | Prisma.PayrollEmployeeSummaryScalarFieldEnum[]
+}
+
+/**
+ * Organization.onboardingTokens
+ */
+export type Organization$onboardingTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationOnboardingToken
+   */
+  select?: Prisma.OrganizationOnboardingTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationOnboardingToken
+   */
+  omit?: Prisma.OrganizationOnboardingTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationOnboardingTokenInclude<ExtArgs> | null
+  where?: Prisma.OrganizationOnboardingTokenWhereInput
+  orderBy?: Prisma.OrganizationOnboardingTokenOrderByWithRelationInput | Prisma.OrganizationOnboardingTokenOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationOnboardingTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationOnboardingTokenScalarFieldEnum | Prisma.OrganizationOnboardingTokenScalarFieldEnum[]
 }
 
 /**

@@ -244,4 +244,117 @@ describe("workflow foundation integration", () => {
     assert.equal(res.status, 200);
     assert.equal(res.body.message, "Fetched Successfully");
   });
+
+  test("GET /api/admin/organization allows superadmin scope", async () => {
+    prismaMock.organization.count = async () => 1;
+    prismaMock.organization.findMany = async () => [
+      {
+        id: 10,
+        name: "Org One",
+        total_employees: 3,
+        status: "ACTIVE",
+        expire_time: null,
+        code: "ORG-001",
+        plan: {
+          id: 1,
+          name: "Starter",
+        },
+      },
+    ];
+
+    const res = await request(app)
+      .get("/api/admin/organization")
+      .set(superadminAuthHeader);
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, "Organization Fetched");
+    assert.equal(Array.isArray(res.body.data), true);
+    assert.equal(res.body.data.length, 1);
+  });
+
+  test("GET /api/admin/departments allows superadmin scope", async () => {
+    prismaMock.department.count = async () => 1;
+    prismaMock.department.findMany = async () => [
+      {
+        id: 1,
+        name: "Operations",
+        location: "HQ",
+        positions: [],
+      },
+    ];
+
+    const res = await request(app)
+      .get("/api/admin/departments")
+      .set(superadminAuthHeader);
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, "Departments fetched");
+    assert.equal(Array.isArray(res.body.data), true);
+    assert.equal(res.body.data.length, 1);
+  });
+
+  test("GET /api/admin/positions allows superadmin scope", async () => {
+    prismaMock.position.count = async () => 1;
+    prismaMock.position.findMany = async () => [
+      {
+        id: 1,
+        name: "HR Manager",
+        department: {
+          id: 1,
+          name: "Operations",
+        },
+      },
+    ];
+
+    const res = await request(app)
+      .get("/api/admin/positions")
+      .set(superadminAuthHeader);
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, "Positions fetched");
+    assert.equal(Array.isArray(res.body.data), true);
+    assert.equal(res.body.data.length, 1);
+  });
+
+  test("POST /api/admin/organization allows superadmin scope", async () => {
+    prismaMock.codeCounter.upsert = async () => ({ value: 9 });
+    prismaMock.employee.findFirst = async () => null;
+    prismaMock.organization.create = async () => ({
+      id: 11,
+      name: "New Org",
+      ownerEmail: "owner@neworg.local",
+      total_employees: 100,
+      status: "APPROVED",
+      expire_time: null,
+      code: "ORG-009",
+      planId: 1,
+    });
+    prismaMock.department.create = async () => ({ id: 20 });
+    prismaMock.employee.create = async () => ({
+      id: 100,
+      email: "owner@neworg.local",
+      full_name: "New Org Super Admin",
+      code: "EMP-009",
+    });
+    prismaMock.designation.upsert = async () => ({ id: 31 });
+    prismaMock.menu.findMany = async () => [{ id: 1 }, { id: 2 }];
+    prismaMock.designationOnMenu.upsert = async () => ({});
+    prismaMock.designationOnEmployee.upsert = async () => ({});
+
+    const res = await request(app)
+      .post("/api/admin/organization")
+      .set(superadminAuthHeader)
+      .send({
+        name: "New Org",
+        ownerEmail: "owner@neworg.local",
+        ownerPassword: "123456",
+        total_employees: 100,
+        status: "APPROVED",
+        planId: 1,
+      });
+
+    assert.equal(res.status, 201);
+    assert.equal(res.body.message, "Organization Created");
+    assert.equal(res.body.data.name, "New Org");
+  });
 });

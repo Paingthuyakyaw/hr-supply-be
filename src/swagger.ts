@@ -204,6 +204,28 @@ const openApiSpec = {
         },
       },
     },
+    "/admin/platform/organizations/{id}/approve": {
+      post: {
+        summary: "Approve organization (SUPERADMIN)",
+        tags: ["Admin - Platform Users"],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/ApproveOrganizationRequest"),
+            },
+          },
+        },
+        responses: {
+          "200": { description: "Organization approved" },
+          "400": { description: "Invalid payload" },
+          "401": { description: "Unauthorized" },
+          "409": { description: "ownerEmail conflict" },
+        },
+      },
+    },
     "/admin/platform-users/{id}": {
       patch: {
         summary: "Update platform user (SUPERADMIN)",
@@ -243,6 +265,111 @@ const openApiSpec = {
               },
             },
           },
+        },
+      },
+    },
+    "/admin/designation": {
+      get: {
+        summary: "List designations",
+        tags: ["Admin - Designation"],
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: "search", in: "query", schema: { type: "string" } },
+          { name: "page", in: "query", schema: { type: "integer", default: 1 } },
+          { name: "size", in: "query", schema: { type: "integer", default: 10 } },
+        ],
+        responses: {
+          "200": {
+            description: "Designation fetched",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/DesignationListResponse"),
+              },
+            },
+          },
+        },
+      },
+      post: {
+        summary: "Create designation",
+        tags: ["Admin - Designation"],
+        security: [{ bearerAuth: [] }],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/DesignationCreateRequest"),
+            },
+          },
+        },
+        responses: {
+          "201": {
+            description: "Designation created",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/DesignationDataResponse"),
+              },
+            },
+          },
+        },
+      },
+    },
+    "/admin/designation/{id}": {
+      get: {
+        summary: "Get designation detail",
+        tags: ["Admin - Designation"],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+        responses: {
+          "200": {
+            description: "Designation detail",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/DesignationDataResponse"),
+              },
+            },
+          },
+          "404": { description: "Designation not found" },
+        },
+      },
+      put: {
+        summary: "Update designation",
+        tags: ["Admin - Designation"],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/DesignationUpdateRequest"),
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Designation updated",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/DesignationDataResponse"),
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        summary: "Delete designation",
+        tags: ["Admin - Designation"],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+        responses: {
+          "200": {
+            description: "Designation deleted",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/DeleteByIdResponse"),
+              },
+            },
+          },
+          "404": { description: "Designation not found" },
         },
       },
     },
@@ -634,6 +761,7 @@ const openApiSpec = {
       get: {
         summary: "List departments",
         tags: ["Admin - Departments"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "page",
@@ -667,6 +795,7 @@ const openApiSpec = {
       post: {
         summary: "Create department",
         tags: ["Admin - Departments"],
+        security: [{ bearerAuth: [] }],
         requestBody: {
           required: true,
           content: {
@@ -692,6 +821,7 @@ const openApiSpec = {
       get: {
         summary: "Get department by ID",
         tags: ["Admin - Departments"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -717,6 +847,7 @@ const openApiSpec = {
       put: {
         summary: "Update department",
         tags: ["Admin - Departments"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -749,6 +880,7 @@ const openApiSpec = {
       delete: {
         summary: "Delete department",
         tags: ["Admin - Departments"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -769,6 +901,7 @@ const openApiSpec = {
       get: {
         summary: "List positions",
         tags: ["Admin - Positions"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "page",
@@ -808,6 +941,7 @@ const openApiSpec = {
       post: {
         summary: "Create position",
         tags: ["Admin - Positions"],
+        security: [{ bearerAuth: [] }],
         requestBody: {
           required: true,
           content: {
@@ -833,6 +967,7 @@ const openApiSpec = {
       get: {
         summary: "Get position by ID",
         tags: ["Admin - Positions"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -858,6 +993,7 @@ const openApiSpec = {
       put: {
         summary: "Update position",
         tags: ["Admin - Positions"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -890,6 +1026,7 @@ const openApiSpec = {
       delete: {
         summary: "Delete position",
         tags: ["Admin - Positions"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "id",
@@ -910,6 +1047,7 @@ const openApiSpec = {
       get: {
         summary: "List organizations",
         tags: ["Admin - Organization"],
+        security: [{ bearerAuth: [] }],
         parameters: [
           {
             name: "page",
@@ -952,6 +1090,7 @@ const openApiSpec = {
       post: {
         summary: "Create organization",
         tags: ["Admin - Organization"],
+        security: [{ bearerAuth: [] }],
         requestBody: {
           required: true,
           content: {
@@ -985,6 +1124,7 @@ const openApiSpec = {
       get: {
         summary: "Plan Listing",
         tags: ["Admin - Plan"],
+        security: [{ bearerAuth: [] }],
         responses: {
           "200": {
             description: "Plan Fetched",
@@ -3377,6 +3517,7 @@ const openApiSpec = {
         properties: {
           id: { type: "integer" },
           name: { type: "string" },
+          ownerEmail: { type: "string", format: "email", nullable: true },
           total_employees: { type: "integer" },
           status: {
             type: "string",
@@ -3399,19 +3540,15 @@ const openApiSpec = {
       },
       OrganizationCreateRequest: {
         type: "object",
-        required: ["name", "status", "planId"],
+        required: ["name", "ownerEmail", "ownerPassword", "status", "planId"],
         properties: {
           name: { type: "string" },
-          // Note: validator file uses `total_employment` but Prisma model uses `total_employees`.
-          // We document the intended Prisma field, plus the current validator field for compatibility.
+          ownerEmail: { type: "string", format: "email" },
+          ownerPassword: { type: "string", minLength: 6, maxLength: 128 },
+          ownerName: { type: "string" },
           total_employees: {
             type: "integer",
             description: "Total employees limit/count",
-          },
-          total_employment: {
-            type: "integer",
-            description:
-              "Deprecated/compat alias used by current validator (prefer total_employees)",
           },
           status: {
             type: "string",
@@ -3433,6 +3570,82 @@ const openApiSpec = {
         properties: {
           message: { type: "string", example: "Validation Error" },
           errors: { type: "array", items: { type: "object" } },
+        },
+      },
+      DesignationPermission: {
+        type: "object",
+        properties: {
+          menu: { type: "string" },
+          actions: {
+            type: "array",
+            items: { type: "string", enum: ["CREATE", "VIEW", "UPDATE", "DELETE"] },
+          },
+        },
+      },
+      Designation: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          name: { type: "string" },
+          organizationId: { type: "integer" },
+          permissions: {
+            type: "array",
+            items: ref("#/components/schemas/DesignationPermission"),
+          },
+        },
+      },
+      DesignationCreateRequest: {
+        type: "object",
+        required: ["name"],
+        properties: {
+          name: { type: "string" },
+          permissions: {
+            type: "array",
+            items: ref("#/components/schemas/DesignationPermission"),
+          },
+          employeeIds: {
+            type: "array",
+            items: { type: "integer" },
+          },
+        },
+      },
+      DesignationUpdateRequest: {
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          permissions: {
+            type: "array",
+            items: ref("#/components/schemas/DesignationPermission"),
+          },
+          employeeIds: {
+            type: "array",
+            items: { type: "integer" },
+          },
+        },
+      },
+      DesignationDataResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: ref("#/components/schemas/Designation"),
+          meta: { nullable: true },
+          error: { nullable: true },
+        },
+      },
+      DesignationListResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: { type: "array", items: { type: "object" } },
+          meta: ref("#/components/schemas/PaginationMeta"),
+          error: { nullable: true },
+        },
+      },
+      ApproveOrganizationRequest: {
+        type: "object",
+        properties: {
+          ownerEmail: { type: "string", format: "email" },
+          ownerName: { type: "string" },
         },
       },
     },

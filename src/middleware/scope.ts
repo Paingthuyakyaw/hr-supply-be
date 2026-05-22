@@ -15,9 +15,19 @@ export const requireOwnAdminScope = (
   next: NextFunction,
 ) => {
   const user = (req as RequestWithUser).user;
-  if (user?.adminScope === "SUPERADMIN" && user.actorType === "platform") {
+  const isReadOnlyMethod = req.method === "GET" || req.method === "HEAD" || req.method === "OPTIONS";
+  if (isReadOnlyMethod) {
+    return next();
+  }
+  const isSuperadmin = user?.adminScope === "SUPERADMIN" && user.actorType === "platform";
+  const isOrganizationCreateEndpoint =
+    req.method === "POST" && req.baseUrl === "/api/admin/organization" && req.path === "/";
+  if (isSuperadmin && isOrganizationCreateEndpoint) {
+    return next();
+  }
+  if (isSuperadmin) {
     return res.status(403).json({
-      message: "Forbidden: this endpoint is limited to organization admins",
+      message: "Forbidden: write actions are limited to organization admins",
     });
   }
   return next();

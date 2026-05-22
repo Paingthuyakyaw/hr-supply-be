@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createDesignation,
+  deleteDesignation,
   getDesignationDetail,
   getDesignation,
   updateDesignation,
@@ -40,6 +41,12 @@ designationRouter.put(
   validate(updateDesignationSchema),
   requirePermission(MenuCode.EMPLOYEE, Action.UPDATE),
   updateDesignation,
+);
+designationRouter.delete(
+  `/:id`,
+  validate(designationIdParamSchema),
+  requirePermission(MenuCode.EMPLOYEE, Action.DELETE),
+  deleteDesignation,
 );
 
 export default designationRouter;

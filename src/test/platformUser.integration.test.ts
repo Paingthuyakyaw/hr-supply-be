@@ -122,4 +122,72 @@ describe("platform user integration", () => {
     assert.equal(res.body.message, "Platform user updated");
     assert.equal(res.body.data.isActive, false);
   });
+
+  test("POST /api/admin/platform/organizations/:id/approve bootstraps owner setup", async () => {
+    prismaMock.organization.findUnique = async () => ({
+      id: 10,
+      name: "Acme Org",
+      ownerEmail: null,
+      status: "PENDING",
+    });
+    prismaMock.employee.findFirst = async (args: any) => {
+      if (args?.where?.organizationId === 10 && args?.where?.email === "owner@acme.local") {
+        return null;
+      }
+      return null;
+    };
+    prismaMock.$transaction = async (callback: (tx: any) => Promise<any>) => {
+      const tx = {
+        organization: {
+          update: async () => ({
+            id: 10,
+            name: "Acme Org",
+            ownerEmail: "owner@acme.local",
+            status: "APPROVED",
+          }),
+        },
+        department: {
+          findFirst: async () => null,
+          create: async () => ({ id: 20 }),
+        },
+        employee: {
+          findFirst: async () => null,
+          create: async () => ({
+            id: 30,
+            code: "EMP-001",
+            email: "owner@acme.local",
+            full_name: "Acme Owner",
+          }),
+        },
+        codeCounter: {
+          upsert: async () => ({ value: 1 }),
+        },
+        designation: {
+          upsert: async () => ({ id: 40 }),
+        },
+        menu: {
+          findMany: async () => [{ id: 1 }, { id: 2 }],
+        },
+        designationOnMenu: {
+          upsert: async () => ({}),
+        },
+        designationOnEmployee: {
+          upsert: async () => ({}),
+        },
+      };
+      return callback(tx);
+    };
+
+    const res = await request(app)
+      .post("/api/admin/platform/organizations/10/approve")
+      .set(superadminAuthHeader)
+      .send({
+        ownerEmail: "owner@acme.local",
+        ownerName: "Acme Owner",
+      });
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, "Organization approved");
+    assert.equal(res.body.data.organizationId, 10);
+  });
 });

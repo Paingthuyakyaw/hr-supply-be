@@ -212,7 +212,7 @@ describe("attendance integration", () => {
     assert.equal(res.status, 403);
     assert.equal(
       res.body.message,
-      "Forbidden: this endpoint is limited to organization admins",
+      "Forbidden: write actions are limited to organization admins",
     );
   });
 });

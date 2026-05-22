@@ -56,6 +56,7 @@ export const ModelName = {
   Department: 'Department',
   Position: 'Position',
   Employee: 'Employee',
+  OrganizationOnboardingToken: 'OrganizationOnboardingToken',
   EmployeeContract: 'EmployeeContract',
   ApprovalRequest: 'ApprovalRequest',
   ApprovalStep: 'ApprovalStep',
@@ -102,6 +103,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  ownerEmail: 'ownerEmail',
   total_employees: 'total_employees',
   status: 'status',
   expire_time: 'expire_time',
@@ -176,6 +178,21 @@ export const EmployeeScalarFieldEnum = {
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const OrganizationOnboardingTokenScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  employeeId: 'employeeId',
+  email: 'email',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationOnboardingTokenScalarFieldEnum = (typeof OrganizationOnboardingTokenScalarFieldEnum)[keyof typeof OrganizationOnboardingTokenScalarFieldEnum]
 
 
 export const EmployeeContractScalarFieldEnum = {

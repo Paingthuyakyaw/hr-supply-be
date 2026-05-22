@@ -324,6 +324,7 @@ export type EmployeeWhereInput = {
   payrollItems?: Prisma.PayrollItemListRelationFilter
   createdPayrollRuns?: Prisma.PayrollRunListRelationFilter
   payrollSummaries?: Prisma.PayrollEmployeeSummaryListRelationFilter
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenListRelationFilter
 }
 
 export type EmployeeOrderByWithRelationInput = {
@@ -359,6 +360,7 @@ export type EmployeeOrderByWithRelationInput = {
   payrollItems?: Prisma.PayrollItemOrderByRelationAggregateInput
   createdPayrollRuns?: Prisma.PayrollRunOrderByRelationAggregateInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryOrderByRelationAggregateInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenOrderByRelationAggregateInput
 }
 
 export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
@@ -397,6 +399,7 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   payrollItems?: Prisma.PayrollItemListRelationFilter
   createdPayrollRuns?: Prisma.PayrollRunListRelationFilter
   payrollSummaries?: Prisma.PayrollEmployeeSummaryListRelationFilter
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenListRelationFilter
 }, "id" | "code" | "email" | "phoneNumber">
 
 export type EmployeeOrderByWithAggregationInput = {
@@ -475,6 +478,7 @@ export type EmployeeCreateInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateInput = {
@@ -508,6 +512,7 @@ export type EmployeeUncheckedCreateInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUpdateInput = {
@@ -540,6 +545,7 @@ export type EmployeeUpdateInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateInput = {
@@ -573,6 +579,7 @@ export type EmployeeUncheckedUpdateInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateManyInput = {
@@ -841,6 +848,20 @@ export type EnumEmployeeStatusFieldUpdateOperationsInput = {
   set?: $Enums.EmployeeStatus
 }
 
+export type EmployeeCreateNestedOneWithoutOnboardingTokensInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutOnboardingTokensInput, Prisma.EmployeeUncheckedCreateWithoutOnboardingTokensInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutOnboardingTokensInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+}
+
+export type EmployeeUpdateOneRequiredWithoutOnboardingTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutOnboardingTokensInput, Prisma.EmployeeUncheckedCreateWithoutOnboardingTokensInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutOnboardingTokensInput
+  upsert?: Prisma.EmployeeUpsertWithoutOnboardingTokensInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutOnboardingTokensInput, Prisma.EmployeeUpdateWithoutOnboardingTokensInput>, Prisma.EmployeeUncheckedUpdateWithoutOnboardingTokensInput>
+}
+
 export type EmployeeCreateNestedOneWithoutContractRecordsInput = {
   create?: Prisma.XOR<Prisma.EmployeeCreateWithoutContractRecordsInput, Prisma.EmployeeUncheckedCreateWithoutContractRecordsInput>
   connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutContractRecordsInput
@@ -1058,6 +1079,7 @@ export type EmployeeCreateWithoutOrganizationInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutOrganizationInput = {
@@ -1090,6 +1112,7 @@ export type EmployeeUncheckedCreateWithoutOrganizationInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutOrganizationInput = {
@@ -1169,6 +1192,7 @@ export type EmployeeCreateWithoutHead_employeeInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutHead_employeeInput = {
@@ -1201,6 +1225,7 @@ export type EmployeeUncheckedCreateWithoutHead_employeeInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutHead_employeeInput = {
@@ -1237,6 +1262,7 @@ export type EmployeeCreateWithoutDepartmentInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutDepartmentInput = {
@@ -1269,6 +1295,7 @@ export type EmployeeUncheckedCreateWithoutDepartmentInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutDepartmentInput = {
@@ -1321,6 +1348,7 @@ export type EmployeeUpdateWithoutHead_employeeInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutHead_employeeInput = {
@@ -1353,6 +1381,7 @@ export type EmployeeUncheckedUpdateWithoutHead_employeeInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -1369,6 +1398,152 @@ export type EmployeeUpdateWithWhereUniqueWithoutDepartmentInput = {
 export type EmployeeUpdateManyWithWhereWithoutDepartmentInput = {
   where: Prisma.EmployeeScalarWhereInput
   data: Prisma.XOR<Prisma.EmployeeUpdateManyMutationInput, Prisma.EmployeeUncheckedUpdateManyWithoutDepartmentInput>
+}
+
+export type EmployeeCreateWithoutOnboardingTokensInput = {
+  full_name: string
+  avatar?: string | null
+  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
+  code: string
+  email?: string | null
+  phoneNumber?: string | null
+  password?: string | null
+  dob?: Date | string | null
+  employment_type?: $Enums.EmployeeType
+  status?: $Enums.EmployeeStatus
+  location: string
+  date_joined?: Date | string
+  updated_at?: Date | string
+  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
+  department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
+  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
+  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
+  designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
+  requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
+  approvalSteps?: Prisma.ApprovalStepCreateNestedManyWithoutApproverInput
+  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutEmployeeInput
+  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutEmployeeInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutEmployeeInput
+  reviewedLeaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutReviewedByInput
+  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
+  createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
+  payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+}
+
+export type EmployeeUncheckedCreateWithoutOnboardingTokensInput = {
+  id?: number
+  full_name: string
+  avatar?: string | null
+  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
+  code: string
+  email?: string | null
+  phoneNumber?: string | null
+  password?: string | null
+  dob?: Date | string | null
+  employment_type?: $Enums.EmployeeType
+  status?: $Enums.EmployeeStatus
+  location: string
+  date_joined?: Date | string
+  updated_at?: Date | string
+  department_id: number
+  organizationId: number
+  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
+  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
+  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
+  designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
+  approvalSteps?: Prisma.ApprovalStepUncheckedCreateNestedManyWithoutApproverInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutEmployeeInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutEmployeeInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutEmployeeInput
+  reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
+  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
+  createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
+  payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+}
+
+export type EmployeeCreateOrConnectWithoutOnboardingTokensInput = {
+  where: Prisma.EmployeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutOnboardingTokensInput, Prisma.EmployeeUncheckedCreateWithoutOnboardingTokensInput>
+}
+
+export type EmployeeUpsertWithoutOnboardingTokensInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutOnboardingTokensInput, Prisma.EmployeeUncheckedUpdateWithoutOnboardingTokensInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutOnboardingTokensInput, Prisma.EmployeeUncheckedCreateWithoutOnboardingTokensInput>
+  where?: Prisma.EmployeeWhereInput
+}
+
+export type EmployeeUpdateToOneWithWhereWithoutOnboardingTokensInput = {
+  where?: Prisma.EmployeeWhereInput
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutOnboardingTokensInput, Prisma.EmployeeUncheckedUpdateWithoutOnboardingTokensInput>
+}
+
+export type EmployeeUpdateWithoutOnboardingTokensInput = {
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
+  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
+  department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
+  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
+  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
+  designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
+  requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
+  approvalSteps?: Prisma.ApprovalStepUpdateManyWithoutApproverNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutEmployeeNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutEmployeeNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutEmployeeNestedInput
+  reviewedLeaveRequests?: Prisma.LeaveRequestUpdateManyWithoutReviewedByNestedInput
+  payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
+  createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
+  payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+}
+
+export type EmployeeUncheckedUpdateWithoutOnboardingTokensInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
+  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department_id?: Prisma.IntFieldUpdateOperationsInput | number
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
+  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
+  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
+  designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  approvalSteps?: Prisma.ApprovalStepUncheckedUpdateManyWithoutApproverNestedInput
+  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutEmployeeNestedInput
+  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutEmployeeNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutEmployeeNestedInput
+  reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
+  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
+  createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
+  payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutContractRecordsInput = {
@@ -1400,6 +1575,7 @@ export type EmployeeCreateWithoutContractRecordsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutContractRecordsInput = {
@@ -1432,6 +1608,7 @@ export type EmployeeUncheckedCreateWithoutContractRecordsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutContractRecordsInput = {
@@ -1479,6 +1656,7 @@ export type EmployeeUpdateWithoutContractRecordsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutContractRecordsInput = {
@@ -1511,6 +1689,7 @@ export type EmployeeUncheckedUpdateWithoutContractRecordsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutRequestedApprovalsInput = {
@@ -1542,6 +1721,7 @@ export type EmployeeCreateWithoutRequestedApprovalsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutRequestedApprovalsInput = {
@@ -1574,6 +1754,7 @@ export type EmployeeUncheckedCreateWithoutRequestedApprovalsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutRequestedApprovalsInput = {
@@ -1621,6 +1802,7 @@ export type EmployeeUpdateWithoutRequestedApprovalsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutRequestedApprovalsInput = {
@@ -1653,6 +1835,7 @@ export type EmployeeUncheckedUpdateWithoutRequestedApprovalsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutApprovalStepsInput = {
@@ -1684,6 +1867,7 @@ export type EmployeeCreateWithoutApprovalStepsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutApprovalStepsInput = {
@@ -1716,6 +1900,7 @@ export type EmployeeUncheckedCreateWithoutApprovalStepsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutApprovalStepsInput = {
@@ -1763,6 +1948,7 @@ export type EmployeeUpdateWithoutApprovalStepsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutApprovalStepsInput = {
@@ -1795,6 +1981,7 @@ export type EmployeeUncheckedUpdateWithoutApprovalStepsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutPositionsInput = {
@@ -1826,6 +2013,7 @@ export type EmployeeCreateWithoutPositionsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutPositionsInput = {
@@ -1858,6 +2046,7 @@ export type EmployeeUncheckedCreateWithoutPositionsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutPositionsInput = {
@@ -1905,6 +2094,7 @@ export type EmployeeUpdateWithoutPositionsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutPositionsInput = {
@@ -1937,6 +2127,7 @@ export type EmployeeUncheckedUpdateWithoutPositionsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutDocumentsInput = {
@@ -1968,6 +2159,7 @@ export type EmployeeCreateWithoutDocumentsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutDocumentsInput = {
@@ -2000,6 +2192,7 @@ export type EmployeeUncheckedCreateWithoutDocumentsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutDocumentsInput = {
@@ -2047,6 +2240,7 @@ export type EmployeeUpdateWithoutDocumentsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutDocumentsInput = {
@@ -2079,6 +2273,7 @@ export type EmployeeUncheckedUpdateWithoutDocumentsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutDesignationsInput = {
@@ -2110,6 +2305,7 @@ export type EmployeeCreateWithoutDesignationsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutDesignationsInput = {
@@ -2142,6 +2338,7 @@ export type EmployeeUncheckedCreateWithoutDesignationsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutDesignationsInput = {
@@ -2189,6 +2386,7 @@ export type EmployeeUpdateWithoutDesignationsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutDesignationsInput = {
@@ -2221,6 +2419,7 @@ export type EmployeeUncheckedUpdateWithoutDesignationsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutAttendanceRecordsInput = {
@@ -2252,6 +2451,7 @@ export type EmployeeCreateWithoutAttendanceRecordsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutAttendanceRecordsInput = {
@@ -2284,6 +2484,7 @@ export type EmployeeUncheckedCreateWithoutAttendanceRecordsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutAttendanceRecordsInput = {
@@ -2331,6 +2532,7 @@ export type EmployeeUpdateWithoutAttendanceRecordsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutAttendanceRecordsInput = {
@@ -2363,6 +2565,7 @@ export type EmployeeUncheckedUpdateWithoutAttendanceRecordsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutLeaveBalancesInput = {
@@ -2394,6 +2597,7 @@ export type EmployeeCreateWithoutLeaveBalancesInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutLeaveBalancesInput = {
@@ -2426,6 +2630,7 @@ export type EmployeeUncheckedCreateWithoutLeaveBalancesInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutLeaveBalancesInput = {
@@ -2473,6 +2678,7 @@ export type EmployeeUpdateWithoutLeaveBalancesInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutLeaveBalancesInput = {
@@ -2505,6 +2711,7 @@ export type EmployeeUncheckedUpdateWithoutLeaveBalancesInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutLeaveRequestsInput = {
@@ -2536,6 +2743,7 @@ export type EmployeeCreateWithoutLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutLeaveRequestsInput = {
@@ -2568,6 +2776,7 @@ export type EmployeeUncheckedCreateWithoutLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutLeaveRequestsInput = {
@@ -2604,6 +2813,7 @@ export type EmployeeCreateWithoutReviewedLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutReviewedLeaveRequestsInput = {
@@ -2636,6 +2846,7 @@ export type EmployeeUncheckedCreateWithoutReviewedLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutReviewedLeaveRequestsInput = {
@@ -2683,6 +2894,7 @@ export type EmployeeUpdateWithoutLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutLeaveRequestsInput = {
@@ -2715,6 +2927,7 @@ export type EmployeeUncheckedUpdateWithoutLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUpsertWithoutReviewedLeaveRequestsInput = {
@@ -2757,6 +2970,7 @@ export type EmployeeUpdateWithoutReviewedLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutReviewedLeaveRequestsInput = {
@@ -2789,6 +3003,7 @@ export type EmployeeUncheckedUpdateWithoutReviewedLeaveRequestsInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutCreatedPayrollRunsInput = {
@@ -2820,6 +3035,7 @@ export type EmployeeCreateWithoutCreatedPayrollRunsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutReviewedByInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutCreatedPayrollRunsInput = {
@@ -2852,6 +3068,7 @@ export type EmployeeUncheckedCreateWithoutCreatedPayrollRunsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutCreatedPayrollRunsInput = {
@@ -2899,6 +3116,7 @@ export type EmployeeUpdateWithoutCreatedPayrollRunsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUpdateManyWithoutReviewedByNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutCreatedPayrollRunsInput = {
@@ -2931,6 +3149,7 @@ export type EmployeeUncheckedUpdateWithoutCreatedPayrollRunsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutPayrollItemsInput = {
@@ -2962,6 +3181,7 @@ export type EmployeeCreateWithoutPayrollItemsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutReviewedByInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutPayrollItemsInput = {
@@ -2994,6 +3214,7 @@ export type EmployeeUncheckedCreateWithoutPayrollItemsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutPayrollItemsInput = {
@@ -3041,6 +3262,7 @@ export type EmployeeUpdateWithoutPayrollItemsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUpdateManyWithoutReviewedByNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutPayrollItemsInput = {
@@ -3073,6 +3295,7 @@ export type EmployeeUncheckedUpdateWithoutPayrollItemsInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateWithoutPayrollSummariesInput = {
@@ -3104,6 +3327,7 @@ export type EmployeeCreateWithoutPayrollSummariesInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutReviewedByInput
   payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutPayrollSummariesInput = {
@@ -3136,6 +3360,7 @@ export type EmployeeUncheckedCreateWithoutPayrollSummariesInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
   payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutPayrollSummariesInput = {
@@ -3183,6 +3408,7 @@ export type EmployeeUpdateWithoutPayrollSummariesInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUpdateManyWithoutReviewedByNestedInput
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutPayrollSummariesInput = {
@@ -3215,6 +3441,7 @@ export type EmployeeUncheckedUpdateWithoutPayrollSummariesInput = {
   reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeCreateManyOrganizationInput = {
@@ -3264,6 +3491,7 @@ export type EmployeeUpdateWithoutOrganizationInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
@@ -3296,6 +3524,7 @@ export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateManyWithoutOrganizationInput = {
@@ -3363,6 +3592,7 @@ export type EmployeeUpdateWithoutDepartmentInput = {
   payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutDepartmentInput = {
@@ -3395,6 +3625,7 @@ export type EmployeeUncheckedUpdateWithoutDepartmentInput = {
   payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
   createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
+  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateManyWithoutDepartmentInput = {
@@ -3434,6 +3665,7 @@ export type EmployeeCountOutputType = {
   payrollItems: number
   createdPayrollRuns: number
   payrollSummaries: number
+  onboardingTokens: number
 }
 
 export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3450,6 +3682,7 @@ export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   payrollItems?: boolean | EmployeeCountOutputTypeCountPayrollItemsArgs
   createdPayrollRuns?: boolean | EmployeeCountOutputTypeCountCreatedPayrollRunsArgs
   payrollSummaries?: boolean | EmployeeCountOutputTypeCountPayrollSummariesArgs
+  onboardingTokens?: boolean | EmployeeCountOutputTypeCountOnboardingTokensArgs
 }
 
 /**
@@ -3553,6 +3786,13 @@ export type EmployeeCountOutputTypeCountPayrollSummariesArgs<ExtArgs extends run
   where?: Prisma.PayrollEmployeeSummaryWhereInput
 }
 
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountOnboardingTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationOnboardingTokenWhereInput
+}
+
 
 export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3587,6 +3827,7 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   payrollItems?: boolean | Prisma.Employee$payrollItemsArgs<ExtArgs>
   createdPayrollRuns?: boolean | Prisma.Employee$createdPayrollRunsArgs<ExtArgs>
   payrollSummaries?: boolean | Prisma.Employee$payrollSummariesArgs<ExtArgs>
+  onboardingTokens?: boolean | Prisma.Employee$onboardingTokensArgs<ExtArgs>
   _count?: boolean | Prisma.EmployeeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employee"]>
 
@@ -3669,6 +3910,7 @@ export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   payrollItems?: boolean | Prisma.Employee$payrollItemsArgs<ExtArgs>
   createdPayrollRuns?: boolean | Prisma.Employee$createdPayrollRunsArgs<ExtArgs>
   payrollSummaries?: boolean | Prisma.Employee$payrollSummariesArgs<ExtArgs>
+  onboardingTokens?: boolean | Prisma.Employee$onboardingTokensArgs<ExtArgs>
   _count?: boolean | Prisma.EmployeeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EmployeeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3699,6 +3941,7 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     payrollItems: Prisma.$PayrollItemPayload<ExtArgs>[]
     createdPayrollRuns: Prisma.$PayrollRunPayload<ExtArgs>[]
     payrollSummaries: Prisma.$PayrollEmployeeSummaryPayload<ExtArgs>[]
+    onboardingTokens: Prisma.$OrganizationOnboardingTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -4127,6 +4370,7 @@ export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime
   payrollItems<T extends Prisma.Employee$payrollItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$payrollItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdPayrollRuns<T extends Prisma.Employee$createdPayrollRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$createdPayrollRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payrollSummaries<T extends Prisma.Employee$payrollSummariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$payrollSummariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollEmployeeSummaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  onboardingTokens<T extends Prisma.Employee$onboardingTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$onboardingTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationOnboardingTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4901,6 +5145,30 @@ export type Employee$payrollSummariesArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.PayrollEmployeeSummaryScalarFieldEnum | Prisma.PayrollEmployeeSummaryScalarFieldEnum[]
+}
+
+/**
+ * Employee.onboardingTokens
+ */
+export type Employee$onboardingTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationOnboardingToken
+   */
+  select?: Prisma.OrganizationOnboardingTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationOnboardingToken
+   */
+  omit?: Prisma.OrganizationOnboardingTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationOnboardingTokenInclude<ExtArgs> | null
+  where?: Prisma.OrganizationOnboardingTokenWhereInput
+  orderBy?: Prisma.OrganizationOnboardingTokenOrderByWithRelationInput | Prisma.OrganizationOnboardingTokenOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationOnboardingTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationOnboardingTokenScalarFieldEnum | Prisma.OrganizationOnboardingTokenScalarFieldEnum[]
 }
 
 /**

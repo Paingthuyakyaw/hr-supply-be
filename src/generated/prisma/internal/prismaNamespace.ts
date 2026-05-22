@@ -389,6 +389,7 @@ export const ModelName = {
   Department: 'Department',
   Position: 'Position',
   Employee: 'Employee',
+  OrganizationOnboardingToken: 'OrganizationOnboardingToken',
   EmployeeContract: 'EmployeeContract',
   ApprovalRequest: 'ApprovalRequest',
   ApprovalStep: 'ApprovalStep',
@@ -429,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "employeeContract" | "approvalRequest" | "approvalStep" | "platformUser" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee" | "codeCounter" | "organizationSchedule" | "attendancePolicy" | "attendanceShift" | "attendanceRecord" | "leaveType" | "leaveBalance" | "leaveRequest" | "holidayCalendar" | "payrollComponent" | "payrollRun" | "payrollItem" | "payrollEmployeeSummary"
+    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "organizationOnboardingToken" | "employeeContract" | "approvalRequest" | "approvalStep" | "platformUser" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee" | "codeCounter" | "organizationSchedule" | "attendancePolicy" | "attendanceShift" | "attendanceRecord" | "leaveType" | "leaveBalance" | "leaveRequest" | "holidayCalendar" | "payrollComponent" | "payrollRun" | "payrollItem" | "payrollEmployeeSummary"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -800,6 +801,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.EmployeeCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.EmployeeCountAggregateOutputType> | number
+        }
+      }
+    }
+    OrganizationOnboardingToken: {
+      payload: Prisma.$OrganizationOnboardingTokenPayload<ExtArgs>
+      fields: Prisma.OrganizationOnboardingTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OrganizationOnboardingTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OrganizationOnboardingTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.OrganizationOnboardingTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OrganizationOnboardingTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>
+        }
+        findMany: {
+          args: Prisma.OrganizationOnboardingTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>[]
+        }
+        create: {
+          args: Prisma.OrganizationOnboardingTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>
+        }
+        createMany: {
+          args: Prisma.OrganizationOnboardingTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OrganizationOnboardingTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.OrganizationOnboardingTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>
+        }
+        update: {
+          args: Prisma.OrganizationOnboardingTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.OrganizationOnboardingTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OrganizationOnboardingTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OrganizationOnboardingTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.OrganizationOnboardingTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationOnboardingTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.OrganizationOnboardingTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOrganizationOnboardingToken>
+        }
+        groupBy: {
+          args: Prisma.OrganizationOnboardingTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OrganizationOnboardingTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OrganizationOnboardingTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OrganizationOnboardingTokenCountAggregateOutputType> | number
         }
       }
     }
@@ -2695,6 +2770,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  ownerEmail: 'ownerEmail',
   total_employees: 'total_employees',
   status: 'status',
   expire_time: 'expire_time',
@@ -2769,6 +2845,21 @@ export const EmployeeScalarFieldEnum = {
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const OrganizationOnboardingTokenScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  employeeId: 'employeeId',
+  email: 'email',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationOnboardingTokenScalarFieldEnum = (typeof OrganizationOnboardingTokenScalarFieldEnum)[keyof typeof OrganizationOnboardingTokenScalarFieldEnum]
 
 
 export const EmployeeContractScalarFieldEnum = {
@@ -3637,6 +3728,7 @@ export type GlobalOmitConfig = {
   department?: Prisma.DepartmentOmit
   position?: Prisma.PositionOmit
   employee?: Prisma.EmployeeOmit
+  organizationOnboardingToken?: Prisma.OrganizationOnboardingTokenOmit
   employeeContract?: Prisma.EmployeeContractOmit
   approvalRequest?: Prisma.ApprovalRequestOmit
   approvalStep?: Prisma.ApprovalStepOmit

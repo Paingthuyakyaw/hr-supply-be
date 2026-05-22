@@ -45,6 +45,7 @@ beforeEach(() => {
     cb({
       designation: {
         update: async () => ({}),
+        delete: async () => ({}),
         findUnique: async () => ({
           id: 1,
           name: "Updated Name",
@@ -180,5 +181,27 @@ describe("designation integration", () => {
     assert.equal(res.status, 200);
     assert.equal(res.body.error, null);
     assert.equal(res.body.data.name, "Updated Name");
+  });
+
+  test("DELETE /api/designation/:id deletes designation", async () => {
+    prismaMock.designation.findFirst = async () => ({ id: 1 });
+    prismaMock.$transaction = async (cb: (tx: any) => Promise<any>) =>
+      cb({
+        designationOnEmployee: {
+          deleteMany: async () => ({}),
+        },
+        designationOnMenu: {
+          deleteMany: async () => ({}),
+        },
+        designation: {
+          delete: async () => ({}),
+        },
+      });
+
+    const res = await request(app).delete("/api/admin/designation/1").set(authHeader);
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, "Designation deleted");
+    assert.equal(res.body.data.id, 1);
   });
 });

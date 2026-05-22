@@ -413,3 +413,46 @@ export const updateDesignation = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteDesignation = async (req: Request, res: Response) => {
+  try {
+    const designationId = Number(req.params.id);
+    const userOrgId = getUserOrgId(req);
+    if (userOrgId === null) {
+      return sendError(res, { status: 401, message: "Unauthorized" });
+    }
+    if (!Number.isFinite(designationId)) {
+      return sendError(res, { status: 400, message: "Invalid designation id" });
+    }
+
+    const existing = await prisma.designation.findFirst({
+      where: {
+        id: designationId,
+        organizationId: userOrgId,
+      },
+      select: { id: true },
+    });
+    if (!existing) {
+      return sendError(res, { status: 404, message: "Designation not found" });
+    }
+
+    await prisma.$transaction(async (tx) => {
+      await tx.designationOnEmployee.deleteMany({
+        where: { designationId },
+      });
+      await tx.designationOnMenu.deleteMany({
+        where: { designationId },
+      });
+      await tx.designation.delete({
+        where: { id: designationId },
+      });
+    });
+
+    return sendSuccess(res, {
+      message: "Designation deleted",
+      data: { id: designationId },
+    });
+  } catch (err) {
+    return sendError(res, { message: "Server Error", error: err });
+  }
+};
+

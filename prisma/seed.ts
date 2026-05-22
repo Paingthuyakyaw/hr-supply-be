@@ -42,6 +42,12 @@ const todayUtc = () => {
 };
 
 const ALL_ACTIONS = [Action.CREATE, Action.VIEW, Action.UPDATE, Action.DELETE];
+const SEED_OWNER_EMAIL = "seed.owner@hr.local";
+const SEED_OWNER_PASSWORD = "123456";
+const SEED_ADMIN_EMAIL = "seed.admin@hr.local";
+const SEED_ADMIN_PASSWORD = "password123";
+const SEED_MANAGER_EMAIL = "seed.manager@hr.local";
+const SEED_STAFF_EMAIL = "seed.staff@hr.local";
 
 async function main() {
   const menuMap = new Map<MenuCode, { id: number; menu: MenuCode }>();
@@ -87,6 +93,7 @@ async function main() {
     where: { code: "SEED-ORG" },
     update: {
       name: "Seed Organization",
+      ownerEmail: SEED_OWNER_EMAIL,
       total_employees: 100,
       status: OrganizationStatus.APPROVED,
       planId: plan.id,
@@ -96,6 +103,7 @@ async function main() {
     create: {
       name: "Seed Organization",
       code: "SEED-ORG",
+      ownerEmail: SEED_OWNER_EMAIL,
       total_employees: 100,
       status: OrganizationStatus.APPROVED,
       planId: plan.id,
@@ -113,7 +121,7 @@ async function main() {
     },
     update: {
       is_active: true,
-      employee_count: 3,
+      employee_count: 4,
       location: "Yangon",
       annual_budget: "10000000",
       startTime: timeUtc(9, 0),
@@ -124,7 +132,7 @@ async function main() {
       organizationId: org.id,
       name: "Engineering",
       is_active: true,
-      employee_count: 3,
+      employee_count: 4,
       location: "Yangon",
       annual_budget: "10000000",
       startTime: timeUtc(9, 0),
@@ -162,13 +170,13 @@ async function main() {
     where: {
       organizationId_name: {
         organizationId: org.id,
-        name: "HR Admin",
+        name: "Org Super Admin",
       },
     },
     update: {},
     create: {
       organizationId: org.id,
-      name: "HR Admin",
+      name: "Org Super Admin",
     },
   });
 
@@ -189,13 +197,39 @@ async function main() {
     });
   }
 
-  const passwordHash = await bcrypt.hash("password123", 10);
+  const ownerPasswordHash = await bcrypt.hash(SEED_OWNER_PASSWORD, 10);
+  const passwordHash = await bcrypt.hash(SEED_ADMIN_PASSWORD, 10);
+
+  const owner = await prisma.employee.upsert({
+    where: { code: "SEED-EMP-OWNER" },
+    update: {
+      full_name: "Seed Owner",
+      email: SEED_OWNER_EMAIL,
+      password: ownerPasswordHash,
+      location: "Yangon",
+      department_id: department.id,
+      organizationId: org.id,
+      status: EmployeeStatus.ACTIVE,
+      employment_type: EmployeeType.FULL_TIME,
+    },
+    create: {
+      full_name: "Seed Owner",
+      code: "SEED-EMP-OWNER",
+      email: SEED_OWNER_EMAIL,
+      password: ownerPasswordHash,
+      location: "Yangon",
+      department_id: department.id,
+      organizationId: org.id,
+      status: EmployeeStatus.ACTIVE,
+      employment_type: EmployeeType.FULL_TIME,
+    },
+  });
 
   const admin = await prisma.employee.upsert({
     where: { code: "SEED-EMP-ADMIN" },
     update: {
       full_name: "Seed Admin",
-      email: "seed.admin@hr.local",
+      email: SEED_ADMIN_EMAIL,
       password: passwordHash,
       location: "Yangon",
       department_id: department.id,
@@ -206,7 +240,7 @@ async function main() {
     create: {
       full_name: "Seed Admin",
       code: "SEED-EMP-ADMIN",
-      email: "seed.admin@hr.local",
+      email: SEED_ADMIN_EMAIL,
       password: passwordHash,
       location: "Yangon",
       department_id: department.id,
@@ -220,7 +254,7 @@ async function main() {
     where: { code: "SEED-EMP-MGR" },
     update: {
       full_name: "Seed Manager",
-      email: "seed.manager@hr.local",
+      email: SEED_MANAGER_EMAIL,
       password: passwordHash,
       location: "Yangon",
       department_id: department.id,
@@ -231,7 +265,7 @@ async function main() {
     create: {
       full_name: "Seed Manager",
       code: "SEED-EMP-MGR",
-      email: "seed.manager@hr.local",
+      email: SEED_MANAGER_EMAIL,
       password: passwordHash,
       location: "Yangon",
       department_id: department.id,
@@ -245,7 +279,7 @@ async function main() {
     where: { code: "SEED-EMP-001" },
     update: {
       full_name: "Seed Staff",
-      email: "seed.staff@hr.local",
+      email: SEED_STAFF_EMAIL,
       password: passwordHash,
       location: "Yangon",
       department_id: department.id,
@@ -257,7 +291,7 @@ async function main() {
     create: {
       full_name: "Seed Staff",
       code: "SEED-EMP-001",
-      email: "seed.staff@hr.local",
+      email: SEED_STAFF_EMAIL,
       password: passwordHash,
       location: "Yangon",
       department_id: department.id,
@@ -268,7 +302,7 @@ async function main() {
     },
   });
 
-  for (const employee of [admin, manager, staff]) {
+  for (const employee of [owner, admin]) {
     await prisma.designationOnEmployee.upsert({
       where: {
         designationId_employeeId: {
@@ -284,7 +318,7 @@ async function main() {
     });
   }
 
-  for (const employee of [admin, manager, staff]) {
+  for (const employee of [owner, admin, manager, staff]) {
     await prisma.employeeOnPosition.upsert({
       where: {
         employee_id_position_id: {
@@ -631,7 +665,7 @@ async function main() {
     update: {
       status: PayrollRunStatus.DRAFT,
       notes: "Seed payroll run",
-      createdById: admin.id,
+      createdById: owner.id,
       processedAt: new Date(),
     },
     create: {
@@ -639,7 +673,7 @@ async function main() {
       month: payrollMonth,
       status: PayrollRunStatus.DRAFT,
       notes: "Seed payroll run",
-      createdById: admin.id,
+      createdById: owner.id,
       processedAt: new Date(),
     },
   });
@@ -651,7 +685,7 @@ async function main() {
     where: { organizationId: org.id, payrollRunId: payrollRun.id },
   });
 
-  const seedEmployees = [admin, manager, staff];
+  const seedEmployees = [owner, admin, manager, staff];
   for (const employee of seedEmployees) {
     const amounts = seededPayrollComponents.map((component) => {
       if (
@@ -793,9 +827,12 @@ async function main() {
   }
 
   console.info("Seed completed.");
-  console.info("Seed login credentials:");
-  console.info("  email: seed.admin@hr.local");
-  console.info("  password: password123");
+  console.info("Seed org owner credentials:");
+  console.info(`  email: ${SEED_OWNER_EMAIL}`);
+  console.info(`  password: ${SEED_OWNER_PASSWORD}`);
+  console.info("Seed org admin credentials:");
+  console.info(`  email: ${SEED_ADMIN_EMAIL}`);
+  console.info(`  password: ${SEED_ADMIN_PASSWORD}`);
   console.info("  organizationCode: SEED-ORG");
   console.info("Superadmin login credentials:");
   console.info("  email: superadmin@gmail.com");

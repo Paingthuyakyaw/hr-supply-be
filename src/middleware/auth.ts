@@ -3,6 +3,19 @@ import { verifyAccessToken } from "../utils/token";
 
 type AuthClientType = "admin" | "mobile";
 
+const normalizeNumericClaim = (value: unknown): number | undefined => {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === "string" && value.trim().length > 0) {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+  return undefined;
+};
+
 const createAuthVerify = (allowedClientTypes?: AuthClientType[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -34,7 +47,11 @@ const createAuthVerify = (allowedClientTypes?: AuthClientType[]) => {
         });
       }
 
-      (req as any).user = decoded;
+      (req as any).user = {
+        ...decoded,
+        sub: normalizeNumericClaim((decoded as any).sub),
+        orgId: normalizeNumericClaim((decoded as any).orgId),
+      };
       return next();
     } catch (err) {
       return res.status(401).json({
