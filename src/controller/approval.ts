@@ -3,9 +3,11 @@ import { prisma } from "../../lib/prisma";
 import {
   Action,
   ApprovalStatus,
+  ApprovalStepScope,
   ApprovalStepStatus,
   ApprovalType,
   MenuCode,
+  PlatformPermission,
 } from "../generated/prisma/enums";
 import { sendError, sendSuccess } from "../utils/httpResponse";
 import { logAuditEvent } from "../utils/audit";
@@ -14,6 +16,9 @@ type JwtUser = {
   sub: number;
   orgId: number;
   email: string;
+  clientType?: "admin" | "mobile";
+  adminScope?: "OWN_ADMIN" | "SUPERADMIN";
+  actorType?: "employee" | "platform";
 };
 
 type RequestWithUser = Request & {
@@ -31,12 +36,30 @@ const getUserContext = (req: Request) => {
   };
 };
 
+const getUserClaims = (req: Request) => (req as RequestWithUser).user ?? null;
+
 const parsePage = (value: unknown, fallback: number) => {
   const parsed = Number(value);
   if (!Number.isFinite(parsed) || parsed <= 0) {
     return fallback;
   }
   return Math.floor(parsed);
+};
+
+const PLATFORM_ESCALATED_TYPES = new Set<ApprovalType>([
+  ApprovalType.OVERTIME,
+  ApprovalType.PAYROLL_ADJUSTMENT,
+]);
+
+const isSuperadminActor = (req: Request) => {
+  const user = getUserClaims(req);
+  return (
+    !!user &&
+    user.clientType === "admin" &&
+    user.adminScope === "SUPERADMIN" &&
+    user.actorType === "platform" &&
+    Number.isFinite(user.sub)
+  );
 };
 
 export const listApprovals = async (req: Request, res: Response) => {
@@ -51,15 +74,42 @@ export const listApprovals = async (req: Request, res: Response) => {
     const size = Math.min(parsePage(req.query.size, 20), 100);
     const type = req.query.type as ApprovalType | undefined;
     const status = req.query.status as ApprovalStatus | undefined;
+    const superadminActor = isSuperadminActor(req);
 
-    const where = {
-      organizationId: user.orgId,
-      ...(type ? { type } : {}),
-      ...(status ? { status } : {}),
-      ...(role === "approver"
-        ? { steps: { some: { approverId: user.userId } } }
-        : { requesterId: user.userId }),
+    const where =
+      role === "approver" && superadminActor
+        ? {
+            ...(type ? { type } : {}),
+            ...(status ? { status } : {}),
+            ...(req.query.organizationId
+              ? { organizationId: Number(req.query.organizationId) }
+              : {}),
+            steps: {
+              some: {
+                scope: ApprovalStepScope.PLATFORM,
+                platformApproverId: user.userId,
+              },
+            },
+          }
+        : {
+            organizationId: user.orgId,
+            ...(type ? { type } : {}),
+            ...(status ? { status } : {}),
+            ...(role === "approver"
+              ? { steps: { some: { approverId: user.userId } } }
+              : { requesterId: user.userId }),
+          };
+
+    const includeRelations: any = {
+      steps: {
+        orderBy: { stepOrder: "asc" },
+      },
     };
+    if (superadminActor && role === "approver") {
+      includeRelations.organization = {
+        select: { id: true, code: true, name: true },
+      };
+    }
 
     const [total, items] = await Promise.all([
       prisma.approvalRequest.count({ where }),
@@ -68,11 +118,7 @@ export const listApprovals = async (req: Request, res: Response) => {
         orderBy: { id: "desc" },
         skip: (page - 1) * size,
         take: size,
-        include: {
-          steps: {
-            orderBy: { stepOrder: "asc" },
-          },
-        },
+        include: includeRelations,
       }),
     ]);
 
@@ -160,6 +206,24 @@ export const createApproval = async (req: Request, res: Response) => {
     }
 
     const uniqueApprovers = Array.from(new Set(approvers.map((a) => a.id)));
+    const platformApprovers = PLATFORM_ESCALATED_TYPES.has(type)
+      ? await prisma.platformUser.findMany({
+          where: {
+            isActive: true,
+            permissions: { has: PlatformPermission.APPROVAL_DECIDE },
+          },
+          select: { id: true },
+          orderBy: { id: "asc" },
+          take: 1,
+        })
+      : [];
+
+    if (PLATFORM_ESCALATED_TYPES.has(type) && !platformApprovers.length) {
+      return sendError(res, {
+        status: 400,
+        message: "No platform approver configured for escalated approvals",
+      });
+    }
 
     const approval = await prisma.$transaction(async (tx) => {
       const created = await tx.approvalRequest.create({
@@ -173,12 +237,22 @@ export const createApproval = async (req: Request, res: Response) => {
       });
 
       await tx.approvalStep.createMany({
-        data: uniqueApprovers.map((approverId, index) => ({
-          requestId: created.id,
-          approverId,
-          stepOrder: index + 1,
-          status: ApprovalStepStatus.PENDING,
-        })),
+        data: [
+          ...uniqueApprovers.map((approverId, index) => ({
+            requestId: created.id,
+            scope: ApprovalStepScope.ORG,
+            approverId,
+            stepOrder: index + 1,
+            status: ApprovalStepStatus.PENDING,
+          })),
+          ...platformApprovers.map((approver, index) => ({
+            requestId: created.id,
+            scope: ApprovalStepScope.PLATFORM,
+            platformApproverId: approver.id,
+            stepOrder: uniqueApprovers.length + index + 1,
+            status: ApprovalStepStatus.PENDING,
+          })),
+        ],
       });
 
       return tx.approvalRequest.findUnique({
@@ -194,13 +268,16 @@ export const createApproval = async (req: Request, res: Response) => {
     logAuditEvent({
       actorId: user.userId,
       actorOrgId: user.orgId,
+      actorType: "ORG_USER",
+      targetOrganizationId: user.orgId,
       entity: "approval_request",
       entityId: approval?.id,
       action: "CREATE",
       changes: {
         type,
         targetEmployeeId: resolvedTargetEmployeeId,
-        totalSteps: uniqueApprovers.length,
+        totalSteps: uniqueApprovers.length + platformApprovers.length,
+        hasPlatformEscalation: platformApprovers.length > 0,
       },
     });
 
@@ -237,7 +314,7 @@ export const decideApproval = async (req: Request, res: Response) => {
     const approval = await prisma.approvalRequest.findFirst({
       where: {
         id: requestId,
-        organizationId: user.orgId,
+        ...(isSuperadminActor(req) ? {} : { organizationId: user.orgId }),
       },
       include: {
         steps: {
@@ -266,7 +343,20 @@ export const decideApproval = async (req: Request, res: Response) => {
         message: "Current approval step is invalid",
       });
     }
-    if (currentStep.approverId !== user.userId) {
+    if (currentStep.scope === ApprovalStepScope.PLATFORM) {
+      if (!isSuperadminActor(req)) {
+        return sendError(res, {
+          status: 403,
+          message: "Current step requires platform approver",
+        });
+      }
+      if (currentStep.platformApproverId !== user.userId) {
+        return sendError(res, {
+          status: 403,
+          message: "You are not allowed to approve this platform step",
+        });
+      }
+    } else if (currentStep.approverId !== user.userId) {
       return sendError(res, {
         status: 403,
         message: "You are not allowed to approve this step",
@@ -321,6 +411,8 @@ export const decideApproval = async (req: Request, res: Response) => {
     logAuditEvent({
       actorId: user.userId,
       actorOrgId: user.orgId,
+      actorType: isSuperadminActor(req) ? "SUPERADMIN" : "ORG_USER",
+      targetOrganizationId: approval.organizationId,
       entity: "approval_request",
       entityId: requestId,
       action: "UPDATE",
@@ -331,6 +423,7 @@ export const decideApproval = async (req: Request, res: Response) => {
       },
       meta: {
         stepId: currentStep.id,
+        stepScope: currentStep.scope,
       },
     });
 

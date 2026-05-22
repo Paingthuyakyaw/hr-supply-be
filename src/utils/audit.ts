@@ -3,6 +3,8 @@ type AuditAction = "CREATE" | "UPDATE" | "DELETE";
 type AuditEventPayload = {
   actorId?: number | null;
   actorOrgId?: number | null;
+  actorType?: "ORG_USER" | "SUPERADMIN";
+  targetOrganizationId?: number | null;
   entity: string;
   entityId?: number | string | null;
   action: AuditAction;

@@ -11,7 +11,8 @@ import posRouter from "./router/position";
 import emRouter from "./router/employee";
 import authRouter from "./router/auth";
 import orgRouter from "./router/organization";
-import { authVerify } from "./middleware/auth";
+import { authVerifyAdmin, authVerifyMobile } from "./middleware/auth";
+import { requireOwnAdminScope } from "./middleware/scope";
 import planRouter from "./router/plan";
 import designationRouter from "./router/designation";
 import uploadRouter from "./router/upload";
@@ -20,6 +21,7 @@ import adminAttendanceRouter from "./router/adminAttendance";
 import leaveRouter from "./router/leave";
 import adminLeaveRouter from "./router/adminLeave";
 import adminPayrollRouter from "./router/adminPayroll";
+import adminPlatformUserRouter from "./router/adminPlatformUser";
 
 const app = express();
 const configuredOrigins = (process.env.CORS_ORIGINS ?? "")
@@ -90,18 +92,19 @@ app.get("/api/docs", sendSwaggerUi);
 app.get("/api/docs/", sendSwaggerUi);
 
 app.use("/api/auth", authRouter);
-app.use("/api/admin/employees", authVerify, emRouter);
-app.use("/api/admin/departments", authVerify, deptRouter);
-app.use("/api/admin/positions", authVerify, posRouter);
-app.use("/api/admin/organization", authVerify, orgRouter);
-app.use("/api/admin/plan", authVerify, planRouter);
-app.use("/api/admin/designation", authVerify, designationRouter);
-app.use("/api/admin/uploads", authVerify, uploadRouter);
-app.use("/api/attendance", authVerify, approvalRouter);
-app.use("/api/admin/attendance", authVerify, adminAttendanceRouter);
-app.use("/api/leave", authVerify, leaveRouter);
-app.use("/api/admin/leave", authVerify, adminLeaveRouter);
-app.use("/api/admin/payroll", authVerify, adminPayrollRouter);
+app.use("/api/admin/employees", authVerifyAdmin, requireOwnAdminScope, emRouter);
+app.use("/api/admin/departments", authVerifyAdmin, requireOwnAdminScope, deptRouter);
+app.use("/api/admin/positions", authVerifyAdmin, requireOwnAdminScope, posRouter);
+app.use("/api/admin/organization", authVerifyAdmin, requireOwnAdminScope, orgRouter);
+app.use("/api/admin/plan", authVerifyAdmin, requireOwnAdminScope, planRouter);
+app.use("/api/admin/designation", authVerifyAdmin, requireOwnAdminScope, designationRouter);
+app.use("/api/admin/uploads", authVerifyAdmin, requireOwnAdminScope, uploadRouter);
+app.use("/api/attendance", authVerifyMobile, approvalRouter);
+app.use("/api/admin/attendance", authVerifyAdmin, adminAttendanceRouter);
+app.use("/api/leave", authVerifyMobile, leaveRouter);
+app.use("/api/admin/leave", authVerifyAdmin, requireOwnAdminScope, adminLeaveRouter);
+app.use("/api/admin/payroll", authVerifyAdmin, requireOwnAdminScope, adminPayrollRouter);
+app.use("/api/admin/platform-users", authVerifyAdmin, adminPlatformUserRouter);
 
 app.get("/", (req, res) =>
   res.json({

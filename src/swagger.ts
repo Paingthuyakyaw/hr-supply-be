@@ -16,6 +16,8 @@ const openApiSpec = {
       "API documentation for HR Supply - Auth, Employees, Departments, Positions",
   },
   tags: [
+    { name: "Admin - Auth" },
+    { name: "Admin - Platform Users" },
     { name: "Admin - Employees" },
     { name: "Admin - Organization" },
     { name: "Admin - Departments" },
@@ -48,10 +50,10 @@ const openApiSpec = {
         },
       },
     },
-    "/auth/login": {
+    "/auth/admin/login": {
       post: {
-        summary: "Login",
-        tags: ["Auth"],
+        summary: "Admin login",
+        tags: ["Admin - Auth"],
         requestBody: {
           required: true,
           content: {
@@ -62,7 +64,7 @@ const openApiSpec = {
         },
         responses: {
           "200": {
-            description: "Login successful",
+            description: "Admin login successful",
             content: {
               "application/json": {
                 schema: ref("#/components/schemas/LoginResponse"),
@@ -71,12 +73,67 @@ const openApiSpec = {
           },
           "400": { description: "Email and password are required" },
           "401": { description: "Invalid email or password" },
+          "403": { description: "Admin access is required" },
         },
       },
     },
-    "/auth/refresh": {
+    "/auth/mobile/login": {
       post: {
-        summary: "Refresh access token",
+        summary: "Mobile login",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/MobileLoginRequest"),
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Mobile login successful",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/LoginResponse"),
+              },
+            },
+          },
+          "400": { description: "Identifier and password are required" },
+          "401": { description: "Invalid credentials" },
+          "403": { description: "Employee is not allowed to use mobile app" },
+        },
+      },
+    },
+    "/auth/admin/refresh": {
+      post: {
+        summary: "Admin refresh token",
+        tags: ["Admin - Auth"],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/RefreshRequest"),
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Token refreshed",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/RefreshResponse"),
+              },
+            },
+          },
+          "400": { description: "Refresh token is required" },
+          "401": { description: "Invalid or expired refresh token" },
+          "403": { description: "This refresh token is not valid for admin auth flow" },
+          "404": { description: "Employee not found" },
+        },
+      },
+    },
+    "/auth/mobile/refresh": {
+      post: {
+        summary: "Mobile refresh token",
         tags: ["Auth"],
         requestBody: {
           content: {
@@ -96,7 +153,96 @@ const openApiSpec = {
           },
           "400": { description: "Refresh token is required" },
           "401": { description: "Invalid or expired refresh token" },
+          "403": { description: "This refresh token is not valid for mobile auth flow" },
           "404": { description: "Employee not found" },
+        },
+      },
+    },
+    "/admin/platform-users": {
+      get: {
+        summary: "List platform users (SUPERADMIN)",
+        tags: ["Admin - Platform Users"],
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: "page", in: "query", schema: { type: "integer", default: 1 } },
+          { name: "size", in: "query", schema: { type: "integer", default: 20 } },
+          { name: "q", in: "query", schema: { type: "string" } },
+          { name: "isActive", in: "query", schema: { type: "boolean" } },
+        ],
+        responses: {
+          "200": {
+            description: "Platform users fetched",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PlatformUserListResponse"),
+              },
+            },
+          },
+        },
+      },
+      post: {
+        summary: "Create platform user (SUPERADMIN)",
+        tags: ["Admin - Platform Users"],
+        security: [{ bearerAuth: [] }],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/PlatformUserCreateRequest"),
+            },
+          },
+        },
+        responses: {
+          "201": {
+            description: "Platform user created",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PlatformUserDataResponse"),
+              },
+            },
+          },
+        },
+      },
+    },
+    "/admin/platform-users/{id}": {
+      patch: {
+        summary: "Update platform user (SUPERADMIN)",
+        tags: ["Admin - Platform Users"],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/PlatformUserUpdateRequest"),
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Platform user updated",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PlatformUserDataResponse"),
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        summary: "Delete platform user (SUPERADMIN)",
+        tags: ["Admin - Platform Users"],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer" } }],
+        responses: {
+          "200": {
+            description: "Platform user deleted",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/DeleteByIdResponse"),
+              },
+            },
+          },
         },
       },
     },
@@ -1267,6 +1413,136 @@ const openApiSpec = {
         },
       },
     },
+    "/admin/payroll/overview": {
+      get: {
+        summary: "Payroll management overview by month",
+        tags: ["Admin - Payroll"],
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: "month", in: "query", required: true, schema: { type: "string", example: "2026-12" } },
+          { name: "q", in: "query", schema: { type: "string" } },
+          {
+            name: "status",
+            in: "query",
+            schema: { type: "string", enum: ["PENDING", "PROCESSED", "PAID"] },
+          },
+          { name: "departmentId", in: "query", schema: { type: "integer" } },
+          { name: "page", in: "query", schema: { type: "integer", default: 1 } },
+          { name: "size", in: "query", schema: { type: "integer", default: 20 } },
+        ],
+        responses: {
+          "200": {
+            description: "Payroll overview fetched",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PayrollOverviewResponse"),
+              },
+            },
+          },
+        },
+      },
+    },
+    "/admin/payroll/calculate/options": {
+      get: {
+        summary: "Get options for calculate payroll screen",
+        tags: ["Admin - Payroll"],
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          {
+            name: "month",
+            in: "query",
+            schema: { type: "string", example: "2026-12" },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Payroll calculate options fetched",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PayrollCalculateOptionsResponse"),
+              },
+            },
+          },
+        },
+      },
+    },
+    "/admin/payroll/employees/{employeeId}/calculate": {
+      post: {
+        summary: "Calculate payroll for one employee",
+        tags: ["Admin - Payroll"],
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: "employeeId", in: "path", required: true, schema: { type: "integer" } },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/PayrollEmployeeCalculateRequest"),
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Employee payroll calculated",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PayrollEmployeeCalculateResponse"),
+              },
+            },
+          },
+        },
+      },
+    },
+    "/admin/payroll/employees/{employeeId}": {
+      get: {
+        summary: "Get employee payroll detail by month",
+        tags: ["Admin - Payroll"],
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: "employeeId", in: "path", required: true, schema: { type: "integer" } },
+          { name: "month", in: "query", required: true, schema: { type: "string", example: "2026-12" } },
+        ],
+        responses: {
+          "200": {
+            description: "Payroll detail fetched",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PayrollEmployeeDetailResponse"),
+              },
+            },
+          },
+        },
+      },
+    },
+    "/admin/payroll/employees/{employeeId}/pay": {
+      post: {
+        summary: "Mark employee payroll as paid",
+        tags: ["Admin - Payroll"],
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { name: "employeeId", in: "path", required: true, schema: { type: "integer" } },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: ref("#/components/schemas/PayrollEmployeePayRequest"),
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Payroll marked as paid",
+            content: {
+              "application/json": {
+                schema: ref("#/components/schemas/PayrollEmployeePayResponse"),
+              },
+            },
+          },
+        },
+      },
+    },
     "/admin/payroll/runs/{id}/summary": {
       get: {
         summary: "Get payroll run summary",
@@ -1403,6 +1679,13 @@ const openApiSpec = {
               type: "string",
               enum: ["OVERTIME", "PAYROLL_ADJUSTMENT"],
             },
+          },
+          {
+            name: "organizationId",
+            in: "query",
+            description:
+              "Only for SUPERADMIN scope. Filter approvals by organization.",
+            schema: { type: "integer" },
           },
           {
             name: "page",
@@ -1688,6 +1971,14 @@ const openApiSpec = {
           password: { type: "string" },
         },
       },
+      MobileLoginRequest: {
+        type: "object",
+        required: ["identifier", "password"],
+        properties: {
+          identifier: { type: "string", description: "email, code, or phoneNumber" },
+          password: { type: "string" },
+        },
+      },
       LoginResponse: {
         type: "object",
         properties: {
@@ -1864,6 +2155,70 @@ const openApiSpec = {
             },
           },
           meta: { nullable: true, type: "object" },
+          error: { nullable: true, type: "object" },
+        },
+      },
+      PlatformUser: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          email: { type: "string", format: "email" },
+          fullName: { type: "string" },
+          isActive: { type: "boolean" },
+          permissions: {
+            type: "array",
+            items: { type: "string", enum: ["APPROVAL_VIEW", "APPROVAL_DECIDE"] },
+          },
+          createdAt: { type: "string", format: "date-time" },
+          updatedAt: { type: "string", format: "date-time" },
+        },
+      },
+      PlatformUserCreateRequest: {
+        type: "object",
+        required: ["email", "fullName", "password", "permissions"],
+        properties: {
+          email: { type: "string", format: "email" },
+          fullName: { type: "string" },
+          password: { type: "string", minLength: 6 },
+          isActive: { type: "boolean" },
+          permissions: {
+            type: "array",
+            minItems: 1,
+            items: { type: "string", enum: ["APPROVAL_VIEW", "APPROVAL_DECIDE"] },
+          },
+        },
+      },
+      PlatformUserUpdateRequest: {
+        type: "object",
+        properties: {
+          fullName: { type: "string" },
+          password: { type: "string", minLength: 6 },
+          isActive: { type: "boolean" },
+          permissions: {
+            type: "array",
+            minItems: 1,
+            items: { type: "string", enum: ["APPROVAL_VIEW", "APPROVAL_DECIDE"] },
+          },
+        },
+      },
+      PlatformUserDataResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: ref("#/components/schemas/PlatformUser"),
+          meta: { nullable: true, type: "object" },
+          error: { nullable: true, type: "object" },
+        },
+      },
+      PlatformUserListResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: {
+            type: "array",
+            items: ref("#/components/schemas/PlatformUser"),
+          },
+          meta: ref("#/components/schemas/PaginationMeta"),
           error: { nullable: true, type: "object" },
         },
       },
@@ -2457,6 +2812,38 @@ const openApiSpec = {
           processedAt: { type: "string", format: "date-time", nullable: true },
         },
       },
+      PayrollEmployeeSummary: {
+        type: "object",
+        properties: {
+          summaryId: { type: "integer" },
+          employee: {
+            type: "object",
+            properties: {
+              id: { type: "integer" },
+              code: { type: "string" },
+              full_name: { type: "string" },
+            },
+          },
+          department: {
+            oneOf: [
+              {
+                type: "object",
+                properties: {
+                  id: { type: "integer" },
+                  name: { type: "string" },
+                },
+              },
+              { type: "null" },
+            ],
+          },
+          basicSalary: { type: "number" },
+          allowances: { type: "number" },
+          deductions: { type: "number" },
+          netPay: { type: "number" },
+          status: { type: "string", enum: ["PENDING", "PROCESSED", "PAID"] },
+          paidAt: { type: "string", format: "date-time", nullable: true },
+        },
+      },
       PayrollRunExecuteResponse: {
         type: "object",
         properties: {
@@ -2466,6 +2853,8 @@ const openApiSpec = {
             properties: {
               run: ref("#/components/schemas/PayrollRunBase"),
               employees: { type: "integer" },
+              processedEmployees: { type: "integer" },
+              pendingEmployees: { type: "integer" },
             },
           },
           meta: { nullable: true, type: "object" },
@@ -2501,6 +2890,7 @@ const openApiSpec = {
                     employeeCode: { type: "string" },
                     employeeName: { type: "string" },
                     netPay: { type: "number" },
+                    status: { type: "string", enum: ["PENDING", "PROCESSED", "PAID"] },
                   },
                 },
               },
@@ -2509,10 +2899,176 @@ const openApiSpec = {
                 properties: {
                   employees: { type: "integer" },
                   totalNetPay: { type: "number" },
+                  paidCount: { type: "integer" },
+                  pendingCount: { type: "integer" },
                 },
               },
             },
           },
+          meta: { nullable: true, type: "object" },
+          error: { nullable: true, type: "object" },
+        },
+      },
+      PayrollOverviewResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: {
+            type: "object",
+            properties: {
+              month: { type: "string" },
+              run: {
+                oneOf: [
+                  ref("#/components/schemas/PayrollRunBase"),
+                  { type: "null" },
+                ],
+              },
+              cards: {
+                type: "object",
+                properties: {
+                  totalPayroll: { type: "number" },
+                  paid: { type: "integer" },
+                  processed: { type: "integer" },
+                  pending: { type: "integer" },
+                },
+              },
+              rows: {
+                type: "array",
+                items: ref("#/components/schemas/PayrollEmployeeSummary"),
+              },
+            },
+          },
+          meta: ref("#/components/schemas/PaginationMeta"),
+          error: { nullable: true, type: "object" },
+        },
+      },
+      PayrollCalculateOptionsResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: {
+            type: "object",
+            properties: {
+              month: { type: "string" },
+              hasPayrollRun: { type: "boolean" },
+              employees: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: { type: "integer" },
+                    code: { type: "string" },
+                    full_name: { type: "string" },
+                    baseSalary: { type: "number" },
+                  },
+                },
+              },
+              allowances: {
+                type: "array",
+                items: ref("#/components/schemas/PayrollComponent"),
+              },
+              deductions: {
+                type: "array",
+                items: ref("#/components/schemas/PayrollComponent"),
+              },
+            },
+          },
+          meta: { nullable: true, type: "object" },
+          error: { nullable: true, type: "object" },
+        },
+      },
+      PayrollEmployeeCalculateRequest: {
+        type: "object",
+        required: ["month"],
+        properties: {
+          month: { type: "string", example: "2026-12" },
+          allowances: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                componentId: { type: "integer" },
+                amount: { type: "number" },
+              },
+            },
+          },
+          deductions: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                componentId: { type: "integer" },
+                amount: { type: "number" },
+              },
+            },
+          },
+          notes: { type: "string" },
+        },
+      },
+      PayrollEmployeeCalculateResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: {
+            type: "object",
+            properties: {
+              run: {
+                type: "object",
+                properties: {
+                  id: { type: "integer" },
+                  month: { type: "string" },
+                  status: { type: "string", enum: ["DRAFT", "FINALIZED", "EXPORTED"] },
+                },
+              },
+              summary: {
+                type: "object",
+              },
+            },
+          },
+          meta: { nullable: true, type: "object" },
+          error: { nullable: true, type: "object" },
+        },
+      },
+      PayrollEmployeeDetailResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: {
+            type: "object",
+            properties: {
+              run: ref("#/components/schemas/PayrollRunBase"),
+              summary: {
+                type: "object",
+              },
+              employee: {
+                type: "object",
+              },
+              allowances: {
+                type: "array",
+                items: { type: "object" },
+              },
+              deductions: {
+                type: "array",
+                items: { type: "object" },
+              },
+            },
+          },
+          meta: { nullable: true, type: "object" },
+          error: { nullable: true, type: "object" },
+        },
+      },
+      PayrollEmployeePayRequest: {
+        type: "object",
+        required: ["month"],
+        properties: {
+          month: { type: "string", example: "2026-12" },
+        },
+      },
+      PayrollEmployeePayResponse: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          data: { type: "object" },
           meta: { nullable: true, type: "object" },
           error: { nullable: true, type: "object" },
         },
@@ -2538,7 +3094,9 @@ const openApiSpec = {
         properties: {
           id: { type: "integer" },
           stepOrder: { type: "integer" },
-          approverId: { type: "integer" },
+          scope: { type: "string", enum: ["ORG", "PLATFORM"] },
+          approverId: { type: "integer", nullable: true },
+          platformApproverId: { type: "integer", nullable: true },
           status: {
             type: "string",
             enum: ["PENDING", "APPROVED", "REJECTED"],

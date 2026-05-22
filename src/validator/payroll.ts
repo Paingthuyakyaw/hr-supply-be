@@ -1,5 +1,6 @@
 import z from "zod";
 import {
+  PayrollEmployeeStatus,
   PayrollCalculationType,
   PayrollComponentType,
   PayrollRunStatus,
@@ -64,5 +65,57 @@ export const payrollRunListSchema = z.object({
 export const payrollRunIdSchema = z.object({
   params: z.object({
     id: idParam,
+  }),
+});
+
+export const payrollOverviewSchema = z.object({
+  query: z.object({
+    month: monthString,
+    q: z.string().trim().optional(),
+    status: z.nativeEnum(PayrollEmployeeStatus).optional(),
+    departmentId: z.coerce.number().int().positive().optional(),
+    page: z.coerce.number().int().min(1).optional(),
+    size: z.coerce.number().int().min(1).max(100).optional(),
+  }),
+});
+
+export const payrollRunCalculateOptionsSchema = z.object({
+  query: z.object({
+    month: monthString.optional(),
+  }),
+});
+
+const componentAmountSchema = z.object({
+  componentId: z.number().int().positive(),
+  amount: z.number().min(0),
+});
+
+export const payrollEmployeePayrollSchema = z.object({
+  params: z.object({
+    employeeId: idParam,
+  }),
+  body: z.object({
+    month: monthString,
+    allowances: z.array(componentAmountSchema).optional().default([]),
+    deductions: z.array(componentAmountSchema).optional().default([]),
+    notes: z.string().trim().max(1000).optional(),
+  }),
+});
+
+export const payrollEmployeePayrollDetailSchema = z.object({
+  params: z.object({
+    employeeId: idParam,
+  }),
+  query: z.object({
+    month: monthString,
+  }),
+});
+
+export const payrollEmployeePaySchema = z.object({
+  params: z.object({
+    employeeId: idParam,
+  }),
+  body: z.object({
+    month: monthString,
   }),
 });

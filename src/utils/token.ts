@@ -23,6 +23,9 @@ export interface AuthTokenPayload {
   sub: number;
   orgId: number;
   email?: string | null;
+  clientType?: "admin" | "mobile";
+  adminScope?: "OWN_ADMIN" | "SUPERADMIN";
+  actorType?: "employee" | "platform";
 }
 
 export function signAccessToken(payload: AuthTokenPayload) {

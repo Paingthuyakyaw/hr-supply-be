@@ -10,6 +10,7 @@ export const approvalListSchema = z.object({
     type: z
       .enum([ApprovalType.OVERTIME, ApprovalType.PAYROLL_ADJUSTMENT])
       .optional(),
+    organizationId: z.coerce.number().int().positive().optional(),
     page: z.coerce.number().int().min(1).optional(),
     size: z.coerce.number().int().min(1).max(100).optional(),
   }),
@@ -71,3 +72,4 @@ export const decideApprovalSchema = z.object({
     comment: z.string().max(1000).optional(),
   }),
 });
+

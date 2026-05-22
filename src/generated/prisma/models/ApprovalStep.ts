@@ -31,6 +31,7 @@ export type ApprovalStepAvgAggregateOutputType = {
   requestId: number | null
   stepOrder: number | null
   approverId: number | null
+  platformApproverId: number | null
 }
 
 export type ApprovalStepSumAggregateOutputType = {
@@ -38,13 +39,16 @@ export type ApprovalStepSumAggregateOutputType = {
   requestId: number | null
   stepOrder: number | null
   approverId: number | null
+  platformApproverId: number | null
 }
 
 export type ApprovalStepMinAggregateOutputType = {
   id: number | null
   requestId: number | null
   stepOrder: number | null
+  scope: $Enums.ApprovalStepScope | null
   approverId: number | null
+  platformApproverId: number | null
   status: $Enums.ApprovalStepStatus | null
   comment: string | null
   actedAt: Date | null
@@ -56,7 +60,9 @@ export type ApprovalStepMaxAggregateOutputType = {
   id: number | null
   requestId: number | null
   stepOrder: number | null
+  scope: $Enums.ApprovalStepScope | null
   approverId: number | null
+  platformApproverId: number | null
   status: $Enums.ApprovalStepStatus | null
   comment: string | null
   actedAt: Date | null
@@ -68,7 +74,9 @@ export type ApprovalStepCountAggregateOutputType = {
   id: number
   requestId: number
   stepOrder: number
+  scope: number
   approverId: number
+  platformApproverId: number
   status: number
   comment: number
   actedAt: number
@@ -83,6 +91,7 @@ export type ApprovalStepAvgAggregateInputType = {
   requestId?: true
   stepOrder?: true
   approverId?: true
+  platformApproverId?: true
 }
 
 export type ApprovalStepSumAggregateInputType = {
@@ -90,13 +99,16 @@ export type ApprovalStepSumAggregateInputType = {
   requestId?: true
   stepOrder?: true
   approverId?: true
+  platformApproverId?: true
 }
 
 export type ApprovalStepMinAggregateInputType = {
   id?: true
   requestId?: true
   stepOrder?: true
+  scope?: true
   approverId?: true
+  platformApproverId?: true
   status?: true
   comment?: true
   actedAt?: true
@@ -108,7 +120,9 @@ export type ApprovalStepMaxAggregateInputType = {
   id?: true
   requestId?: true
   stepOrder?: true
+  scope?: true
   approverId?: true
+  platformApproverId?: true
   status?: true
   comment?: true
   actedAt?: true
@@ -120,7 +134,9 @@ export type ApprovalStepCountAggregateInputType = {
   id?: true
   requestId?: true
   stepOrder?: true
+  scope?: true
   approverId?: true
+  platformApproverId?: true
   status?: true
   comment?: true
   actedAt?: true
@@ -219,7 +235,9 @@ export type ApprovalStepGroupByOutputType = {
   id: number
   requestId: number
   stepOrder: number
-  approverId: number
+  scope: $Enums.ApprovalStepScope
+  approverId: number | null
+  platformApproverId: number | null
   status: $Enums.ApprovalStepStatus
   comment: string | null
   actedAt: Date | null
@@ -254,21 +272,26 @@ export type ApprovalStepWhereInput = {
   id?: Prisma.IntFilter<"ApprovalStep"> | number
   requestId?: Prisma.IntFilter<"ApprovalStep"> | number
   stepOrder?: Prisma.IntFilter<"ApprovalStep"> | number
-  approverId?: Prisma.IntFilter<"ApprovalStep"> | number
+  scope?: Prisma.EnumApprovalStepScopeFilter<"ApprovalStep"> | $Enums.ApprovalStepScope
+  approverId?: Prisma.IntNullableFilter<"ApprovalStep"> | number | null
+  platformApproverId?: Prisma.IntNullableFilter<"ApprovalStep"> | number | null
   status?: Prisma.EnumApprovalStepStatusFilter<"ApprovalStep"> | $Enums.ApprovalStepStatus
   comment?: Prisma.StringNullableFilter<"ApprovalStep"> | string | null
   actedAt?: Prisma.DateTimeNullableFilter<"ApprovalStep"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ApprovalStep"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ApprovalStep"> | Date | string
   request?: Prisma.XOR<Prisma.ApprovalRequestScalarRelationFilter, Prisma.ApprovalRequestWhereInput>
-  approver?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  approver?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  platformApprover?: Prisma.XOR<Prisma.PlatformUserNullableScalarRelationFilter, Prisma.PlatformUserWhereInput> | null
 }
 
 export type ApprovalStepOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   stepOrder?: Prisma.SortOrder
-  approverId?: Prisma.SortOrder
+  scope?: Prisma.SortOrder
+  approverId?: Prisma.SortOrderInput | Prisma.SortOrder
+  platformApproverId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   actedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -276,6 +299,7 @@ export type ApprovalStepOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   request?: Prisma.ApprovalRequestOrderByWithRelationInput
   approver?: Prisma.EmployeeOrderByWithRelationInput
+  platformApprover?: Prisma.PlatformUserOrderByWithRelationInput
 }
 
 export type ApprovalStepWhereUniqueInput = Prisma.AtLeast<{
@@ -286,21 +310,26 @@ export type ApprovalStepWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ApprovalStepWhereInput | Prisma.ApprovalStepWhereInput[]
   requestId?: Prisma.IntFilter<"ApprovalStep"> | number
   stepOrder?: Prisma.IntFilter<"ApprovalStep"> | number
-  approverId?: Prisma.IntFilter<"ApprovalStep"> | number
+  scope?: Prisma.EnumApprovalStepScopeFilter<"ApprovalStep"> | $Enums.ApprovalStepScope
+  approverId?: Prisma.IntNullableFilter<"ApprovalStep"> | number | null
+  platformApproverId?: Prisma.IntNullableFilter<"ApprovalStep"> | number | null
   status?: Prisma.EnumApprovalStepStatusFilter<"ApprovalStep"> | $Enums.ApprovalStepStatus
   comment?: Prisma.StringNullableFilter<"ApprovalStep"> | string | null
   actedAt?: Prisma.DateTimeNullableFilter<"ApprovalStep"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ApprovalStep"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ApprovalStep"> | Date | string
   request?: Prisma.XOR<Prisma.ApprovalRequestScalarRelationFilter, Prisma.ApprovalRequestWhereInput>
-  approver?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  approver?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  platformApprover?: Prisma.XOR<Prisma.PlatformUserNullableScalarRelationFilter, Prisma.PlatformUserWhereInput> | null
 }, "id" | "requestId_stepOrder">
 
 export type ApprovalStepOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   stepOrder?: Prisma.SortOrder
-  approverId?: Prisma.SortOrder
+  scope?: Prisma.SortOrder
+  approverId?: Prisma.SortOrderInput | Prisma.SortOrder
+  platformApproverId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   actedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -320,7 +349,9 @@ export type ApprovalStepScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"ApprovalStep"> | number
   requestId?: Prisma.IntWithAggregatesFilter<"ApprovalStep"> | number
   stepOrder?: Prisma.IntWithAggregatesFilter<"ApprovalStep"> | number
-  approverId?: Prisma.IntWithAggregatesFilter<"ApprovalStep"> | number
+  scope?: Prisma.EnumApprovalStepScopeWithAggregatesFilter<"ApprovalStep"> | $Enums.ApprovalStepScope
+  approverId?: Prisma.IntNullableWithAggregatesFilter<"ApprovalStep"> | number | null
+  platformApproverId?: Prisma.IntNullableWithAggregatesFilter<"ApprovalStep"> | number | null
   status?: Prisma.EnumApprovalStepStatusWithAggregatesFilter<"ApprovalStep"> | $Enums.ApprovalStepStatus
   comment?: Prisma.StringNullableWithAggregatesFilter<"ApprovalStep"> | string | null
   actedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ApprovalStep"> | Date | string | null
@@ -330,20 +361,24 @@ export type ApprovalStepScalarWhereWithAggregatesInput = {
 
 export type ApprovalStepCreateInput = {
   stepOrder: number
+  scope?: $Enums.ApprovalStepScope
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   request: Prisma.ApprovalRequestCreateNestedOneWithoutStepsInput
-  approver: Prisma.EmployeeCreateNestedOneWithoutApprovalStepsInput
+  approver?: Prisma.EmployeeCreateNestedOneWithoutApprovalStepsInput
+  platformApprover?: Prisma.PlatformUserCreateNestedOneWithoutApprovalStepsInput
 }
 
 export type ApprovalStepUncheckedCreateInput = {
   id?: number
   requestId: number
   stepOrder: number
-  approverId: number
+  scope?: $Enums.ApprovalStepScope
+  approverId?: number | null
+  platformApproverId?: number | null
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
@@ -353,20 +388,24 @@ export type ApprovalStepUncheckedCreateInput = {
 
 export type ApprovalStepUpdateInput = {
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   request?: Prisma.ApprovalRequestUpdateOneRequiredWithoutStepsNestedInput
-  approver?: Prisma.EmployeeUpdateOneRequiredWithoutApprovalStepsNestedInput
+  approver?: Prisma.EmployeeUpdateOneWithoutApprovalStepsNestedInput
+  platformApprover?: Prisma.PlatformUserUpdateOneWithoutApprovalStepsNestedInput
 }
 
 export type ApprovalStepUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   requestId?: Prisma.IntFieldUpdateOperationsInput | number
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  approverId?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  approverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  platformApproverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -378,7 +417,9 @@ export type ApprovalStepCreateManyInput = {
   id?: number
   requestId: number
   stepOrder: number
-  approverId: number
+  scope?: $Enums.ApprovalStepScope
+  approverId?: number | null
+  platformApproverId?: number | null
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
@@ -388,6 +429,7 @@ export type ApprovalStepCreateManyInput = {
 
 export type ApprovalStepUpdateManyMutationInput = {
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -399,7 +441,9 @@ export type ApprovalStepUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   requestId?: Prisma.IntFieldUpdateOperationsInput | number
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  approverId?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  approverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  platformApproverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -426,7 +470,9 @@ export type ApprovalStepCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   stepOrder?: Prisma.SortOrder
+  scope?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
+  platformApproverId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   actedAt?: Prisma.SortOrder
@@ -439,13 +485,16 @@ export type ApprovalStepAvgOrderByAggregateInput = {
   requestId?: Prisma.SortOrder
   stepOrder?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
+  platformApproverId?: Prisma.SortOrder
 }
 
 export type ApprovalStepMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   stepOrder?: Prisma.SortOrder
+  scope?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
+  platformApproverId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   actedAt?: Prisma.SortOrder
@@ -457,7 +506,9 @@ export type ApprovalStepMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   stepOrder?: Prisma.SortOrder
+  scope?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
+  platformApproverId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   actedAt?: Prisma.SortOrder
@@ -470,6 +521,7 @@ export type ApprovalStepSumOrderByAggregateInput = {
   requestId?: Prisma.SortOrder
   stepOrder?: Prisma.SortOrder
   approverId?: Prisma.SortOrder
+  platformApproverId?: Prisma.SortOrder
 }
 
 export type ApprovalStepCreateNestedManyWithoutApproverInput = {
@@ -556,24 +608,74 @@ export type ApprovalStepUncheckedUpdateManyWithoutRequestNestedInput = {
   deleteMany?: Prisma.ApprovalStepScalarWhereInput | Prisma.ApprovalStepScalarWhereInput[]
 }
 
+export type EnumApprovalStepScopeFieldUpdateOperationsInput = {
+  set?: $Enums.ApprovalStepScope
+}
+
 export type EnumApprovalStepStatusFieldUpdateOperationsInput = {
   set?: $Enums.ApprovalStepStatus
 }
 
+export type ApprovalStepCreateNestedManyWithoutPlatformApproverInput = {
+  create?: Prisma.XOR<Prisma.ApprovalStepCreateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput> | Prisma.ApprovalStepCreateWithoutPlatformApproverInput[] | Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput[]
+  connectOrCreate?: Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput | Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput[]
+  createMany?: Prisma.ApprovalStepCreateManyPlatformApproverInputEnvelope
+  connect?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+}
+
+export type ApprovalStepUncheckedCreateNestedManyWithoutPlatformApproverInput = {
+  create?: Prisma.XOR<Prisma.ApprovalStepCreateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput> | Prisma.ApprovalStepCreateWithoutPlatformApproverInput[] | Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput[]
+  connectOrCreate?: Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput | Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput[]
+  createMany?: Prisma.ApprovalStepCreateManyPlatformApproverInputEnvelope
+  connect?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+}
+
+export type ApprovalStepUpdateManyWithoutPlatformApproverNestedInput = {
+  create?: Prisma.XOR<Prisma.ApprovalStepCreateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput> | Prisma.ApprovalStepCreateWithoutPlatformApproverInput[] | Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput[]
+  connectOrCreate?: Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput | Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput[]
+  upsert?: Prisma.ApprovalStepUpsertWithWhereUniqueWithoutPlatformApproverInput | Prisma.ApprovalStepUpsertWithWhereUniqueWithoutPlatformApproverInput[]
+  createMany?: Prisma.ApprovalStepCreateManyPlatformApproverInputEnvelope
+  set?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  disconnect?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  delete?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  connect?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  update?: Prisma.ApprovalStepUpdateWithWhereUniqueWithoutPlatformApproverInput | Prisma.ApprovalStepUpdateWithWhereUniqueWithoutPlatformApproverInput[]
+  updateMany?: Prisma.ApprovalStepUpdateManyWithWhereWithoutPlatformApproverInput | Prisma.ApprovalStepUpdateManyWithWhereWithoutPlatformApproverInput[]
+  deleteMany?: Prisma.ApprovalStepScalarWhereInput | Prisma.ApprovalStepScalarWhereInput[]
+}
+
+export type ApprovalStepUncheckedUpdateManyWithoutPlatformApproverNestedInput = {
+  create?: Prisma.XOR<Prisma.ApprovalStepCreateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput> | Prisma.ApprovalStepCreateWithoutPlatformApproverInput[] | Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput[]
+  connectOrCreate?: Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput | Prisma.ApprovalStepCreateOrConnectWithoutPlatformApproverInput[]
+  upsert?: Prisma.ApprovalStepUpsertWithWhereUniqueWithoutPlatformApproverInput | Prisma.ApprovalStepUpsertWithWhereUniqueWithoutPlatformApproverInput[]
+  createMany?: Prisma.ApprovalStepCreateManyPlatformApproverInputEnvelope
+  set?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  disconnect?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  delete?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  connect?: Prisma.ApprovalStepWhereUniqueInput | Prisma.ApprovalStepWhereUniqueInput[]
+  update?: Prisma.ApprovalStepUpdateWithWhereUniqueWithoutPlatformApproverInput | Prisma.ApprovalStepUpdateWithWhereUniqueWithoutPlatformApproverInput[]
+  updateMany?: Prisma.ApprovalStepUpdateManyWithWhereWithoutPlatformApproverInput | Prisma.ApprovalStepUpdateManyWithWhereWithoutPlatformApproverInput[]
+  deleteMany?: Prisma.ApprovalStepScalarWhereInput | Prisma.ApprovalStepScalarWhereInput[]
+}
+
 export type ApprovalStepCreateWithoutApproverInput = {
   stepOrder: number
+  scope?: $Enums.ApprovalStepScope
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   request: Prisma.ApprovalRequestCreateNestedOneWithoutStepsInput
+  platformApprover?: Prisma.PlatformUserCreateNestedOneWithoutApprovalStepsInput
 }
 
 export type ApprovalStepUncheckedCreateWithoutApproverInput = {
   id?: number
   requestId: number
   stepOrder: number
+  scope?: $Enums.ApprovalStepScope
+  platformApproverId?: number | null
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
@@ -614,7 +716,9 @@ export type ApprovalStepScalarWhereInput = {
   id?: Prisma.IntFilter<"ApprovalStep"> | number
   requestId?: Prisma.IntFilter<"ApprovalStep"> | number
   stepOrder?: Prisma.IntFilter<"ApprovalStep"> | number
-  approverId?: Prisma.IntFilter<"ApprovalStep"> | number
+  scope?: Prisma.EnumApprovalStepScopeFilter<"ApprovalStep"> | $Enums.ApprovalStepScope
+  approverId?: Prisma.IntNullableFilter<"ApprovalStep"> | number | null
+  platformApproverId?: Prisma.IntNullableFilter<"ApprovalStep"> | number | null
   status?: Prisma.EnumApprovalStepStatusFilter<"ApprovalStep"> | $Enums.ApprovalStepStatus
   comment?: Prisma.StringNullableFilter<"ApprovalStep"> | string | null
   actedAt?: Prisma.DateTimeNullableFilter<"ApprovalStep"> | Date | string | null
@@ -624,18 +728,22 @@ export type ApprovalStepScalarWhereInput = {
 
 export type ApprovalStepCreateWithoutRequestInput = {
   stepOrder: number
+  scope?: $Enums.ApprovalStepScope
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  approver: Prisma.EmployeeCreateNestedOneWithoutApprovalStepsInput
+  approver?: Prisma.EmployeeCreateNestedOneWithoutApprovalStepsInput
+  platformApprover?: Prisma.PlatformUserCreateNestedOneWithoutApprovalStepsInput
 }
 
 export type ApprovalStepUncheckedCreateWithoutRequestInput = {
   id?: number
   stepOrder: number
-  approverId: number
+  scope?: $Enums.ApprovalStepScope
+  approverId?: number | null
+  platformApproverId?: number | null
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
@@ -669,10 +777,63 @@ export type ApprovalStepUpdateManyWithWhereWithoutRequestInput = {
   data: Prisma.XOR<Prisma.ApprovalStepUpdateManyMutationInput, Prisma.ApprovalStepUncheckedUpdateManyWithoutRequestInput>
 }
 
+export type ApprovalStepCreateWithoutPlatformApproverInput = {
+  stepOrder: number
+  scope?: $Enums.ApprovalStepScope
+  status?: $Enums.ApprovalStepStatus
+  comment?: string | null
+  actedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  request: Prisma.ApprovalRequestCreateNestedOneWithoutStepsInput
+  approver?: Prisma.EmployeeCreateNestedOneWithoutApprovalStepsInput
+}
+
+export type ApprovalStepUncheckedCreateWithoutPlatformApproverInput = {
+  id?: number
+  requestId: number
+  stepOrder: number
+  scope?: $Enums.ApprovalStepScope
+  approverId?: number | null
+  status?: $Enums.ApprovalStepStatus
+  comment?: string | null
+  actedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ApprovalStepCreateOrConnectWithoutPlatformApproverInput = {
+  where: Prisma.ApprovalStepWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApprovalStepCreateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput>
+}
+
+export type ApprovalStepCreateManyPlatformApproverInputEnvelope = {
+  data: Prisma.ApprovalStepCreateManyPlatformApproverInput | Prisma.ApprovalStepCreateManyPlatformApproverInput[]
+  skipDuplicates?: boolean
+}
+
+export type ApprovalStepUpsertWithWhereUniqueWithoutPlatformApproverInput = {
+  where: Prisma.ApprovalStepWhereUniqueInput
+  update: Prisma.XOR<Prisma.ApprovalStepUpdateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedUpdateWithoutPlatformApproverInput>
+  create: Prisma.XOR<Prisma.ApprovalStepCreateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedCreateWithoutPlatformApproverInput>
+}
+
+export type ApprovalStepUpdateWithWhereUniqueWithoutPlatformApproverInput = {
+  where: Prisma.ApprovalStepWhereUniqueInput
+  data: Prisma.XOR<Prisma.ApprovalStepUpdateWithoutPlatformApproverInput, Prisma.ApprovalStepUncheckedUpdateWithoutPlatformApproverInput>
+}
+
+export type ApprovalStepUpdateManyWithWhereWithoutPlatformApproverInput = {
+  where: Prisma.ApprovalStepScalarWhereInput
+  data: Prisma.XOR<Prisma.ApprovalStepUpdateManyMutationInput, Prisma.ApprovalStepUncheckedUpdateManyWithoutPlatformApproverInput>
+}
+
 export type ApprovalStepCreateManyApproverInput = {
   id?: number
   requestId: number
   stepOrder: number
+  scope?: $Enums.ApprovalStepScope
+  platformApproverId?: number | null
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
@@ -682,18 +843,22 @@ export type ApprovalStepCreateManyApproverInput = {
 
 export type ApprovalStepUpdateWithoutApproverInput = {
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   request?: Prisma.ApprovalRequestUpdateOneRequiredWithoutStepsNestedInput
+  platformApprover?: Prisma.PlatformUserUpdateOneWithoutApprovalStepsNestedInput
 }
 
 export type ApprovalStepUncheckedUpdateWithoutApproverInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   requestId?: Prisma.IntFieldUpdateOperationsInput | number
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  platformApproverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -705,6 +870,8 @@ export type ApprovalStepUncheckedUpdateManyWithoutApproverInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   requestId?: Prisma.IntFieldUpdateOperationsInput | number
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  platformApproverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -715,7 +882,9 @@ export type ApprovalStepUncheckedUpdateManyWithoutApproverInput = {
 export type ApprovalStepCreateManyRequestInput = {
   id?: number
   stepOrder: number
-  approverId: number
+  scope?: $Enums.ApprovalStepScope
+  approverId?: number | null
+  platformApproverId?: number | null
   status?: $Enums.ApprovalStepStatus
   comment?: string | null
   actedAt?: Date | string | null
@@ -725,18 +894,22 @@ export type ApprovalStepCreateManyRequestInput = {
 
 export type ApprovalStepUpdateWithoutRequestInput = {
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  approver?: Prisma.EmployeeUpdateOneRequiredWithoutApprovalStepsNestedInput
+  approver?: Prisma.EmployeeUpdateOneWithoutApprovalStepsNestedInput
+  platformApprover?: Prisma.PlatformUserUpdateOneWithoutApprovalStepsNestedInput
 }
 
 export type ApprovalStepUncheckedUpdateWithoutRequestInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  approverId?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  approverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  platformApproverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -747,7 +920,60 @@ export type ApprovalStepUncheckedUpdateWithoutRequestInput = {
 export type ApprovalStepUncheckedUpdateManyWithoutRequestInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
-  approverId?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  approverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  platformApproverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ApprovalStepCreateManyPlatformApproverInput = {
+  id?: number
+  requestId: number
+  stepOrder: number
+  scope?: $Enums.ApprovalStepScope
+  approverId?: number | null
+  status?: $Enums.ApprovalStepStatus
+  comment?: string | null
+  actedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ApprovalStepUpdateWithoutPlatformApproverInput = {
+  stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  request?: Prisma.ApprovalRequestUpdateOneRequiredWithoutStepsNestedInput
+  approver?: Prisma.EmployeeUpdateOneWithoutApprovalStepsNestedInput
+}
+
+export type ApprovalStepUncheckedUpdateWithoutPlatformApproverInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  requestId?: Prisma.IntFieldUpdateOperationsInput | number
+  stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  approverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ApprovalStepUncheckedUpdateManyWithoutPlatformApproverInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  requestId?: Prisma.IntFieldUpdateOperationsInput | number
+  stepOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  scope?: Prisma.EnumApprovalStepScopeFieldUpdateOperationsInput | $Enums.ApprovalStepScope
+  approverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApprovalStepStatusFieldUpdateOperationsInput | $Enums.ApprovalStepStatus
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -761,49 +987,60 @@ export type ApprovalStepSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   requestId?: boolean
   stepOrder?: boolean
+  scope?: boolean
   approverId?: boolean
+  platformApproverId?: boolean
   status?: boolean
   comment?: boolean
   actedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   request?: boolean | Prisma.ApprovalRequestDefaultArgs<ExtArgs>
-  approver?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  approver?: boolean | Prisma.ApprovalStep$approverArgs<ExtArgs>
+  platformApprover?: boolean | Prisma.ApprovalStep$platformApproverArgs<ExtArgs>
 }, ExtArgs["result"]["approvalStep"]>
 
 export type ApprovalStepSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requestId?: boolean
   stepOrder?: boolean
+  scope?: boolean
   approverId?: boolean
+  platformApproverId?: boolean
   status?: boolean
   comment?: boolean
   actedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   request?: boolean | Prisma.ApprovalRequestDefaultArgs<ExtArgs>
-  approver?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  approver?: boolean | Prisma.ApprovalStep$approverArgs<ExtArgs>
+  platformApprover?: boolean | Prisma.ApprovalStep$platformApproverArgs<ExtArgs>
 }, ExtArgs["result"]["approvalStep"]>
 
 export type ApprovalStepSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requestId?: boolean
   stepOrder?: boolean
+  scope?: boolean
   approverId?: boolean
+  platformApproverId?: boolean
   status?: boolean
   comment?: boolean
   actedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   request?: boolean | Prisma.ApprovalRequestDefaultArgs<ExtArgs>
-  approver?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  approver?: boolean | Prisma.ApprovalStep$approverArgs<ExtArgs>
+  platformApprover?: boolean | Prisma.ApprovalStep$platformApproverArgs<ExtArgs>
 }, ExtArgs["result"]["approvalStep"]>
 
 export type ApprovalStepSelectScalar = {
   id?: boolean
   requestId?: boolean
   stepOrder?: boolean
+  scope?: boolean
   approverId?: boolean
+  platformApproverId?: boolean
   status?: boolean
   comment?: boolean
   actedAt?: boolean
@@ -811,31 +1048,37 @@ export type ApprovalStepSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApprovalStepOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "stepOrder" | "approverId" | "status" | "comment" | "actedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["approvalStep"]>
+export type ApprovalStepOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "stepOrder" | "scope" | "approverId" | "platformApproverId" | "status" | "comment" | "actedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["approvalStep"]>
 export type ApprovalStepInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   request?: boolean | Prisma.ApprovalRequestDefaultArgs<ExtArgs>
-  approver?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  approver?: boolean | Prisma.ApprovalStep$approverArgs<ExtArgs>
+  platformApprover?: boolean | Prisma.ApprovalStep$platformApproverArgs<ExtArgs>
 }
 export type ApprovalStepIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   request?: boolean | Prisma.ApprovalRequestDefaultArgs<ExtArgs>
-  approver?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  approver?: boolean | Prisma.ApprovalStep$approverArgs<ExtArgs>
+  platformApprover?: boolean | Prisma.ApprovalStep$platformApproverArgs<ExtArgs>
 }
 export type ApprovalStepIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   request?: boolean | Prisma.ApprovalRequestDefaultArgs<ExtArgs>
-  approver?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  approver?: boolean | Prisma.ApprovalStep$approverArgs<ExtArgs>
+  platformApprover?: boolean | Prisma.ApprovalStep$platformApproverArgs<ExtArgs>
 }
 
 export type $ApprovalStepPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ApprovalStep"
   objects: {
     request: Prisma.$ApprovalRequestPayload<ExtArgs>
-    approver: Prisma.$EmployeePayload<ExtArgs>
+    approver: Prisma.$EmployeePayload<ExtArgs> | null
+    platformApprover: Prisma.$PlatformUserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     requestId: number
     stepOrder: number
-    approverId: number
+    scope: $Enums.ApprovalStepScope
+    approverId: number | null
+    platformApproverId: number | null
     status: $Enums.ApprovalStepStatus
     comment: string | null
     actedAt: Date | null
@@ -1236,7 +1479,8 @@ readonly fields: ApprovalStepFieldRefs;
 export interface Prisma__ApprovalStepClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   request<T extends Prisma.ApprovalRequestDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ApprovalRequestDefaultArgs<ExtArgs>>): Prisma.Prisma__ApprovalRequestClient<runtime.Types.Result.GetResult<Prisma.$ApprovalRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  approver<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  approver<T extends Prisma.ApprovalStep$approverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ApprovalStep$approverArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  platformApprover<T extends Prisma.ApprovalStep$platformApproverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ApprovalStep$platformApproverArgs<ExtArgs>>): Prisma.Prisma__PlatformUserClient<runtime.Types.Result.GetResult<Prisma.$PlatformUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1269,7 +1513,9 @@ export interface ApprovalStepFieldRefs {
   readonly id: Prisma.FieldRef<"ApprovalStep", 'Int'>
   readonly requestId: Prisma.FieldRef<"ApprovalStep", 'Int'>
   readonly stepOrder: Prisma.FieldRef<"ApprovalStep", 'Int'>
+  readonly scope: Prisma.FieldRef<"ApprovalStep", 'ApprovalStepScope'>
   readonly approverId: Prisma.FieldRef<"ApprovalStep", 'Int'>
+  readonly platformApproverId: Prisma.FieldRef<"ApprovalStep", 'Int'>
   readonly status: Prisma.FieldRef<"ApprovalStep", 'ApprovalStepStatus'>
   readonly comment: Prisma.FieldRef<"ApprovalStep", 'String'>
   readonly actedAt: Prisma.FieldRef<"ApprovalStep", 'DateTime'>
@@ -1673,6 +1919,44 @@ export type ApprovalStepDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many ApprovalSteps to delete.
    */
   limit?: number
+}
+
+/**
+ * ApprovalStep.approver
+ */
+export type ApprovalStep$approverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * ApprovalStep.platformApprover
+ */
+export type ApprovalStep$platformApproverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlatformUser
+   */
+  select?: Prisma.PlatformUserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlatformUser
+   */
+  omit?: Prisma.PlatformUserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlatformUserInclude<ExtArgs> | null
+  where?: Prisma.PlatformUserWhereInput
 }
 
 /**

@@ -59,6 +59,7 @@ export const ModelName = {
   EmployeeContract: 'EmployeeContract',
   ApprovalRequest: 'ApprovalRequest',
   ApprovalStep: 'ApprovalStep',
+  PlatformUser: 'PlatformUser',
   EmployeeOnPosition: 'EmployeeOnPosition',
   Image: 'Image',
   ID_Document: 'ID_Document',
@@ -78,7 +79,8 @@ export const ModelName = {
   HolidayCalendar: 'HolidayCalendar',
   PayrollComponent: 'PayrollComponent',
   PayrollRun: 'PayrollRun',
-  PayrollItem: 'PayrollItem'
+  PayrollItem: 'PayrollItem',
+  PayrollEmployeeSummary: 'PayrollEmployeeSummary'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -212,7 +214,9 @@ export const ApprovalStepScalarFieldEnum = {
   id: 'id',
   requestId: 'requestId',
   stepOrder: 'stepOrder',
+  scope: 'scope',
   approverId: 'approverId',
+  platformApproverId: 'platformApproverId',
   status: 'status',
   comment: 'comment',
   actedAt: 'actedAt',
@@ -221,6 +225,20 @@ export const ApprovalStepScalarFieldEnum = {
 } as const
 
 export type ApprovalStepScalarFieldEnum = (typeof ApprovalStepScalarFieldEnum)[keyof typeof ApprovalStepScalarFieldEnum]
+
+
+export const PlatformUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  fullName: 'fullName',
+  password: 'password',
+  isActive: 'isActive',
+  permissions: 'permissions',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlatformUserScalarFieldEnum = (typeof PlatformUserScalarFieldEnum)[keyof typeof PlatformUserScalarFieldEnum]
 
 
 export const EmployeeOnPositionScalarFieldEnum = {
@@ -482,11 +500,31 @@ export const PayrollItemScalarFieldEnum = {
   employeeId: 'employeeId',
   componentId: 'componentId',
   amount: 'amount',
+  employeeSummaryId: 'employeeSummaryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type PayrollItemScalarFieldEnum = (typeof PayrollItemScalarFieldEnum)[keyof typeof PayrollItemScalarFieldEnum]
+
+
+export const PayrollEmployeeSummaryScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  payrollRunId: 'payrollRunId',
+  employeeId: 'employeeId',
+  basicSalary: 'basicSalary',
+  totalAllowances: 'totalAllowances',
+  totalDeductions: 'totalDeductions',
+  netPay: 'netPay',
+  status: 'status',
+  paidAt: 'paidAt',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PayrollEmployeeSummaryScalarFieldEnum = (typeof PayrollEmployeeSummaryScalarFieldEnum)[keyof typeof PayrollEmployeeSummaryScalarFieldEnum]
 
 
 export const SortOrder = {

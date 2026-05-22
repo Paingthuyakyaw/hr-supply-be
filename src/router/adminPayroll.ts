@@ -1,10 +1,15 @@
 import { Router } from "express";
 import {
+  calculateEmployeePayroll,
   createPayrollComponent,
   exportPayrollRun,
+  getEmployeePayrollDetail,
+  getPayrollCalculateOptions,
+  getPayrollOverview,
   getPayrollRunSummary,
   listPayrollComponents,
   listPayrollRuns,
+  markPayrollAsPaid,
   runPayroll,
   updatePayrollComponent,
 } from "../controller/payroll";
@@ -13,6 +18,11 @@ import {
   payrollComponentCreateSchema,
   payrollComponentListSchema,
   payrollComponentUpdateSchema,
+  payrollEmployeePaySchema,
+  payrollEmployeePayrollDetailSchema,
+  payrollEmployeePayrollSchema,
+  payrollOverviewSchema,
+  payrollRunCalculateOptionsSchema,
   payrollRunCreateSchema,
   payrollRunIdSchema,
   payrollRunListSchema,
@@ -48,6 +58,41 @@ adminPayrollRouter.post(
   validate(payrollRunCreateSchema),
   requirePermission(MenuCode.PAYROLL, Action.CREATE),
   runPayroll,
+);
+
+adminPayrollRouter.get(
+  "/overview",
+  validate(payrollOverviewSchema),
+  requirePermission(MenuCode.PAYROLL, Action.VIEW),
+  getPayrollOverview,
+);
+
+adminPayrollRouter.get(
+  "/calculate/options",
+  validate(payrollRunCalculateOptionsSchema),
+  requirePermission(MenuCode.PAYROLL, Action.VIEW),
+  getPayrollCalculateOptions,
+);
+
+adminPayrollRouter.post(
+  "/employees/:employeeId/calculate",
+  validate(payrollEmployeePayrollSchema),
+  requirePermission(MenuCode.PAYROLL, Action.UPDATE),
+  calculateEmployeePayroll,
+);
+
+adminPayrollRouter.get(
+  "/employees/:employeeId",
+  validate(payrollEmployeePayrollDetailSchema),
+  requirePermission(MenuCode.PAYROLL, Action.VIEW),
+  getEmployeePayrollDetail,
+);
+
+adminPayrollRouter.post(
+  "/employees/:employeeId/pay",
+  validate(payrollEmployeePaySchema),
+  requirePermission(MenuCode.PAYROLL, Action.UPDATE),
+  markPayrollAsPaid,
 );
 
 adminPayrollRouter.get(

@@ -127,6 +127,22 @@ export const ApprovalStepStatus = {
 export type ApprovalStepStatus = (typeof ApprovalStepStatus)[keyof typeof ApprovalStepStatus]
 
 
+export const ApprovalStepScope = {
+  ORG: 'ORG',
+  PLATFORM: 'PLATFORM'
+} as const
+
+export type ApprovalStepScope = (typeof ApprovalStepScope)[keyof typeof ApprovalStepScope]
+
+
+export const PlatformPermission = {
+  APPROVAL_VIEW: 'APPROVAL_VIEW',
+  APPROVAL_DECIDE: 'APPROVAL_DECIDE'
+} as const
+
+export type PlatformPermission = (typeof PlatformPermission)[keyof typeof PlatformPermission]
+
+
 export const AttendanceRecordState = {
   OPEN: 'OPEN',
   CLOSED: 'CLOSED',
@@ -178,3 +194,12 @@ export const PayrollRunStatus = {
 } as const
 
 export type PayrollRunStatus = (typeof PayrollRunStatus)[keyof typeof PayrollRunStatus]
+
+
+export const PayrollEmployeeStatus = {
+  PENDING: 'PENDING',
+  PROCESSED: 'PROCESSED',
+  PAID: 'PAID'
+} as const
+
+export type PayrollEmployeeStatus = (typeof PayrollEmployeeStatus)[keyof typeof PayrollEmployeeStatus]

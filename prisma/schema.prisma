@@ -36,6 +36,7 @@ model Organization {
   payrollComponents PayrollComponent[]
   payrollRuns PayrollRun[]
   payrollItems PayrollItem[]
+  payrollEmployeeSummaries PayrollEmployeeSummary[]
 }
 
 model Plan {
@@ -138,6 +139,7 @@ model Employee {
   reviewedLeaveRequests LeaveRequest[] @relation("LeaveReviewer")
   payrollItems PayrollItem[]
   createdPayrollRuns PayrollRun[] @relation("PayrollRunCreator")
+  payrollSummaries PayrollEmployeeSummary[]
 
   @@index([organizationId])
   @@index([department_id])
@@ -184,8 +186,11 @@ model ApprovalStep {
   requestId  Int
   request    ApprovalRequest    @relation(fields: [requestId], references: [id])
   stepOrder  Int
-  approverId Int
-  approver   Employee           @relation("ApprovalAssignee", fields: [approverId], references: [id])
+  scope      ApprovalStepScope  @default(ORG)
+  approverId Int?
+  approver   Employee?          @relation("ApprovalAssignee", fields: [approverId], references: [id])
+  platformApproverId Int?
+  platformApprover   PlatformUser? @relation(fields: [platformApproverId], references: [id])
   status     ApprovalStepStatus @default(PENDING)
   comment    String?
   actedAt    DateTime?
@@ -194,7 +199,21 @@ model ApprovalStep {
 
   @@index([requestId, stepOrder])
   @@index([approverId])
+  @@index([platformApproverId])
   @@unique([requestId, stepOrder])
+}
+
+model PlatformUser {
+  id          Int                 @id @default(autoincrement())
+  email       String              @unique
+  fullName    String
+  password    String
+  isActive    Boolean             @default(true)
+  permissions PlatformPermission[] @default([APPROVAL_VIEW, APPROVAL_DECIDE])
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  approvalSteps ApprovalStep[]
 }
 
 model EmployeeOnPosition {
@@ -478,6 +497,7 @@ model PayrollRun {
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
   items          PayrollItem[]
+  employeeSummaries PayrollEmployeeSummary[]
 
   @@index([organizationId, month])
   @@unique([organizationId, month])
@@ -494,11 +514,38 @@ model PayrollItem {
   componentId    Int
   component      PayrollComponent @relation(fields: [componentId], references: [id])
   amount         Decimal      @db.Decimal(12, 2)
+  employeeSummaryId Int?
+  employeeSummary PayrollEmployeeSummary? @relation(fields: [employeeSummaryId], references: [id])
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 
   @@index([organizationId, employeeId])
   @@index([organizationId, payrollRunId])
+}
+
+model PayrollEmployeeSummary {
+  id             Int                 @id @default(autoincrement())
+  organizationId Int
+  organization   Organization        @relation(fields: [organizationId], references: [id])
+  payrollRunId   Int
+  payrollRun     PayrollRun          @relation(fields: [payrollRunId], references: [id])
+  employeeId     Int
+  employee       Employee            @relation(fields: [employeeId], references: [id])
+  basicSalary    Decimal             @db.Decimal(12, 2)
+  totalAllowances Decimal            @db.Decimal(12, 2)
+  totalDeductions Decimal            @db.Decimal(12, 2)
+  netPay         Decimal             @db.Decimal(12, 2)
+  status         PayrollEmployeeStatus @default(PENDING)
+  paidAt         DateTime?
+  notes          String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  items PayrollItem[]
+
+  @@index([organizationId, payrollRunId])
+  @@index([organizationId, employeeId])
+  @@unique([payrollRunId, employeeId])
 }
 
 enum MenuCode {
@@ -586,6 +633,16 @@ enum ApprovalStepStatus {
   REJECTED
 }
 
+enum ApprovalStepScope {
+  ORG
+  PLATFORM
+}
+
+enum PlatformPermission {
+  APPROVAL_VIEW
+  APPROVAL_DECIDE
+}
+
 enum AttendanceRecordState {
   OPEN
   CLOSED
@@ -619,6 +676,12 @@ enum PayrollRunStatus {
   DRAFT
   FINALIZED
   EXPORTED
+}
+
+enum PayrollEmployeeStatus {
+  PENDING
+  PROCESSED
+  PAID
 }
 
 

@@ -18,7 +18,9 @@ import {
   attendanceShiftUpdateSchema,
 } from "../validator/attendance";
 import { requirePermission } from "../middleware/permission";
-import { Action, MenuCode } from "../generated/prisma/enums";
+import { Action, MenuCode, PlatformPermission } from "../generated/prisma/enums";
+import { requireOwnAdminScope } from "../middleware/scope";
+import { requirePlatformPermissionIfSuperadmin } from "../middleware/platformPermission";
 
 const adminAttendanceRouter = Router();
 
@@ -31,6 +33,7 @@ adminAttendanceRouter.get(
   "/approvals",
   forceApproverRole,
   validate(approvalListSchema),
+  requirePlatformPermissionIfSuperadmin(PlatformPermission.APPROVAL_VIEW),
   requirePermission(MenuCode.ATTENDANCE, Action.VIEW),
   listApprovals,
 );
@@ -38,12 +41,14 @@ adminAttendanceRouter.get(
 adminAttendanceRouter.post(
   "/approvals/:id/decision",
   validate(decideApprovalSchema),
+  requirePlatformPermissionIfSuperadmin(PlatformPermission.APPROVAL_DECIDE),
   requirePermission(MenuCode.ATTENDANCE, Action.UPDATE),
   decideApproval,
 );
 
 adminAttendanceRouter.get(
   "/policy",
+  requireOwnAdminScope,
   requirePermission(MenuCode.ATTENDANCE, Action.VIEW),
   getAttendancePolicy,
 );
@@ -51,12 +56,14 @@ adminAttendanceRouter.get(
 adminAttendanceRouter.put(
   "/policy",
   validate(attendancePolicySchema),
+  requireOwnAdminScope,
   requirePermission(MenuCode.ATTENDANCE, Action.UPDATE),
   upsertAttendancePolicy,
 );
 
 adminAttendanceRouter.get(
   "/shifts",
+  requireOwnAdminScope,
   requirePermission(MenuCode.ATTENDANCE, Action.VIEW),
   listAttendanceShifts,
 );
@@ -64,6 +71,7 @@ adminAttendanceRouter.get(
 adminAttendanceRouter.post(
   "/shifts",
   validate(attendanceShiftCreateSchema),
+  requireOwnAdminScope,
   requirePermission(MenuCode.ATTENDANCE, Action.CREATE),
   createAttendanceShift,
 );
@@ -71,6 +79,7 @@ adminAttendanceRouter.post(
 adminAttendanceRouter.patch(
   "/shifts/:id",
   validate(attendanceShiftUpdateSchema),
+  requireOwnAdminScope,
   requirePermission(MenuCode.ATTENDANCE, Action.UPDATE),
   updateAttendanceShift,
 );
@@ -78,6 +87,7 @@ adminAttendanceRouter.patch(
 adminAttendanceRouter.get(
   "/records",
   validate(attendanceRecordListSchema),
+  requireOwnAdminScope,
   requirePermission(MenuCode.ATTENDANCE, Action.VIEW),
   listAttendanceRecords,
 );

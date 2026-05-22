@@ -4,6 +4,10 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import {
   Action,
+  ApprovalStatus,
+  ApprovalStepScope,
+  ApprovalStepStatus,
+  ApprovalType,
   AttendanceRecordState,
   AttendanceWorkStatus,
   ContractStatus,
@@ -12,6 +16,11 @@ import {
   LeaveRequestStatus,
   MenuCode,
   OrganizationStatus,
+  PayrollCalculationType,
+  PayrollComponentType,
+  PayrollEmployeeStatus,
+  PayrollRunStatus,
+  PlatformPermission,
   WeekDay,
 } from "../src/generated/prisma/enums";
 
@@ -514,11 +523,283 @@ async function main() {
     },
   });
 
+  const defaultPayrollComponents = [
+    {
+      code: "BASIC",
+      name: "Basic Salary",
+      type: PayrollComponentType.EARNING,
+      calculationType: PayrollCalculationType.FIXED,
+      value: 900000,
+      isTaxable: true,
+      isActive: true,
+    },
+    {
+      code: "TRANSPORT",
+      name: "Transport Allowance",
+      type: PayrollComponentType.EARNING,
+      calculationType: PayrollCalculationType.FIXED,
+      value: 60000,
+      isTaxable: false,
+      isActive: true,
+    },
+    {
+      code: "MEAL",
+      name: "Meal Allowance",
+      type: PayrollComponentType.EARNING,
+      calculationType: PayrollCalculationType.FIXED,
+      value: 40000,
+      isTaxable: false,
+      isActive: true,
+    },
+    {
+      code: "PERFORMANCE",
+      name: "Performance Bonus",
+      type: PayrollComponentType.EARNING,
+      calculationType: PayrollCalculationType.FIXED,
+      value: 50000,
+      isTaxable: true,
+      isActive: true,
+    },
+    {
+      code: "INCOME_TAX",
+      name: "Income Tax",
+      type: PayrollComponentType.DEDUCTION,
+      calculationType: PayrollCalculationType.PERCENTAGE,
+      value: 5,
+      isTaxable: false,
+      isActive: true,
+    },
+    {
+      code: "HEALTH_INS",
+      name: "Health Insurance",
+      type: PayrollComponentType.DEDUCTION,
+      calculationType: PayrollCalculationType.FIXED,
+      value: 30000,
+      isTaxable: false,
+      isActive: true,
+    },
+    {
+      code: "PENSION",
+      name: "Pension Fund",
+      type: PayrollComponentType.DEDUCTION,
+      calculationType: PayrollCalculationType.PERCENTAGE,
+      value: 2,
+      isTaxable: false,
+      isActive: true,
+    },
+  ] as const;
+
+  const seededPayrollComponents = [];
+  for (const component of defaultPayrollComponents) {
+    const upserted = await prisma.payrollComponent.upsert({
+      where: {
+        organizationId_code: {
+          organizationId: org.id,
+          code: component.code,
+        },
+      },
+      update: {
+        name: component.name,
+        type: component.type,
+        calculationType: component.calculationType,
+        value: component.value,
+        isTaxable: component.isTaxable,
+        isActive: component.isActive,
+      },
+      create: {
+        organizationId: org.id,
+        code: component.code,
+        name: component.name,
+        type: component.type,
+        calculationType: component.calculationType,
+        value: component.value,
+        isTaxable: component.isTaxable,
+        isActive: component.isActive,
+      },
+    });
+    seededPayrollComponents.push(upserted);
+  }
+
+  const payrollMonth = new Date().toISOString().slice(0, 7);
+  const payrollRun = await prisma.payrollRun.upsert({
+    where: {
+      organizationId_month: {
+        organizationId: org.id,
+        month: payrollMonth,
+      },
+    },
+    update: {
+      status: PayrollRunStatus.DRAFT,
+      notes: "Seed payroll run",
+      createdById: admin.id,
+      processedAt: new Date(),
+    },
+    create: {
+      organizationId: org.id,
+      month: payrollMonth,
+      status: PayrollRunStatus.DRAFT,
+      notes: "Seed payroll run",
+      createdById: admin.id,
+      processedAt: new Date(),
+    },
+  });
+
+  await prisma.payrollItem.deleteMany({
+    where: { organizationId: org.id, payrollRunId: payrollRun.id },
+  });
+  await prisma.payrollEmployeeSummary.deleteMany({
+    where: { organizationId: org.id, payrollRunId: payrollRun.id },
+  });
+
+  const seedEmployees = [admin, manager, staff];
+  for (const employee of seedEmployees) {
+    const amounts = seededPayrollComponents.map((component) => {
+      if (
+        component.type === PayrollComponentType.EARNING &&
+        component.calculationType === PayrollCalculationType.FIXED
+      ) {
+        return { componentId: component.id, type: component.type, amount: Number(component.value) };
+      }
+      if (
+        component.type === PayrollComponentType.EARNING &&
+        component.calculationType === PayrollCalculationType.PERCENTAGE
+      ) {
+        return {
+          componentId: component.id,
+          type: component.type,
+          amount: (900000 * Number(component.value)) / 100,
+        };
+      }
+      if (
+        component.type === PayrollComponentType.DEDUCTION &&
+        component.calculationType === PayrollCalculationType.FIXED
+      ) {
+        return { componentId: component.id, type: component.type, amount: Number(component.value) * -1 };
+      }
+      return {
+        componentId: component.id,
+        type: component.type,
+        amount: ((900000 * Number(component.value)) / 100) * -1,
+      };
+    });
+
+    const totalAllowances = amounts
+      .filter((item) => item.type === PayrollComponentType.EARNING)
+      .reduce((sum, item) => sum + item.amount, 0);
+    const totalDeductions = amounts
+      .filter((item) => item.type === PayrollComponentType.DEDUCTION)
+      .reduce((sum, item) => sum + Math.abs(item.amount), 0);
+    const netPay = totalAllowances - totalDeductions;
+
+    const summary = await prisma.payrollEmployeeSummary.create({
+      data: {
+        organizationId: org.id,
+        payrollRunId: payrollRun.id,
+        employeeId: employee.id,
+        basicSalary: 900000,
+        totalAllowances,
+        totalDeductions,
+        netPay,
+        status:
+          employee.id === admin.id
+            ? PayrollEmployeeStatus.PAID
+            : PayrollEmployeeStatus.PROCESSED,
+        paidAt: employee.id === admin.id ? new Date() : null,
+        notes: "Seed payroll summary",
+      },
+    });
+
+    if (amounts.length) {
+      await prisma.payrollItem.createMany({
+        data: amounts.map((item) => ({
+          organizationId: org.id,
+          payrollRunId: payrollRun.id,
+          employeeId: employee.id,
+          componentId: item.componentId,
+          amount: item.amount,
+          employeeSummaryId: summary.id,
+        })),
+      });
+    }
+  }
+
+  const superadminPasswordHash = await bcrypt.hash("123456", 10);
+  const superadmin = await prisma.platformUser.upsert({
+    where: { email: "superadmin@gmail.com" },
+    update: {
+      fullName: "Super Admin User",
+      password: superadminPasswordHash,
+      isActive: true,
+      permissions: [PlatformPermission.APPROVAL_VIEW, PlatformPermission.APPROVAL_DECIDE],
+    },
+    create: {
+      email: "superadmin@gmail.com",
+      fullName: "Super Admin User",
+      password: superadminPasswordHash,
+      isActive: true,
+      permissions: [PlatformPermission.APPROVAL_VIEW, PlatformPermission.APPROVAL_DECIDE],
+    },
+  });
+
+  const existingEscalatedApproval = await prisma.approvalRequest.findFirst({
+    where: {
+      organizationId: org.id,
+      requesterId: staff.id,
+      type: ApprovalType.OVERTIME,
+      status: ApprovalStatus.PENDING,
+      currentStep: 2,
+    },
+    select: { id: true },
+  });
+  if (!existingEscalatedApproval) {
+    const escalatedRequest = await prisma.approvalRequest.create({
+      data: {
+        organizationId: org.id,
+        requesterId: staff.id,
+        targetEmployeeId: staff.id,
+        type: ApprovalType.OVERTIME,
+        status: ApprovalStatus.PENDING,
+        currentStep: 2,
+        payload: {
+          workDate: `${currentYear}-11-20`,
+          startTime: "18:00",
+          endTime: "20:00",
+          totalHours: 2,
+          reason: "Seed escalated overtime request",
+        },
+      },
+    });
+
+    await prisma.approvalStep.createMany({
+      data: [
+        {
+          requestId: escalatedRequest.id,
+          stepOrder: 1,
+          scope: ApprovalStepScope.ORG,
+          approverId: manager.id,
+          status: ApprovalStepStatus.APPROVED,
+          comment: "Approved by manager",
+          actedAt: new Date(),
+        },
+        {
+          requestId: escalatedRequest.id,
+          stepOrder: 2,
+          scope: ApprovalStepScope.PLATFORM,
+          platformApproverId: superadmin.id,
+          status: ApprovalStepStatus.PENDING,
+        },
+      ],
+    });
+  }
+
   console.info("Seed completed.");
   console.info("Seed login credentials:");
   console.info("  email: seed.admin@hr.local");
   console.info("  password: password123");
   console.info("  organizationCode: SEED-ORG");
+  console.info("Superadmin login credentials:");
+  console.info("  email: superadmin@gmail.com");
+  console.info("  password: 123456");
 }
 
 main()

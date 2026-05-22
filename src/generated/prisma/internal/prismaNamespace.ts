@@ -392,6 +392,7 @@ export const ModelName = {
   EmployeeContract: 'EmployeeContract',
   ApprovalRequest: 'ApprovalRequest',
   ApprovalStep: 'ApprovalStep',
+  PlatformUser: 'PlatformUser',
   EmployeeOnPosition: 'EmployeeOnPosition',
   Image: 'Image',
   ID_Document: 'ID_Document',
@@ -411,7 +412,8 @@ export const ModelName = {
   HolidayCalendar: 'HolidayCalendar',
   PayrollComponent: 'PayrollComponent',
   PayrollRun: 'PayrollRun',
-  PayrollItem: 'PayrollItem'
+  PayrollItem: 'PayrollItem',
+  PayrollEmployeeSummary: 'PayrollEmployeeSummary'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -427,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "employeeContract" | "approvalRequest" | "approvalStep" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee" | "codeCounter" | "organizationSchedule" | "attendancePolicy" | "attendanceShift" | "attendanceRecord" | "leaveType" | "leaveBalance" | "leaveRequest" | "holidayCalendar" | "payrollComponent" | "payrollRun" | "payrollItem"
+    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "employeeContract" | "approvalRequest" | "approvalStep" | "platformUser" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee" | "codeCounter" | "organizationSchedule" | "attendancePolicy" | "attendanceShift" | "attendanceRecord" | "leaveType" | "leaveBalance" | "leaveRequest" | "holidayCalendar" | "payrollComponent" | "payrollRun" | "payrollItem" | "payrollEmployeeSummary"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1020,6 +1022,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ApprovalStepCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ApprovalStepCountAggregateOutputType> | number
+        }
+      }
+    }
+    PlatformUser: {
+      payload: Prisma.$PlatformUserPayload<ExtArgs>
+      fields: Prisma.PlatformUserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlatformUserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlatformUserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>
+        }
+        findFirst: {
+          args: Prisma.PlatformUserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlatformUserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>
+        }
+        findMany: {
+          args: Prisma.PlatformUserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>[]
+        }
+        create: {
+          args: Prisma.PlatformUserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>
+        }
+        createMany: {
+          args: Prisma.PlatformUserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlatformUserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>[]
+        }
+        delete: {
+          args: Prisma.PlatformUserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>
+        }
+        update: {
+          args: Prisma.PlatformUserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlatformUserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlatformUserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlatformUserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>[]
+        }
+        upsert: {
+          args: Prisma.PlatformUserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformUserPayload>
+        }
+        aggregate: {
+          args: Prisma.PlatformUserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlatformUser>
+        }
+        groupBy: {
+          args: Prisma.PlatformUserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlatformUserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlatformUserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlatformUserCountAggregateOutputType> | number
         }
       }
     }
@@ -2503,6 +2579,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PayrollEmployeeSummary: {
+      payload: Prisma.$PayrollEmployeeSummaryPayload<ExtArgs>
+      fields: Prisma.PayrollEmployeeSummaryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PayrollEmployeeSummaryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PayrollEmployeeSummaryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>
+        }
+        findFirst: {
+          args: Prisma.PayrollEmployeeSummaryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PayrollEmployeeSummaryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>
+        }
+        findMany: {
+          args: Prisma.PayrollEmployeeSummaryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>[]
+        }
+        create: {
+          args: Prisma.PayrollEmployeeSummaryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>
+        }
+        createMany: {
+          args: Prisma.PayrollEmployeeSummaryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PayrollEmployeeSummaryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>[]
+        }
+        delete: {
+          args: Prisma.PayrollEmployeeSummaryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>
+        }
+        update: {
+          args: Prisma.PayrollEmployeeSummaryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>
+        }
+        deleteMany: {
+          args: Prisma.PayrollEmployeeSummaryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PayrollEmployeeSummaryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PayrollEmployeeSummaryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>[]
+        }
+        upsert: {
+          args: Prisma.PayrollEmployeeSummaryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayrollEmployeeSummaryPayload>
+        }
+        aggregate: {
+          args: Prisma.PayrollEmployeeSummaryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayrollEmployeeSummary>
+        }
+        groupBy: {
+          args: Prisma.PayrollEmployeeSummaryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PayrollEmployeeSummaryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PayrollEmployeeSummaryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PayrollEmployeeSummaryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2657,7 +2807,9 @@ export const ApprovalStepScalarFieldEnum = {
   id: 'id',
   requestId: 'requestId',
   stepOrder: 'stepOrder',
+  scope: 'scope',
   approverId: 'approverId',
+  platformApproverId: 'platformApproverId',
   status: 'status',
   comment: 'comment',
   actedAt: 'actedAt',
@@ -2666,6 +2818,20 @@ export const ApprovalStepScalarFieldEnum = {
 } as const
 
 export type ApprovalStepScalarFieldEnum = (typeof ApprovalStepScalarFieldEnum)[keyof typeof ApprovalStepScalarFieldEnum]
+
+
+export const PlatformUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  fullName: 'fullName',
+  password: 'password',
+  isActive: 'isActive',
+  permissions: 'permissions',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlatformUserScalarFieldEnum = (typeof PlatformUserScalarFieldEnum)[keyof typeof PlatformUserScalarFieldEnum]
 
 
 export const EmployeeOnPositionScalarFieldEnum = {
@@ -2927,11 +3093,31 @@ export const PayrollItemScalarFieldEnum = {
   employeeId: 'employeeId',
   componentId: 'componentId',
   amount: 'amount',
+  employeeSummaryId: 'employeeSummaryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type PayrollItemScalarFieldEnum = (typeof PayrollItemScalarFieldEnum)[keyof typeof PayrollItemScalarFieldEnum]
+
+
+export const PayrollEmployeeSummaryScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  payrollRunId: 'payrollRunId',
+  employeeId: 'employeeId',
+  basicSalary: 'basicSalary',
+  totalAllowances: 'totalAllowances',
+  totalDeductions: 'totalDeductions',
+  netPay: 'netPay',
+  status: 'status',
+  paidAt: 'paidAt',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PayrollEmployeeSummaryScalarFieldEnum = (typeof PayrollEmployeeSummaryScalarFieldEnum)[keyof typeof PayrollEmployeeSummaryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3143,6 +3329,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'ApprovalStepScope'
+ */
+export type EnumApprovalStepScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStepScope'>
+    
+
+
+/**
+ * Reference to a field of type 'ApprovalStepScope[]'
+ */
+export type ListEnumApprovalStepScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStepScope[]'>
+    
+
+
+/**
  * Reference to a field of type 'ApprovalStepStatus'
  */
 export type EnumApprovalStepStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStepStatus'>
@@ -3153,6 +3353,20 @@ export type EnumApprovalStepStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'ApprovalStepStatus[]'
  */
 export type ListEnumApprovalStepStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStepStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformPermission[]'
+ */
+export type ListEnumPlatformPermissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformPermission[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformPermission'
+ */
+export type EnumPlatformPermissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformPermission'>
     
 
 
@@ -3297,6 +3511,20 @@ export type ListEnumPayrollRunStatusFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'PayrollEmployeeStatus'
+ */
+export type EnumPayrollEmployeeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PayrollEmployeeStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PayrollEmployeeStatus[]'
+ */
+export type ListEnumPayrollEmployeeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PayrollEmployeeStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3412,6 +3640,7 @@ export type GlobalOmitConfig = {
   employeeContract?: Prisma.EmployeeContractOmit
   approvalRequest?: Prisma.ApprovalRequestOmit
   approvalStep?: Prisma.ApprovalStepOmit
+  platformUser?: Prisma.PlatformUserOmit
   employeeOnPosition?: Prisma.EmployeeOnPositionOmit
   image?: Prisma.ImageOmit
   iD_Document?: Prisma.ID_DocumentOmit
@@ -3432,6 +3661,7 @@ export type GlobalOmitConfig = {
   payrollComponent?: Prisma.PayrollComponentOmit
   payrollRun?: Prisma.PayrollRunOmit
   payrollItem?: Prisma.PayrollItemOmit
+  payrollEmployeeSummary?: Prisma.PayrollEmployeeSummaryOmit
 }
 
 /* Types for Logging */

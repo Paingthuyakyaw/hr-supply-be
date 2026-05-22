@@ -8,13 +8,30 @@ import { signAccessToken } from "../utils/token";
 
 const prismaMock = prisma as any;
 
-const accessToken = signAccessToken({
+const mobileAccessToken = signAccessToken({
   sub: 1,
   orgId: 10,
   email: "attendance@test.com",
+  clientType: "mobile",
+});
+const adminAccessToken = signAccessToken({
+  sub: 1,
+  orgId: 10,
+  email: "attendance-admin@test.com",
+  clientType: "admin",
+});
+const superadminAccessToken = signAccessToken({
+  sub: 99,
+  orgId: 0,
+  email: "attendance-super@test.com",
+  clientType: "admin",
+  adminScope: "SUPERADMIN",
+  actorType: "platform",
 });
 
-const authHeader = { Authorization: `Bearer ${accessToken}` };
+const mobileAuthHeader = { Authorization: `Bearer ${mobileAccessToken}` };
+const adminAuthHeader = { Authorization: `Bearer ${adminAccessToken}` };
+const superadminAuthHeader = { Authorization: `Bearer ${superadminAccessToken}` };
 
 const allowAllPermissions = () => {
   prismaMock.employee.findUnique = async () => ({
@@ -89,7 +106,7 @@ describe("attendance integration", () => {
 
     const res = await request(app)
       .post("/api/attendance/check-in")
-      .set(authHeader)
+      .set(mobileAuthHeader)
       .send({ notes: "start work" });
 
     assert.equal(res.status, 201);
@@ -128,7 +145,7 @@ describe("attendance integration", () => {
 
     const res = await request(app)
       .post("/api/attendance/check-out")
-      .set(authHeader)
+      .set(mobileAuthHeader)
       .send({});
 
     assert.equal(res.status, 200);
@@ -140,7 +157,7 @@ describe("attendance integration", () => {
   test("PUT /api/admin/attendance/policy upserts policy", async () => {
     const res = await request(app)
       .put("/api/admin/attendance/policy")
-      .set(authHeader)
+      .set(adminAuthHeader)
       .send({
         defaultStartTime: "09:00",
         defaultEndTime: "17:30",
@@ -171,12 +188,31 @@ describe("attendance integration", () => {
 
     const res = await request(app)
       .get("/api/admin/attendance/records")
-      .set(authHeader)
+      .set(adminAuthHeader)
       .query({ page: 1, size: 20 });
 
     assert.equal(res.status, 200);
     assert.equal(res.body.message, "Attendance records fetched");
     assert.equal(res.body.meta.total, 1);
     assert.equal(res.body.data[0].employee.code, "EMP-001");
+  });
+
+  test("PUT /api/admin/attendance/policy denies SUPERADMIN scope", async () => {
+    const res = await request(app)
+      .put("/api/admin/attendance/policy")
+      .set(superadminAuthHeader)
+      .send({
+        defaultStartTime: "09:00",
+        defaultEndTime: "17:30",
+        lateGraceMinutes: 15,
+        earlyLeaveGraceMinutes: 10,
+        minHalfDayMinutes: 240,
+      });
+
+    assert.equal(res.status, 403);
+    assert.equal(
+      res.body.message,
+      "Forbidden: this endpoint is limited to organization admins",
+    );
   });
 });

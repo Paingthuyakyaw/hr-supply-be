@@ -6,6 +6,8 @@ type JwtUser = {
   sub: number;
   orgId: number;
   email: string;
+  adminScope?: "OWN_ADMIN" | "SUPERADMIN";
+  actorType?: "employee" | "platform";
 };
 
 type RequestWithUser = Request & {
@@ -18,8 +20,15 @@ export const requirePermission = (menu: MenuCode, action: Action) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = (req as RequestWithUser).user;
-      if (!user?.sub || !user?.orgId) {
+      if (
+        !user?.sub ||
+        !Number.isFinite(user.sub) ||
+        !Number.isFinite(user.orgId)
+      ) {
         return res.status(401).json({ message: "Unauthorized" });
+      }
+      if (user.adminScope === "SUPERADMIN" && user.actorType === "platform") {
+        return next();
       }
 
       const employee = await prisma.employee.findUnique({

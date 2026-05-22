@@ -80,6 +80,11 @@ export type ApprovalRequest = Prisma.ApprovalRequestModel
  */
 export type ApprovalStep = Prisma.ApprovalStepModel
 /**
+ * Model PlatformUser
+ * 
+ */
+export type PlatformUser = Prisma.PlatformUserModel
+/**
  * Model EmployeeOnPosition
  * 
  */
@@ -179,3 +184,8 @@ export type PayrollRun = Prisma.PayrollRunModel
  * 
  */
 export type PayrollItem = Prisma.PayrollItemModel
+/**
+ * Model PayrollEmployeeSummary
+ * 
+ */
+export type PayrollEmployeeSummary = Prisma.PayrollEmployeeSummaryModel

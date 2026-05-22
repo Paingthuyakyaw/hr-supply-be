@@ -33,6 +33,7 @@ export type PayrollItemAvgAggregateOutputType = {
   employeeId: number | null
   componentId: number | null
   amount: runtime.Decimal | null
+  employeeSummaryId: number | null
 }
 
 export type PayrollItemSumAggregateOutputType = {
@@ -42,6 +43,7 @@ export type PayrollItemSumAggregateOutputType = {
   employeeId: number | null
   componentId: number | null
   amount: runtime.Decimal | null
+  employeeSummaryId: number | null
 }
 
 export type PayrollItemMinAggregateOutputType = {
@@ -51,6 +53,7 @@ export type PayrollItemMinAggregateOutputType = {
   employeeId: number | null
   componentId: number | null
   amount: runtime.Decimal | null
+  employeeSummaryId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +65,7 @@ export type PayrollItemMaxAggregateOutputType = {
   employeeId: number | null
   componentId: number | null
   amount: runtime.Decimal | null
+  employeeSummaryId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -73,6 +77,7 @@ export type PayrollItemCountAggregateOutputType = {
   employeeId: number
   componentId: number
   amount: number
+  employeeSummaryId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -86,6 +91,7 @@ export type PayrollItemAvgAggregateInputType = {
   employeeId?: true
   componentId?: true
   amount?: true
+  employeeSummaryId?: true
 }
 
 export type PayrollItemSumAggregateInputType = {
@@ -95,6 +101,7 @@ export type PayrollItemSumAggregateInputType = {
   employeeId?: true
   componentId?: true
   amount?: true
+  employeeSummaryId?: true
 }
 
 export type PayrollItemMinAggregateInputType = {
@@ -104,6 +111,7 @@ export type PayrollItemMinAggregateInputType = {
   employeeId?: true
   componentId?: true
   amount?: true
+  employeeSummaryId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -115,6 +123,7 @@ export type PayrollItemMaxAggregateInputType = {
   employeeId?: true
   componentId?: true
   amount?: true
+  employeeSummaryId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -126,6 +135,7 @@ export type PayrollItemCountAggregateInputType = {
   employeeId?: true
   componentId?: true
   amount?: true
+  employeeSummaryId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -224,6 +234,7 @@ export type PayrollItemGroupByOutputType = {
   employeeId: number
   componentId: number
   amount: runtime.Decimal
+  employeeSummaryId: number | null
   createdAt: Date
   updatedAt: Date
   _count: PayrollItemCountAggregateOutputType | null
@@ -258,12 +269,14 @@ export type PayrollItemWhereInput = {
   employeeId?: Prisma.IntFilter<"PayrollItem"> | number
   componentId?: Prisma.IntFilter<"PayrollItem"> | number
   amount?: Prisma.DecimalFilter<"PayrollItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.IntNullableFilter<"PayrollItem"> | number | null
   createdAt?: Prisma.DateTimeFilter<"PayrollItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PayrollItem"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   payrollRun?: Prisma.XOR<Prisma.PayrollRunScalarRelationFilter, Prisma.PayrollRunWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   component?: Prisma.XOR<Prisma.PayrollComponentScalarRelationFilter, Prisma.PayrollComponentWhereInput>
+  employeeSummary?: Prisma.XOR<Prisma.PayrollEmployeeSummaryNullableScalarRelationFilter, Prisma.PayrollEmployeeSummaryWhereInput> | null
 }
 
 export type PayrollItemOrderByWithRelationInput = {
@@ -273,12 +286,14 @@ export type PayrollItemOrderByWithRelationInput = {
   employeeId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  employeeSummaryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
   payrollRun?: Prisma.PayrollRunOrderByWithRelationInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
   component?: Prisma.PayrollComponentOrderByWithRelationInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryOrderByWithRelationInput
 }
 
 export type PayrollItemWhereUniqueInput = Prisma.AtLeast<{
@@ -291,12 +306,14 @@ export type PayrollItemWhereUniqueInput = Prisma.AtLeast<{
   employeeId?: Prisma.IntFilter<"PayrollItem"> | number
   componentId?: Prisma.IntFilter<"PayrollItem"> | number
   amount?: Prisma.DecimalFilter<"PayrollItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.IntNullableFilter<"PayrollItem"> | number | null
   createdAt?: Prisma.DateTimeFilter<"PayrollItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PayrollItem"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   payrollRun?: Prisma.XOR<Prisma.PayrollRunScalarRelationFilter, Prisma.PayrollRunWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   component?: Prisma.XOR<Prisma.PayrollComponentScalarRelationFilter, Prisma.PayrollComponentWhereInput>
+  employeeSummary?: Prisma.XOR<Prisma.PayrollEmployeeSummaryNullableScalarRelationFilter, Prisma.PayrollEmployeeSummaryWhereInput> | null
 }, "id">
 
 export type PayrollItemOrderByWithAggregationInput = {
@@ -306,6 +323,7 @@ export type PayrollItemOrderByWithAggregationInput = {
   employeeId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  employeeSummaryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PayrollItemCountOrderByAggregateInput
@@ -325,6 +343,7 @@ export type PayrollItemScalarWhereWithAggregatesInput = {
   employeeId?: Prisma.IntWithAggregatesFilter<"PayrollItem"> | number
   componentId?: Prisma.IntWithAggregatesFilter<"PayrollItem"> | number
   amount?: Prisma.DecimalWithAggregatesFilter<"PayrollItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.IntNullableWithAggregatesFilter<"PayrollItem"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PayrollItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PayrollItem"> | Date | string
 }
@@ -337,6 +356,7 @@ export type PayrollItemCreateInput = {
   payrollRun: Prisma.PayrollRunCreateNestedOneWithoutItemsInput
   employee: Prisma.EmployeeCreateNestedOneWithoutPayrollItemsInput
   component: Prisma.PayrollComponentCreateNestedOneWithoutItemsInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryCreateNestedOneWithoutItemsInput
 }
 
 export type PayrollItemUncheckedCreateInput = {
@@ -346,6 +366,7 @@ export type PayrollItemUncheckedCreateInput = {
   employeeId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -358,6 +379,7 @@ export type PayrollItemUpdateInput = {
   payrollRun?: Prisma.PayrollRunUpdateOneRequiredWithoutItemsNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutPayrollItemsNestedInput
   component?: Prisma.PayrollComponentUpdateOneRequiredWithoutItemsNestedInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryUpdateOneWithoutItemsNestedInput
 }
 
 export type PayrollItemUncheckedUpdateInput = {
@@ -367,6 +389,7 @@ export type PayrollItemUncheckedUpdateInput = {
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -378,6 +401,7 @@ export type PayrollItemCreateManyInput = {
   employeeId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -395,6 +419,7 @@ export type PayrollItemUncheckedUpdateManyInput = {
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -416,6 +441,7 @@ export type PayrollItemCountOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  employeeSummaryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -427,6 +453,7 @@ export type PayrollItemAvgOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  employeeSummaryId?: Prisma.SortOrder
 }
 
 export type PayrollItemMaxOrderByAggregateInput = {
@@ -436,6 +463,7 @@ export type PayrollItemMaxOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  employeeSummaryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -447,6 +475,7 @@ export type PayrollItemMinOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  employeeSummaryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -458,6 +487,7 @@ export type PayrollItemSumOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  employeeSummaryId?: Prisma.SortOrder
 }
 
 export type PayrollItemCreateNestedManyWithoutOrganizationInput = {
@@ -628,6 +658,48 @@ export type PayrollItemUncheckedUpdateManyWithoutPayrollRunNestedInput = {
   deleteMany?: Prisma.PayrollItemScalarWhereInput | Prisma.PayrollItemScalarWhereInput[]
 }
 
+export type PayrollItemCreateNestedManyWithoutEmployeeSummaryInput = {
+  create?: Prisma.XOR<Prisma.PayrollItemCreateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput> | Prisma.PayrollItemCreateWithoutEmployeeSummaryInput[] | Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput[]
+  connectOrCreate?: Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput | Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput[]
+  createMany?: Prisma.PayrollItemCreateManyEmployeeSummaryInputEnvelope
+  connect?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+}
+
+export type PayrollItemUncheckedCreateNestedManyWithoutEmployeeSummaryInput = {
+  create?: Prisma.XOR<Prisma.PayrollItemCreateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput> | Prisma.PayrollItemCreateWithoutEmployeeSummaryInput[] | Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput[]
+  connectOrCreate?: Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput | Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput[]
+  createMany?: Prisma.PayrollItemCreateManyEmployeeSummaryInputEnvelope
+  connect?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+}
+
+export type PayrollItemUpdateManyWithoutEmployeeSummaryNestedInput = {
+  create?: Prisma.XOR<Prisma.PayrollItemCreateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput> | Prisma.PayrollItemCreateWithoutEmployeeSummaryInput[] | Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput[]
+  connectOrCreate?: Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput | Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput[]
+  upsert?: Prisma.PayrollItemUpsertWithWhereUniqueWithoutEmployeeSummaryInput | Prisma.PayrollItemUpsertWithWhereUniqueWithoutEmployeeSummaryInput[]
+  createMany?: Prisma.PayrollItemCreateManyEmployeeSummaryInputEnvelope
+  set?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  disconnect?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  delete?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  connect?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  update?: Prisma.PayrollItemUpdateWithWhereUniqueWithoutEmployeeSummaryInput | Prisma.PayrollItemUpdateWithWhereUniqueWithoutEmployeeSummaryInput[]
+  updateMany?: Prisma.PayrollItemUpdateManyWithWhereWithoutEmployeeSummaryInput | Prisma.PayrollItemUpdateManyWithWhereWithoutEmployeeSummaryInput[]
+  deleteMany?: Prisma.PayrollItemScalarWhereInput | Prisma.PayrollItemScalarWhereInput[]
+}
+
+export type PayrollItemUncheckedUpdateManyWithoutEmployeeSummaryNestedInput = {
+  create?: Prisma.XOR<Prisma.PayrollItemCreateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput> | Prisma.PayrollItemCreateWithoutEmployeeSummaryInput[] | Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput[]
+  connectOrCreate?: Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput | Prisma.PayrollItemCreateOrConnectWithoutEmployeeSummaryInput[]
+  upsert?: Prisma.PayrollItemUpsertWithWhereUniqueWithoutEmployeeSummaryInput | Prisma.PayrollItemUpsertWithWhereUniqueWithoutEmployeeSummaryInput[]
+  createMany?: Prisma.PayrollItemCreateManyEmployeeSummaryInputEnvelope
+  set?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  disconnect?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  delete?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  connect?: Prisma.PayrollItemWhereUniqueInput | Prisma.PayrollItemWhereUniqueInput[]
+  update?: Prisma.PayrollItemUpdateWithWhereUniqueWithoutEmployeeSummaryInput | Prisma.PayrollItemUpdateWithWhereUniqueWithoutEmployeeSummaryInput[]
+  updateMany?: Prisma.PayrollItemUpdateManyWithWhereWithoutEmployeeSummaryInput | Prisma.PayrollItemUpdateManyWithWhereWithoutEmployeeSummaryInput[]
+  deleteMany?: Prisma.PayrollItemScalarWhereInput | Prisma.PayrollItemScalarWhereInput[]
+}
+
 export type PayrollItemCreateWithoutOrganizationInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -635,6 +707,7 @@ export type PayrollItemCreateWithoutOrganizationInput = {
   payrollRun: Prisma.PayrollRunCreateNestedOneWithoutItemsInput
   employee: Prisma.EmployeeCreateNestedOneWithoutPayrollItemsInput
   component: Prisma.PayrollComponentCreateNestedOneWithoutItemsInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryCreateNestedOneWithoutItemsInput
 }
 
 export type PayrollItemUncheckedCreateWithoutOrganizationInput = {
@@ -643,6 +716,7 @@ export type PayrollItemUncheckedCreateWithoutOrganizationInput = {
   employeeId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -683,6 +757,7 @@ export type PayrollItemScalarWhereInput = {
   employeeId?: Prisma.IntFilter<"PayrollItem"> | number
   componentId?: Prisma.IntFilter<"PayrollItem"> | number
   amount?: Prisma.DecimalFilter<"PayrollItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.IntNullableFilter<"PayrollItem"> | number | null
   createdAt?: Prisma.DateTimeFilter<"PayrollItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PayrollItem"> | Date | string
 }
@@ -694,6 +769,7 @@ export type PayrollItemCreateWithoutEmployeeInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutPayrollItemsInput
   payrollRun: Prisma.PayrollRunCreateNestedOneWithoutItemsInput
   component: Prisma.PayrollComponentCreateNestedOneWithoutItemsInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryCreateNestedOneWithoutItemsInput
 }
 
 export type PayrollItemUncheckedCreateWithoutEmployeeInput = {
@@ -702,6 +778,7 @@ export type PayrollItemUncheckedCreateWithoutEmployeeInput = {
   payrollRunId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -739,6 +816,7 @@ export type PayrollItemCreateWithoutComponentInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutPayrollItemsInput
   payrollRun: Prisma.PayrollRunCreateNestedOneWithoutItemsInput
   employee: Prisma.EmployeeCreateNestedOneWithoutPayrollItemsInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryCreateNestedOneWithoutItemsInput
 }
 
 export type PayrollItemUncheckedCreateWithoutComponentInput = {
@@ -747,6 +825,7 @@ export type PayrollItemUncheckedCreateWithoutComponentInput = {
   payrollRunId: number
   employeeId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -784,6 +863,7 @@ export type PayrollItemCreateWithoutPayrollRunInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutPayrollItemsInput
   employee: Prisma.EmployeeCreateNestedOneWithoutPayrollItemsInput
   component: Prisma.PayrollComponentCreateNestedOneWithoutItemsInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryCreateNestedOneWithoutItemsInput
 }
 
 export type PayrollItemUncheckedCreateWithoutPayrollRunInput = {
@@ -792,6 +872,7 @@ export type PayrollItemUncheckedCreateWithoutPayrollRunInput = {
   employeeId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -822,12 +903,60 @@ export type PayrollItemUpdateManyWithWhereWithoutPayrollRunInput = {
   data: Prisma.XOR<Prisma.PayrollItemUpdateManyMutationInput, Prisma.PayrollItemUncheckedUpdateManyWithoutPayrollRunInput>
 }
 
+export type PayrollItemCreateWithoutEmployeeSummaryInput = {
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutPayrollItemsInput
+  payrollRun: Prisma.PayrollRunCreateNestedOneWithoutItemsInput
+  employee: Prisma.EmployeeCreateNestedOneWithoutPayrollItemsInput
+  component: Prisma.PayrollComponentCreateNestedOneWithoutItemsInput
+}
+
+export type PayrollItemUncheckedCreateWithoutEmployeeSummaryInput = {
+  id?: number
+  organizationId: number
+  payrollRunId: number
+  employeeId: number
+  componentId: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PayrollItemCreateOrConnectWithoutEmployeeSummaryInput = {
+  where: Prisma.PayrollItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.PayrollItemCreateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput>
+}
+
+export type PayrollItemCreateManyEmployeeSummaryInputEnvelope = {
+  data: Prisma.PayrollItemCreateManyEmployeeSummaryInput | Prisma.PayrollItemCreateManyEmployeeSummaryInput[]
+  skipDuplicates?: boolean
+}
+
+export type PayrollItemUpsertWithWhereUniqueWithoutEmployeeSummaryInput = {
+  where: Prisma.PayrollItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.PayrollItemUpdateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedUpdateWithoutEmployeeSummaryInput>
+  create: Prisma.XOR<Prisma.PayrollItemCreateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedCreateWithoutEmployeeSummaryInput>
+}
+
+export type PayrollItemUpdateWithWhereUniqueWithoutEmployeeSummaryInput = {
+  where: Prisma.PayrollItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.PayrollItemUpdateWithoutEmployeeSummaryInput, Prisma.PayrollItemUncheckedUpdateWithoutEmployeeSummaryInput>
+}
+
+export type PayrollItemUpdateManyWithWhereWithoutEmployeeSummaryInput = {
+  where: Prisma.PayrollItemScalarWhereInput
+  data: Prisma.XOR<Prisma.PayrollItemUpdateManyMutationInput, Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeSummaryInput>
+}
+
 export type PayrollItemCreateManyOrganizationInput = {
   id?: number
   payrollRunId: number
   employeeId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -839,6 +968,7 @@ export type PayrollItemUpdateWithoutOrganizationInput = {
   payrollRun?: Prisma.PayrollRunUpdateOneRequiredWithoutItemsNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutPayrollItemsNestedInput
   component?: Prisma.PayrollComponentUpdateOneRequiredWithoutItemsNestedInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryUpdateOneWithoutItemsNestedInput
 }
 
 export type PayrollItemUncheckedUpdateWithoutOrganizationInput = {
@@ -847,6 +977,7 @@ export type PayrollItemUncheckedUpdateWithoutOrganizationInput = {
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -857,6 +988,7 @@ export type PayrollItemUncheckedUpdateManyWithoutOrganizationInput = {
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -867,6 +999,7 @@ export type PayrollItemCreateManyEmployeeInput = {
   payrollRunId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -878,6 +1011,7 @@ export type PayrollItemUpdateWithoutEmployeeInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutPayrollItemsNestedInput
   payrollRun?: Prisma.PayrollRunUpdateOneRequiredWithoutItemsNestedInput
   component?: Prisma.PayrollComponentUpdateOneRequiredWithoutItemsNestedInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryUpdateOneWithoutItemsNestedInput
 }
 
 export type PayrollItemUncheckedUpdateWithoutEmployeeInput = {
@@ -886,6 +1020,7 @@ export type PayrollItemUncheckedUpdateWithoutEmployeeInput = {
   payrollRunId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -896,6 +1031,7 @@ export type PayrollItemUncheckedUpdateManyWithoutEmployeeInput = {
   payrollRunId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -906,6 +1042,7 @@ export type PayrollItemCreateManyComponentInput = {
   payrollRunId: number
   employeeId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -917,6 +1054,7 @@ export type PayrollItemUpdateWithoutComponentInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutPayrollItemsNestedInput
   payrollRun?: Prisma.PayrollRunUpdateOneRequiredWithoutItemsNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutPayrollItemsNestedInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryUpdateOneWithoutItemsNestedInput
 }
 
 export type PayrollItemUncheckedUpdateWithoutComponentInput = {
@@ -925,6 +1063,7 @@ export type PayrollItemUncheckedUpdateWithoutComponentInput = {
   payrollRunId?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -935,6 +1074,7 @@ export type PayrollItemUncheckedUpdateManyWithoutComponentInput = {
   payrollRunId?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -945,6 +1085,7 @@ export type PayrollItemCreateManyPayrollRunInput = {
   employeeId: number
   componentId: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -956,6 +1097,7 @@ export type PayrollItemUpdateWithoutPayrollRunInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutPayrollItemsNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutPayrollItemsNestedInput
   component?: Prisma.PayrollComponentUpdateOneRequiredWithoutItemsNestedInput
+  employeeSummary?: Prisma.PayrollEmployeeSummaryUpdateOneWithoutItemsNestedInput
 }
 
 export type PayrollItemUncheckedUpdateWithoutPayrollRunInput = {
@@ -964,6 +1106,7 @@ export type PayrollItemUncheckedUpdateWithoutPayrollRunInput = {
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -971,6 +1114,50 @@ export type PayrollItemUncheckedUpdateWithoutPayrollRunInput = {
 export type PayrollItemUncheckedUpdateManyWithoutPayrollRunInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  employeeId?: Prisma.IntFieldUpdateOperationsInput | number
+  componentId?: Prisma.IntFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  employeeSummaryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PayrollItemCreateManyEmployeeSummaryInput = {
+  id?: number
+  organizationId: number
+  payrollRunId: number
+  employeeId: number
+  componentId: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PayrollItemUpdateWithoutEmployeeSummaryInput = {
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutPayrollItemsNestedInput
+  payrollRun?: Prisma.PayrollRunUpdateOneRequiredWithoutItemsNestedInput
+  employee?: Prisma.EmployeeUpdateOneRequiredWithoutPayrollItemsNestedInput
+  component?: Prisma.PayrollComponentUpdateOneRequiredWithoutItemsNestedInput
+}
+
+export type PayrollItemUncheckedUpdateWithoutEmployeeSummaryInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  payrollRunId?: Prisma.IntFieldUpdateOperationsInput | number
+  employeeId?: Prisma.IntFieldUpdateOperationsInput | number
+  componentId?: Prisma.IntFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PayrollItemUncheckedUpdateManyWithoutEmployeeSummaryInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
+  payrollRunId?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -987,12 +1174,14 @@ export type PayrollItemSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   employeeId?: boolean
   componentId?: boolean
   amount?: boolean
+  employeeSummaryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   payrollRun?: boolean | Prisma.PayrollRunDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   component?: boolean | Prisma.PayrollComponentDefaultArgs<ExtArgs>
+  employeeSummary?: boolean | Prisma.PayrollItem$employeeSummaryArgs<ExtArgs>
 }, ExtArgs["result"]["payrollItem"]>
 
 export type PayrollItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1002,12 +1191,14 @@ export type PayrollItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   employeeId?: boolean
   componentId?: boolean
   amount?: boolean
+  employeeSummaryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   payrollRun?: boolean | Prisma.PayrollRunDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   component?: boolean | Prisma.PayrollComponentDefaultArgs<ExtArgs>
+  employeeSummary?: boolean | Prisma.PayrollItem$employeeSummaryArgs<ExtArgs>
 }, ExtArgs["result"]["payrollItem"]>
 
 export type PayrollItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1017,12 +1208,14 @@ export type PayrollItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   employeeId?: boolean
   componentId?: boolean
   amount?: boolean
+  employeeSummaryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   payrollRun?: boolean | Prisma.PayrollRunDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   component?: boolean | Prisma.PayrollComponentDefaultArgs<ExtArgs>
+  employeeSummary?: boolean | Prisma.PayrollItem$employeeSummaryArgs<ExtArgs>
 }, ExtArgs["result"]["payrollItem"]>
 
 export type PayrollItemSelectScalar = {
@@ -1032,28 +1225,32 @@ export type PayrollItemSelectScalar = {
   employeeId?: boolean
   componentId?: boolean
   amount?: boolean
+  employeeSummaryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PayrollItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "payrollRunId" | "employeeId" | "componentId" | "amount" | "createdAt" | "updatedAt", ExtArgs["result"]["payrollItem"]>
+export type PayrollItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "payrollRunId" | "employeeId" | "componentId" | "amount" | "employeeSummaryId" | "createdAt" | "updatedAt", ExtArgs["result"]["payrollItem"]>
 export type PayrollItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   payrollRun?: boolean | Prisma.PayrollRunDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   component?: boolean | Prisma.PayrollComponentDefaultArgs<ExtArgs>
+  employeeSummary?: boolean | Prisma.PayrollItem$employeeSummaryArgs<ExtArgs>
 }
 export type PayrollItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   payrollRun?: boolean | Prisma.PayrollRunDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   component?: boolean | Prisma.PayrollComponentDefaultArgs<ExtArgs>
+  employeeSummary?: boolean | Prisma.PayrollItem$employeeSummaryArgs<ExtArgs>
 }
 export type PayrollItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   payrollRun?: boolean | Prisma.PayrollRunDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   component?: boolean | Prisma.PayrollComponentDefaultArgs<ExtArgs>
+  employeeSummary?: boolean | Prisma.PayrollItem$employeeSummaryArgs<ExtArgs>
 }
 
 export type $PayrollItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1063,6 +1260,7 @@ export type $PayrollItemPayload<ExtArgs extends runtime.Types.Extensions.Interna
     payrollRun: Prisma.$PayrollRunPayload<ExtArgs>
     employee: Prisma.$EmployeePayload<ExtArgs>
     component: Prisma.$PayrollComponentPayload<ExtArgs>
+    employeeSummary: Prisma.$PayrollEmployeeSummaryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1071,6 +1269,7 @@ export type $PayrollItemPayload<ExtArgs extends runtime.Types.Extensions.Interna
     employeeId: number
     componentId: number
     amount: runtime.Decimal
+    employeeSummaryId: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["payrollItem"]>
@@ -1471,6 +1670,7 @@ export interface Prisma__PayrollItemClient<T, Null = never, ExtArgs extends runt
   payrollRun<T extends Prisma.PayrollRunDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PayrollRunDefaultArgs<ExtArgs>>): Prisma.Prisma__PayrollRunClient<runtime.Types.Result.GetResult<Prisma.$PayrollRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   component<T extends Prisma.PayrollComponentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PayrollComponentDefaultArgs<ExtArgs>>): Prisma.Prisma__PayrollComponentClient<runtime.Types.Result.GetResult<Prisma.$PayrollComponentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  employeeSummary<T extends Prisma.PayrollItem$employeeSummaryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PayrollItem$employeeSummaryArgs<ExtArgs>>): Prisma.Prisma__PayrollEmployeeSummaryClient<runtime.Types.Result.GetResult<Prisma.$PayrollEmployeeSummaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1506,6 +1706,7 @@ export interface PayrollItemFieldRefs {
   readonly employeeId: Prisma.FieldRef<"PayrollItem", 'Int'>
   readonly componentId: Prisma.FieldRef<"PayrollItem", 'Int'>
   readonly amount: Prisma.FieldRef<"PayrollItem", 'Decimal'>
+  readonly employeeSummaryId: Prisma.FieldRef<"PayrollItem", 'Int'>
   readonly createdAt: Prisma.FieldRef<"PayrollItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PayrollItem", 'DateTime'>
 }
@@ -1906,6 +2107,25 @@ export type PayrollItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many PayrollItems to delete.
    */
   limit?: number
+}
+
+/**
+ * PayrollItem.employeeSummary
+ */
+export type PayrollItem$employeeSummaryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PayrollEmployeeSummary
+   */
+  select?: Prisma.PayrollEmployeeSummarySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PayrollEmployeeSummary
+   */
+  omit?: Prisma.PayrollEmployeeSummaryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayrollEmployeeSummaryInclude<ExtArgs> | null
+  where?: Prisma.PayrollEmployeeSummaryWhereInput
 }
 
 /**

@@ -12,6 +12,7 @@ const accessToken = signAccessToken({
   sub: 1,
   orgId: 10,
   email: "test@example.com",
+  clientType: "admin",
 });
 
 const authHeader = { Authorization: `Bearer ${accessToken}` };

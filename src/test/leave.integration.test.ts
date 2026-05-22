@@ -8,13 +8,21 @@ import { signAccessToken } from "../utils/token";
 
 const prismaMock = prisma as any;
 
-const accessToken = signAccessToken({
+const mobileAccessToken = signAccessToken({
   sub: 1,
   orgId: 10,
   email: "leave@test.com",
+  clientType: "mobile",
+});
+const adminAccessToken = signAccessToken({
+  sub: 1,
+  orgId: 10,
+  email: "leave-admin@test.com",
+  clientType: "admin",
 });
 
-const authHeader = { Authorization: `Bearer ${accessToken}` };
+const mobileAuthHeader = { Authorization: `Bearer ${mobileAccessToken}` };
+const adminAuthHeader = { Authorization: `Bearer ${adminAccessToken}` };
 
 const allowAllPermissions = () => {
   prismaMock.employee.findUnique = async () => ({
@@ -97,7 +105,7 @@ describe("leave integration", () => {
 
     const res = await request(app)
       .post("/api/leave/requests")
-      .set(authHeader)
+      .set(mobileAuthHeader)
       .send({
         leaveTypeId: 2,
         startDate: "2026-06-01",
@@ -147,7 +155,7 @@ describe("leave integration", () => {
 
     const res = await request(app)
       .post("/api/admin/leave/requests/90/decision")
-      .set(authHeader)
+      .set(adminAuthHeader)
       .send({ decision: "APPROVE", comment: "Approved" });
 
     assert.equal(res.status, 200);
@@ -184,7 +192,7 @@ describe("leave integration", () => {
 
     const res = await request(app)
       .post("/api/admin/leave/carry-forward")
-      .set(authHeader)
+      .set(adminAuthHeader)
       .send({ fromYear: 2026 });
 
     assert.equal(res.status, 200);
@@ -201,7 +209,7 @@ describe("leave integration", () => {
 
     const res = await request(app)
       .post("/api/admin/leave/holidays")
-      .set(authHeader)
+      .set(adminAuthHeader)
       .send({
         date: "2026-12-25",
         name: "Christmas Day",
