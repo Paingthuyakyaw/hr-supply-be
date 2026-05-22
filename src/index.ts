@@ -96,7 +96,7 @@ app.use("/api/admin/employees", authVerifyAdmin, requireOwnAdminScope, emRouter)
 app.use("/api/admin/departments", authVerifyAdmin, requireOwnAdminScope, deptRouter);
 app.use("/api/admin/positions", authVerifyAdmin, requireOwnAdminScope, posRouter);
 app.use("/api/admin/organization", authVerifyAdmin, requireOwnAdminScope, orgRouter);
-app.use("/api/admin/plan", authVerifyAdmin, requireOwnAdminScope, planRouter);
+app.use("/api/admin/plan", authVerifyAdmin, planRouter);
 app.use("/api/admin/designation", authVerifyAdmin, requireOwnAdminScope, designationRouter);
 app.use("/api/admin/uploads", authVerifyAdmin, requireOwnAdminScope, uploadRouter);
 app.use("/api/attendance", authVerifyMobile, approvalRouter);

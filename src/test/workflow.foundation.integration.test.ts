@@ -234,4 +234,14 @@ describe("workflow foundation integration", () => {
     assert.equal(res.status, 400);
     assert.equal(res.body.message, "Validation Error");
   });
+
+  test("GET /api/admin/plan allows superadmin scope", async () => {
+    prismaMock.plan.findMany = async () => [];
+    const res = await request(app)
+      .get("/api/admin/plan")
+      .set(superadminAuthHeader);
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, "Fetched Successfully");
+  });
 });
