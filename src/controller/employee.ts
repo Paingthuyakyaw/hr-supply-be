@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { randomBytes } from "node:crypto";
 import { sendEmployeeCreatedOnboardingWebhook } from "../utils/onboardingWebhook";
 import {
+  EmployeeDocumentType,
   ContractStatus,
   EmployeeStatus,
   IDDocType,
@@ -53,6 +54,30 @@ const canTransitionEmployeeStatus = (
   return EMPLOYEE_STATUS_TRANSITIONS[fromStatus]?.includes(toStatus) ?? false;
 };
 
+const toContractResponse = (doc: {
+  id: number;
+  employeeId: number;
+  fileUrl: string | null;
+  version: number;
+  contractStatus: ContractStatus | null;
+  expiresAt: Date | null;
+  reminderDays: number | null;
+  notes: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}) => ({
+  id: doc.id,
+  employeeId: doc.employeeId,
+  fileUrl: doc.fileUrl,
+  version: doc.version,
+  status: doc.contractStatus ?? ContractStatus.ACTIVE,
+  expiresAt: doc.expiresAt,
+  reminderDays: doc.reminderDays,
+  notes: doc.notes,
+  createdAt: doc.createdAt,
+  updatedAt: doc.updatedAt,
+});
+
 export async function getEmployees(req: Request, res: Response) {
   try {
     const user = getUserContext(req);
@@ -93,7 +118,6 @@ export async function getEmployees(req: Request, res: Response) {
           id: true,
           full_name: true,
           avatar: true,
-          contracts: true,
           code: true,
           email: true,
           phoneNumber: true,
@@ -140,7 +164,7 @@ export async function getEmployeeById(req: Request, res: Response) {
         id,
         organizationId: user.orgId,
       },
-      include: { department: true, positions: true, documents: true },
+      include: { department: true, positions: true, employeeDocuments: true },
     });
 
     if (!item) {
@@ -195,6 +219,9 @@ export async function createEmployee(req: Request, res: Response) {
           (typeof doc.front_url !== "undefined" ||
             typeof doc.back_url !== "undefined"),
       );
+    const normalizedContracts = (Array.isArray(contracts) ? contracts : []).filter(
+      (item): item is string => typeof item === "string" && item.trim().length > 0,
+    );
 
     const departmentId = Number(restData.department_id);
     if (!Number.isFinite(departmentId)) {
@@ -220,23 +247,31 @@ export async function createEmployee(req: Request, res: Response) {
         ...restData,
         organizationId: user.orgId,
         avatar: avatarUrl ?? (restData.avatar as string | undefined),
-        contracts: Array.isArray(contracts)
-          ? contracts.filter((item): item is string => typeof item === "string")
-          : [],
         password: hashedPassword,
-        ...(normalizedDocuments.length
+        ...(normalizedDocuments.length || normalizedContracts.length
           ? {
-              documents: {
-                create: normalizedDocuments.map((doc) => ({
-                  type: doc.type,
-                  front_url: doc.front_url,
-                  back_url: doc.back_url,
-                })),
+              employeeDocuments: {
+                create: [
+                  ...normalizedDocuments.map((doc) => ({
+                    organizationId: user.orgId,
+                    type: EmployeeDocumentType.ID_DOCUMENT,
+                    documentSubtype: doc.type,
+                    frontUrl: doc.front_url,
+                    backUrl: doc.back_url,
+                  })),
+                  ...normalizedContracts.map((fileUrl, index) => ({
+                    organizationId: user.orgId,
+                    type: EmployeeDocumentType.CONTRACT,
+                    fileUrl,
+                    version: index + 1,
+                    contractStatus: ContractStatus.ACTIVE,
+                  })),
+                ],
               },
             }
           : {}),
       } as any,
-      include: { department: true, positions: true, documents: true },
+      include: { department: true, positions: true, employeeDocuments: true },
     });
 
     logAuditEvent({
@@ -247,8 +282,7 @@ export async function createEmployee(req: Request, res: Response) {
       action: "CREATE",
       changes: {
         status: item.status,
-        contractsCount: item.contracts.length,
-        documentsCount: item.documents.length,
+        documentsCount: item.employeeDocuments.length,
       },
     });
 
@@ -295,7 +329,6 @@ export async function updateEmployee(req: Request, res: Response) {
       select: {
         id: true,
         status: true,
-        contracts: true,
       },
     });
     if (!exists) {
@@ -330,6 +363,10 @@ export async function updateEmployee(req: Request, res: Response) {
           (typeof doc.front_url !== "undefined" ||
             typeof doc.back_url !== "undefined"),
       );
+    const shouldReplaceContracts = Array.isArray(contracts);
+    const normalizedContracts = (Array.isArray(contracts) ? contracts : []).filter(
+      (item): item is string => typeof item === "string" && item.trim().length > 0,
+    );
 
     const shouldReplaceDocuments = Array.isArray(documents);
     const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
@@ -376,13 +413,6 @@ export async function updateEmployee(req: Request, res: Response) {
           ...restData,
           organizationId: user.orgId,
           ...(typeof avatarUrl !== "undefined" ? { avatar: avatarUrl } : {}),
-          ...(Array.isArray(contracts)
-            ? {
-                contracts: contracts.filter(
-                  (item): item is string => typeof item === "string",
-                ),
-              }
-            : {}),
           ...(typeof hashedPassword !== "undefined"
             ? { password: hashedPassword }
             : {}),
@@ -390,17 +420,36 @@ export async function updateEmployee(req: Request, res: Response) {
       });
 
       if (shouldReplaceDocuments) {
-        await tx.iD_Document.deleteMany({
-          where: { employee_id: id },
+        await tx.employeeDocument.deleteMany({
+          where: { employeeId: id, type: EmployeeDocumentType.ID_DOCUMENT },
         });
 
         if (normalizedDocuments.length) {
-          await tx.iD_Document.createMany({
+          await tx.employeeDocument.createMany({
             data: normalizedDocuments.map((doc) => ({
-              employee_id: id,
-              type: doc.type,
-              front_url: doc.front_url,
-              back_url: doc.back_url,
+              organizationId: user.orgId,
+              employeeId: id,
+              type: EmployeeDocumentType.ID_DOCUMENT,
+              documentSubtype: doc.type,
+              frontUrl: doc.front_url,
+              backUrl: doc.back_url,
+            })),
+          });
+        }
+      }
+      if (shouldReplaceContracts) {
+        await tx.employeeDocument.deleteMany({
+          where: { employeeId: id, type: EmployeeDocumentType.CONTRACT },
+        });
+        if (normalizedContracts.length) {
+          await tx.employeeDocument.createMany({
+            data: normalizedContracts.map((fileUrl, index) => ({
+              organizationId: user.orgId,
+              employeeId: id,
+              type: EmployeeDocumentType.CONTRACT,
+              fileUrl,
+              version: index + 1,
+              contractStatus: ContractStatus.ACTIVE,
             })),
           });
         }
@@ -408,7 +457,7 @@ export async function updateEmployee(req: Request, res: Response) {
 
       return tx.employee.findUnique({
         where: { id },
-        include: { department: true, positions: true, documents: true },
+        include: { department: true, positions: true, employeeDocuments: true },
       });
     });
 
@@ -421,8 +470,7 @@ export async function updateEmployee(req: Request, res: Response) {
       changes: {
         statusBefore: exists.status,
         statusAfter: item?.status,
-        contractsBefore: exists.contracts.length,
-        contractsAfter: item?.contracts?.length ?? 0,
+        contractsReplaced: shouldReplaceContracts,
         documentsReplaced: shouldReplaceDocuments,
       },
     });
@@ -475,7 +523,7 @@ export async function transitionEmployeeLifecycle(req: Request, res: Response) {
     const employee = await prisma.employee.update({
       where: { id },
       data: { status: nextStatus },
-      include: { department: true, positions: true, documents: true },
+      include: { department: true, positions: true, employeeDocuments: true },
     });
 
     logAuditEvent({
@@ -523,7 +571,6 @@ export async function deleteEmployee(req: Request, res: Response) {
       select: {
         id: true,
         status: true,
-        contracts: true,
       },
     });
     if (!exists) {
@@ -540,7 +587,6 @@ export async function deleteEmployee(req: Request, res: Response) {
       action: "DELETE",
       changes: {
         statusBeforeDelete: exists.status,
-        contractsCount: exists.contracts.length,
       },
     });
 
@@ -577,14 +623,26 @@ export async function getEmployeeContracts(req: Request, res: Response) {
       return sendError(res, { status: 404, message: "Employee not found" });
     }
 
-    const contracts = await prisma.employeeContract.findMany({
-      where: { employeeId },
+    const contracts = await prisma.employeeDocument.findMany({
+      where: { employeeId, type: EmployeeDocumentType.CONTRACT },
       orderBy: [{ version: "desc" }, { id: "desc" }],
+      select: {
+        id: true,
+        employeeId: true,
+        fileUrl: true,
+        version: true,
+        contractStatus: true,
+        expiresAt: true,
+        reminderDays: true,
+        notes: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     return sendSuccess(res, {
       message: "Employee contracts fetched",
-      data: contracts,
+      data: contracts.map(toContractResponse),
     });
   } catch (error) {
     return sendError(res, {
@@ -625,20 +683,34 @@ export async function createEmployeeContract(req: Request, res: Response) {
       status?: ContractStatus;
     };
 
-    const currentMaxVersion = await prisma.employeeContract.aggregate({
-      where: { employeeId },
+    const currentMaxVersion = await prisma.employeeDocument.aggregate({
+      where: { employeeId, type: EmployeeDocumentType.CONTRACT },
       _max: { version: true },
     });
 
-    const contract = await prisma.employeeContract.create({
+    const contract = await prisma.employeeDocument.create({
       data: {
+        organizationId: user.orgId,
         employeeId,
+        type: EmployeeDocumentType.CONTRACT,
         fileUrl,
         expiresAt: expiresAt ? new Date(expiresAt) : undefined,
         reminderDays: typeof reminderDays === "number" ? reminderDays : undefined,
         notes,
-        status: status ?? ContractStatus.ACTIVE,
+        contractStatus: status ?? ContractStatus.ACTIVE,
         version: (currentMaxVersion._max.version ?? 0) + 1,
+      },
+      select: {
+        id: true,
+        employeeId: true,
+        fileUrl: true,
+        version: true,
+        contractStatus: true,
+        expiresAt: true,
+        reminderDays: true,
+        notes: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
@@ -650,7 +722,7 @@ export async function createEmployeeContract(req: Request, res: Response) {
       action: "CREATE",
       changes: {
         employeeId,
-        status: contract.status,
+        status: contract.contractStatus,
         version: contract.version,
       },
     });
@@ -658,7 +730,7 @@ export async function createEmployeeContract(req: Request, res: Response) {
     return sendSuccess(res, {
       status: 201,
       message: "Employee contract created",
-      data: contract,
+      data: toContractResponse(contract),
     });
   } catch (error) {
     return sendError(res, {
@@ -695,14 +767,15 @@ export async function updateEmployeeContract(req: Request, res: Response) {
       return sendError(res, { status: 404, message: "Employee not found" });
     }
 
-    const existing = await prisma.employeeContract.findFirst({
+    const existing = await prisma.employeeDocument.findFirst({
       where: {
         id: contractId,
         employeeId,
+        type: EmployeeDocumentType.CONTRACT,
       },
       select: {
         id: true,
-        status: true,
+        contractStatus: true,
         expiresAt: true,
       },
     });
@@ -718,7 +791,7 @@ export async function updateEmployeeContract(req: Request, res: Response) {
       status?: ContractStatus;
     };
 
-    const updated = await prisma.employeeContract.update({
+    const updated = await prisma.employeeDocument.update({
       where: { id: contractId },
       data: {
         ...(typeof fileUrl !== "undefined" ? { fileUrl } : {}),
@@ -727,7 +800,19 @@ export async function updateEmployeeContract(req: Request, res: Response) {
           : {}),
         ...(typeof reminderDays !== "undefined" ? { reminderDays } : {}),
         ...(typeof notes !== "undefined" ? { notes } : {}),
-        ...(typeof status !== "undefined" ? { status } : {}),
+        ...(typeof status !== "undefined" ? { contractStatus: status } : {}),
+      },
+      select: {
+        id: true,
+        employeeId: true,
+        fileUrl: true,
+        version: true,
+        contractStatus: true,
+        expiresAt: true,
+        reminderDays: true,
+        notes: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
@@ -738,8 +823,8 @@ export async function updateEmployeeContract(req: Request, res: Response) {
       entityId: updated.id,
       action: "UPDATE",
       changes: {
-        statusBefore: existing.status,
-        statusAfter: updated.status,
+        statusBefore: existing.contractStatus,
+        statusAfter: updated.contractStatus,
         expiresAtBefore: existing.expiresAt,
         expiresAtAfter: updated.expiresAt,
       },
@@ -747,7 +832,7 @@ export async function updateEmployeeContract(req: Request, res: Response) {
 
     return sendSuccess(res, {
       message: "Employee contract updated",
-      data: updated,
+      data: toContractResponse(updated),
     });
   } catch (error) {
     return sendError(res, {

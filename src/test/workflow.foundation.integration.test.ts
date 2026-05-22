@@ -56,9 +56,9 @@ beforeEach(() => {
     isActive: true,
     permissions: [PlatformPermission.APPROVAL_VIEW, PlatformPermission.APPROVAL_DECIDE],
   });
-  prismaMock.employeeContract.findMany = async () => [];
-  prismaMock.employeeContract.aggregate = async () => ({ _max: { version: 0 } });
-  prismaMock.employeeContract.create = async () => null;
+  prismaMock.employeeDocument.findMany = async () => [];
+  prismaMock.employeeDocument.aggregate = async () => ({ _max: { version: 0 } });
+  prismaMock.employeeDocument.create = async () => null;
   prismaMock.organization.update = async () => null;
   prismaMock.approvalRequest.findFirst = async () => null;
 });
@@ -79,26 +79,39 @@ describe("workflow foundation integration", () => {
     assert.match(res.body.message, /Invalid employee status transition/);
   });
 
-  test("POST /api/employees/:id/contracts creates next version", async () => {
-    prismaMock.employee.findFirst = async () => ({ id: 1, organizationId: 10 });
-    prismaMock.employeeContract.aggregate = async () => ({ _max: { version: 2 } });
-    prismaMock.employeeContract.create = async (args: any) => ({
-      id: 12,
-      employeeId: 1,
-      fileUrl: args.data.fileUrl,
-      version: args.data.version,
-      status: "ACTIVE",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+  test("PUT /api/admin/employees/:id updates contracts via employee update", async () => {
+    prismaMock.employee.findFirst = async () => ({ id: 1, organizationId: 10, status: "ACTIVE" });
+    prismaMock.$transaction = async (callback: (tx: any) => Promise<any>) => {
+      const tx = {
+        employee: {
+          update: async () => ({}),
+          findUnique: async () => ({
+            id: 1,
+            status: "ACTIVE",
+            employeeDocuments: [
+              {
+                id: 77,
+                type: "CONTRACT",
+                fileUrl: "https://files.example.com/contracts/v3.pdf",
+              },
+            ],
+          }),
+        },
+        employeeDocument: {
+          deleteMany: async () => ({}),
+          createMany: async () => ({}),
+        },
+      };
+      return callback(tx);
+    };
 
     const res = await request(app)
-      .post("/api/admin/employees/1/contracts")
+      .put("/api/admin/employees/1")
       .set(adminAuthHeader)
-      .send({ fileUrl: "https://files.example.com/contracts/v3.pdf" });
+      .send({ contracts: ["https://files.example.com/contracts/v3.pdf"] });
 
-    assert.equal(res.status, 201);
-    assert.equal(res.body.data.version, 3);
+    assert.equal(res.status, 200);
+    assert.equal(res.body.message, "Employee updated");
   });
 
   test("PUT /api/organization/:id/schedule updates weekday policy", async () => {

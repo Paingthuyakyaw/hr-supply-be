@@ -39,6 +39,7 @@ model Organization {
   payrollItems PayrollItem[]
   payrollEmployeeSummaries PayrollEmployeeSummary[]
   onboardingTokens OrganizationOnboardingToken[]
+  employeeDocuments EmployeeDocument[]
 }
 
 model Plan {
@@ -102,7 +103,6 @@ model Employee {
   id        Int    @id @default(autoincrement())
   full_name String
   avatar    String?
-  contracts String[] @default([])
 
   code        String  @unique
   email       String? @unique
@@ -127,8 +127,7 @@ model Employee {
 
   department Department @relation(fields: [department_id], references: [id])
 
-  documents ID_Document[]
-  contractRecords EmployeeContract[]
+  employeeDocuments EmployeeDocument[]
 
   head_employee Department? @relation("DepartmentHead")
 
@@ -166,21 +165,27 @@ model OrganizationOnboardingToken {
   @@index([expiresAt])
 }
 
-model EmployeeContract {
-  id           Int            @id @default(autoincrement())
-  employeeId   Int
-  employee     Employee       @relation(fields: [employeeId], references: [id])
-  fileUrl      String
-  version      Int            @default(1)
-  status       ContractStatus @default(ACTIVE)
-  expiresAt    DateTime?
-  reminderDays Int?
-  notes        String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+model EmployeeDocument {
+  id              Int                 @id @default(autoincrement())
+  organizationId  Int
+  organization    Organization        @relation(fields: [organizationId], references: [id])
+  employeeId      Int
+  employee        Employee            @relation(fields: [employeeId], references: [id])
+  type            EmployeeDocumentType
+  documentSubtype IDDocType?
+  fileUrl         String?
+  frontUrl        String?
+  backUrl         String?
+  version         Int                 @default(1)
+  contractStatus  ContractStatus?
+  expiresAt       DateTime?
+  reminderDays    Int?
+  notes           String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
 
-  @@index([employeeId])
-  @@unique([employeeId, version])
+  @@index([organizationId, employeeId])
+  @@index([employeeId, type])
 }
 
 model ApprovalRequest {
@@ -258,19 +263,6 @@ model Image {
   mimeType  String?
   size      Int?
   createdAt DateTime @default(now())
-}
-
-model ID_Document {
-  id         Int       @id @default(autoincrement())
-  type       IDDocType
-  front_url  String?
-  back_url   String?
-  employee_id Int?
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  employee Employee? @relation(fields: [employee_id], references: [id])
 }
 
 model Menu {
@@ -633,6 +625,12 @@ enum ContractStatus {
   ACTIVE
   EXPIRED
   TERMINATED
+}
+
+enum EmployeeDocumentType {
+  CONTRACT
+  ID_DOCUMENT
+  OTHER
 }
 
 enum ApprovalType {

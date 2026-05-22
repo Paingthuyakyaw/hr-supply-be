@@ -99,6 +99,15 @@ export const ContractStatus = {
 export type ContractStatus = (typeof ContractStatus)[keyof typeof ContractStatus]
 
 
+export const EmployeeDocumentType = {
+  CONTRACT: 'CONTRACT',
+  ID_DOCUMENT: 'ID_DOCUMENT',
+  OTHER: 'OTHER'
+} as const
+
+export type EmployeeDocumentType = (typeof EmployeeDocumentType)[keyof typeof EmployeeDocumentType]
+
+
 export const ApprovalType = {
   LEAVE: 'LEAVE',
   OVERTIME: 'OVERTIME',

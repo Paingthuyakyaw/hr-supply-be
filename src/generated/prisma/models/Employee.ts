@@ -78,7 +78,6 @@ export type EmployeeCountAggregateOutputType = {
   id: number
   full_name: number
   avatar: number
-  contracts: number
   code: number
   email: number
   phoneNumber: number
@@ -147,7 +146,6 @@ export type EmployeeCountAggregateInputType = {
   id?: true
   full_name?: true
   avatar?: true
-  contracts?: true
   code?: true
   email?: true
   phoneNumber?: true
@@ -253,7 +251,6 @@ export type EmployeeGroupByOutputType = {
   id: number
   full_name: string
   avatar: string | null
-  contracts: string[]
   code: string
   email: string | null
   phoneNumber: string | null
@@ -295,7 +292,6 @@ export type EmployeeWhereInput = {
   id?: Prisma.IntFilter<"Employee"> | number
   full_name?: Prisma.StringFilter<"Employee"> | string
   avatar?: Prisma.StringNullableFilter<"Employee"> | string | null
-  contracts?: Prisma.StringNullableListFilter<"Employee">
   code?: Prisma.StringFilter<"Employee"> | string
   email?: Prisma.StringNullableFilter<"Employee"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Employee"> | string | null
@@ -311,8 +307,7 @@ export type EmployeeWhereInput = {
   positions?: Prisma.EmployeeOnPositionListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
-  documents?: Prisma.ID_DocumentListRelationFilter
-  contractRecords?: Prisma.EmployeeContractListRelationFilter
+  employeeDocuments?: Prisma.EmployeeDocumentListRelationFilter
   head_employee?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   designations?: Prisma.DesignationOnEmployeeListRelationFilter
   requestedApprovals?: Prisma.ApprovalRequestListRelationFilter
@@ -331,7 +326,6 @@ export type EmployeeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   full_name?: Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
-  contracts?: Prisma.SortOrder
   code?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -347,8 +341,7 @@ export type EmployeeOrderByWithRelationInput = {
   positions?: Prisma.EmployeeOnPositionOrderByRelationAggregateInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
   department?: Prisma.DepartmentOrderByWithRelationInput
-  documents?: Prisma.ID_DocumentOrderByRelationAggregateInput
-  contractRecords?: Prisma.EmployeeContractOrderByRelationAggregateInput
+  employeeDocuments?: Prisma.EmployeeDocumentOrderByRelationAggregateInput
   head_employee?: Prisma.DepartmentOrderByWithRelationInput
   designations?: Prisma.DesignationOnEmployeeOrderByRelationAggregateInput
   requestedApprovals?: Prisma.ApprovalRequestOrderByRelationAggregateInput
@@ -373,7 +366,6 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
   full_name?: Prisma.StringFilter<"Employee"> | string
   avatar?: Prisma.StringNullableFilter<"Employee"> | string | null
-  contracts?: Prisma.StringNullableListFilter<"Employee">
   password?: Prisma.StringNullableFilter<"Employee"> | string | null
   dob?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   employment_type?: Prisma.EnumEmployeeTypeFilter<"Employee"> | $Enums.EmployeeType
@@ -386,8 +378,7 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   positions?: Prisma.EmployeeOnPositionListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
-  documents?: Prisma.ID_DocumentListRelationFilter
-  contractRecords?: Prisma.EmployeeContractListRelationFilter
+  employeeDocuments?: Prisma.EmployeeDocumentListRelationFilter
   head_employee?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   designations?: Prisma.DesignationOnEmployeeListRelationFilter
   requestedApprovals?: Prisma.ApprovalRequestListRelationFilter
@@ -406,7 +397,6 @@ export type EmployeeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   full_name?: Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
-  contracts?: Prisma.SortOrder
   code?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -433,7 +423,6 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Employee"> | number
   full_name?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   avatar?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
-  contracts?: Prisma.StringNullableListFilter<"Employee">
   code?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
   phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
@@ -451,7 +440,6 @@ export type EmployeeScalarWhereWithAggregatesInput = {
 export type EmployeeCreateInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -465,8 +453,7 @@ export type EmployeeCreateInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -485,7 +472,6 @@ export type EmployeeUncheckedCreateInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -499,8 +485,7 @@ export type EmployeeUncheckedCreateInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -518,7 +503,6 @@ export type EmployeeUncheckedCreateInput = {
 export type EmployeeUpdateInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -532,8 +516,7 @@ export type EmployeeUpdateInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -552,7 +535,6 @@ export type EmployeeUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -566,8 +548,7 @@ export type EmployeeUncheckedUpdateInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -586,7 +567,6 @@ export type EmployeeCreateManyInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -604,7 +584,6 @@ export type EmployeeCreateManyInput = {
 export type EmployeeUpdateManyMutationInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -621,7 +600,6 @@ export type EmployeeUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -651,19 +629,10 @@ export type EmployeeNullableScalarRelationFilter = {
   isNot?: Prisma.EmployeeWhereInput | null
 }
 
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
 export type EmployeeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   full_name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  contracts?: Prisma.SortOrder
   code?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
@@ -831,15 +800,6 @@ export type EmployeeUncheckedUpdateManyWithoutDepartmentNestedInput = {
   deleteMany?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
 }
 
-export type EmployeeCreatecontractsInput = {
-  set: string[]
-}
-
-export type EmployeeUpdatecontractsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
 export type EnumEmployeeTypeFieldUpdateOperationsInput = {
   set?: $Enums.EmployeeType
 }
@@ -862,18 +822,18 @@ export type EmployeeUpdateOneRequiredWithoutOnboardingTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutOnboardingTokensInput, Prisma.EmployeeUpdateWithoutOnboardingTokensInput>, Prisma.EmployeeUncheckedUpdateWithoutOnboardingTokensInput>
 }
 
-export type EmployeeCreateNestedOneWithoutContractRecordsInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutContractRecordsInput, Prisma.EmployeeUncheckedCreateWithoutContractRecordsInput>
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutContractRecordsInput
+export type EmployeeCreateNestedOneWithoutEmployeeDocumentsInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutEmployeeDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutEmployeeDocumentsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutEmployeeDocumentsInput
   connect?: Prisma.EmployeeWhereUniqueInput
 }
 
-export type EmployeeUpdateOneRequiredWithoutContractRecordsNestedInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutContractRecordsInput, Prisma.EmployeeUncheckedCreateWithoutContractRecordsInput>
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutContractRecordsInput
-  upsert?: Prisma.EmployeeUpsertWithoutContractRecordsInput
+export type EmployeeUpdateOneRequiredWithoutEmployeeDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutEmployeeDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutEmployeeDocumentsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutEmployeeDocumentsInput
+  upsert?: Prisma.EmployeeUpsertWithoutEmployeeDocumentsInput
   connect?: Prisma.EmployeeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutContractRecordsInput, Prisma.EmployeeUpdateWithoutContractRecordsInput>, Prisma.EmployeeUncheckedUpdateWithoutContractRecordsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutEmployeeDocumentsInput, Prisma.EmployeeUpdateWithoutEmployeeDocumentsInput>, Prisma.EmployeeUncheckedUpdateWithoutEmployeeDocumentsInput>
 }
 
 export type EmployeeCreateNestedOneWithoutRequestedApprovalsInput = {
@@ -918,22 +878,6 @@ export type EmployeeUpdateOneRequiredWithoutPositionsNestedInput = {
   upsert?: Prisma.EmployeeUpsertWithoutPositionsInput
   connect?: Prisma.EmployeeWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutPositionsInput, Prisma.EmployeeUpdateWithoutPositionsInput>, Prisma.EmployeeUncheckedUpdateWithoutPositionsInput>
-}
-
-export type EmployeeCreateNestedOneWithoutDocumentsInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutDocumentsInput>
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutDocumentsInput
-  connect?: Prisma.EmployeeWhereUniqueInput
-}
-
-export type EmployeeUpdateOneWithoutDocumentsNestedInput = {
-  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutDocumentsInput>
-  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutDocumentsInput
-  upsert?: Prisma.EmployeeUpsertWithoutDocumentsInput
-  disconnect?: Prisma.EmployeeWhereInput | boolean
-  delete?: Prisma.EmployeeWhereInput | boolean
-  connect?: Prisma.EmployeeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutDocumentsInput, Prisma.EmployeeUpdateWithoutDocumentsInput>, Prisma.EmployeeUncheckedUpdateWithoutDocumentsInput>
 }
 
 export type EmployeeCreateNestedOneWithoutDesignationsInput = {
@@ -1053,7 +997,6 @@ export type EmployeeUpdateOneRequiredWithoutPayrollSummariesNestedInput = {
 export type EmployeeCreateWithoutOrganizationInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1066,8 +1009,7 @@ export type EmployeeCreateWithoutOrganizationInput = {
   updated_at?: Date | string
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -1086,7 +1028,6 @@ export type EmployeeUncheckedCreateWithoutOrganizationInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1099,8 +1040,7 @@ export type EmployeeUncheckedCreateWithoutOrganizationInput = {
   updated_at?: Date | string
   department_id: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -1148,7 +1088,6 @@ export type EmployeeScalarWhereInput = {
   id?: Prisma.IntFilter<"Employee"> | number
   full_name?: Prisma.StringFilter<"Employee"> | string
   avatar?: Prisma.StringNullableFilter<"Employee"> | string | null
-  contracts?: Prisma.StringNullableListFilter<"Employee">
   code?: Prisma.StringFilter<"Employee"> | string
   email?: Prisma.StringNullableFilter<"Employee"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Employee"> | string | null
@@ -1166,7 +1105,6 @@ export type EmployeeScalarWhereInput = {
 export type EmployeeCreateWithoutHead_employeeInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1180,8 +1118,7 @@ export type EmployeeCreateWithoutHead_employeeInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
   approvalSteps?: Prisma.ApprovalStepCreateNestedManyWithoutApproverInput
@@ -1199,7 +1136,6 @@ export type EmployeeUncheckedCreateWithoutHead_employeeInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1213,8 +1149,7 @@ export type EmployeeUncheckedCreateWithoutHead_employeeInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
   approvalSteps?: Prisma.ApprovalStepUncheckedCreateNestedManyWithoutApproverInput
@@ -1236,7 +1171,6 @@ export type EmployeeCreateOrConnectWithoutHead_employeeInput = {
 export type EmployeeCreateWithoutDepartmentInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1249,8 +1183,7 @@ export type EmployeeCreateWithoutDepartmentInput = {
   updated_at?: Date | string
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -1269,7 +1202,6 @@ export type EmployeeUncheckedCreateWithoutDepartmentInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1282,8 +1214,7 @@ export type EmployeeUncheckedCreateWithoutDepartmentInput = {
   updated_at?: Date | string
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -1322,7 +1253,6 @@ export type EmployeeUpdateToOneWithWhereWithoutHead_employeeInput = {
 export type EmployeeUpdateWithoutHead_employeeInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1336,8 +1266,7 @@ export type EmployeeUpdateWithoutHead_employeeInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
   approvalSteps?: Prisma.ApprovalStepUpdateManyWithoutApproverNestedInput
@@ -1355,7 +1284,6 @@ export type EmployeeUncheckedUpdateWithoutHead_employeeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1369,8 +1297,7 @@ export type EmployeeUncheckedUpdateWithoutHead_employeeInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
   approvalSteps?: Prisma.ApprovalStepUncheckedUpdateManyWithoutApproverNestedInput
@@ -1403,7 +1330,6 @@ export type EmployeeUpdateManyWithWhereWithoutDepartmentInput = {
 export type EmployeeCreateWithoutOnboardingTokensInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1417,8 +1343,7 @@ export type EmployeeCreateWithoutOnboardingTokensInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -1436,7 +1361,6 @@ export type EmployeeUncheckedCreateWithoutOnboardingTokensInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1450,8 +1374,7 @@ export type EmployeeUncheckedCreateWithoutOnboardingTokensInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -1484,7 +1407,6 @@ export type EmployeeUpdateToOneWithWhereWithoutOnboardingTokensInput = {
 export type EmployeeUpdateWithoutOnboardingTokensInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1498,8 +1420,7 @@ export type EmployeeUpdateWithoutOnboardingTokensInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -1517,7 +1438,6 @@ export type EmployeeUncheckedUpdateWithoutOnboardingTokensInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1531,8 +1451,7 @@ export type EmployeeUncheckedUpdateWithoutOnboardingTokensInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1546,10 +1465,9 @@ export type EmployeeUncheckedUpdateWithoutOnboardingTokensInput = {
   payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
-export type EmployeeCreateWithoutContractRecordsInput = {
+export type EmployeeCreateWithoutEmployeeDocumentsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1563,7 +1481,6 @@ export type EmployeeCreateWithoutContractRecordsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -1578,11 +1495,10 @@ export type EmployeeCreateWithoutContractRecordsInput = {
   onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
 }
 
-export type EmployeeUncheckedCreateWithoutContractRecordsInput = {
+export type EmployeeUncheckedCreateWithoutEmployeeDocumentsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1596,7 +1512,6 @@ export type EmployeeUncheckedCreateWithoutContractRecordsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -1611,26 +1526,25 @@ export type EmployeeUncheckedCreateWithoutContractRecordsInput = {
   onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
-export type EmployeeCreateOrConnectWithoutContractRecordsInput = {
+export type EmployeeCreateOrConnectWithoutEmployeeDocumentsInput = {
   where: Prisma.EmployeeWhereUniqueInput
-  create: Prisma.XOR<Prisma.EmployeeCreateWithoutContractRecordsInput, Prisma.EmployeeUncheckedCreateWithoutContractRecordsInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutEmployeeDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutEmployeeDocumentsInput>
 }
 
-export type EmployeeUpsertWithoutContractRecordsInput = {
-  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutContractRecordsInput, Prisma.EmployeeUncheckedUpdateWithoutContractRecordsInput>
-  create: Prisma.XOR<Prisma.EmployeeCreateWithoutContractRecordsInput, Prisma.EmployeeUncheckedCreateWithoutContractRecordsInput>
+export type EmployeeUpsertWithoutEmployeeDocumentsInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutEmployeeDocumentsInput, Prisma.EmployeeUncheckedUpdateWithoutEmployeeDocumentsInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutEmployeeDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutEmployeeDocumentsInput>
   where?: Prisma.EmployeeWhereInput
 }
 
-export type EmployeeUpdateToOneWithWhereWithoutContractRecordsInput = {
+export type EmployeeUpdateToOneWithWhereWithoutEmployeeDocumentsInput = {
   where?: Prisma.EmployeeWhereInput
-  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutContractRecordsInput, Prisma.EmployeeUncheckedUpdateWithoutContractRecordsInput>
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutEmployeeDocumentsInput, Prisma.EmployeeUncheckedUpdateWithoutEmployeeDocumentsInput>
 }
 
-export type EmployeeUpdateWithoutContractRecordsInput = {
+export type EmployeeUpdateWithoutEmployeeDocumentsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1644,7 +1558,6 @@ export type EmployeeUpdateWithoutContractRecordsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -1659,11 +1572,10 @@ export type EmployeeUpdateWithoutContractRecordsInput = {
   onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
 }
 
-export type EmployeeUncheckedUpdateWithoutContractRecordsInput = {
+export type EmployeeUncheckedUpdateWithoutEmployeeDocumentsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1677,7 +1589,6 @@ export type EmployeeUncheckedUpdateWithoutContractRecordsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1695,7 +1606,6 @@ export type EmployeeUncheckedUpdateWithoutContractRecordsInput = {
 export type EmployeeCreateWithoutRequestedApprovalsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1709,8 +1619,7 @@ export type EmployeeCreateWithoutRequestedApprovalsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   approvalSteps?: Prisma.ApprovalStepCreateNestedManyWithoutApproverInput
@@ -1728,7 +1637,6 @@ export type EmployeeUncheckedCreateWithoutRequestedApprovalsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1742,8 +1650,7 @@ export type EmployeeUncheckedCreateWithoutRequestedApprovalsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   approvalSteps?: Prisma.ApprovalStepUncheckedCreateNestedManyWithoutApproverInput
@@ -1776,7 +1683,6 @@ export type EmployeeUpdateToOneWithWhereWithoutRequestedApprovalsInput = {
 export type EmployeeUpdateWithoutRequestedApprovalsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1790,8 +1696,7 @@ export type EmployeeUpdateWithoutRequestedApprovalsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   approvalSteps?: Prisma.ApprovalStepUpdateManyWithoutApproverNestedInput
@@ -1809,7 +1714,6 @@ export type EmployeeUncheckedUpdateWithoutRequestedApprovalsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1823,8 +1727,7 @@ export type EmployeeUncheckedUpdateWithoutRequestedApprovalsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   approvalSteps?: Prisma.ApprovalStepUncheckedUpdateManyWithoutApproverNestedInput
@@ -1841,7 +1744,6 @@ export type EmployeeUncheckedUpdateWithoutRequestedApprovalsInput = {
 export type EmployeeCreateWithoutApprovalStepsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1855,8 +1757,7 @@ export type EmployeeCreateWithoutApprovalStepsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -1874,7 +1775,6 @@ export type EmployeeUncheckedCreateWithoutApprovalStepsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -1888,8 +1788,7 @@ export type EmployeeUncheckedCreateWithoutApprovalStepsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -1922,7 +1821,6 @@ export type EmployeeUpdateToOneWithWhereWithoutApprovalStepsInput = {
 export type EmployeeUpdateWithoutApprovalStepsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1936,8 +1834,7 @@ export type EmployeeUpdateWithoutApprovalStepsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -1955,7 +1852,6 @@ export type EmployeeUncheckedUpdateWithoutApprovalStepsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1969,8 +1865,7 @@ export type EmployeeUncheckedUpdateWithoutApprovalStepsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1987,7 +1882,6 @@ export type EmployeeUncheckedUpdateWithoutApprovalStepsInput = {
 export type EmployeeCreateWithoutPositionsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2000,8 +1894,7 @@ export type EmployeeCreateWithoutPositionsInput = {
   updated_at?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -2020,7 +1913,6 @@ export type EmployeeUncheckedCreateWithoutPositionsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2033,8 +1925,7 @@ export type EmployeeUncheckedCreateWithoutPositionsInput = {
   updated_at?: Date | string
   department_id: number
   organizationId: number
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -2068,7 +1959,6 @@ export type EmployeeUpdateToOneWithWhereWithoutPositionsInput = {
 export type EmployeeUpdateWithoutPositionsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2081,8 +1971,7 @@ export type EmployeeUpdateWithoutPositionsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -2101,7 +1990,6 @@ export type EmployeeUncheckedUpdateWithoutPositionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2114,154 +2002,7 @@ export type EmployeeUncheckedUpdateWithoutPositionsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
-  head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
-  designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
-  requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
-  approvalSteps?: Prisma.ApprovalStepUncheckedUpdateManyWithoutApproverNestedInput
-  attendanceRecords?: Prisma.AttendanceRecordUncheckedUpdateManyWithoutEmployeeNestedInput
-  leaveBalances?: Prisma.LeaveBalanceUncheckedUpdateManyWithoutEmployeeNestedInput
-  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutEmployeeNestedInput
-  reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutReviewedByNestedInput
-  payrollItems?: Prisma.PayrollItemUncheckedUpdateManyWithoutEmployeeNestedInput
-  createdPayrollRuns?: Prisma.PayrollRunUncheckedUpdateManyWithoutCreatedByNestedInput
-  payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedUpdateManyWithoutEmployeeNestedInput
-  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedUpdateManyWithoutEmployeeNestedInput
-}
-
-export type EmployeeCreateWithoutDocumentsInput = {
-  full_name: string
-  avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
-  code: string
-  email?: string | null
-  phoneNumber?: string | null
-  password?: string | null
-  dob?: Date | string | null
-  employment_type?: $Enums.EmployeeType
-  status?: $Enums.EmployeeStatus
-  location: string
-  date_joined?: Date | string
-  updated_at?: Date | string
-  positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
-  organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
-  department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
-  head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
-  designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
-  requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
-  approvalSteps?: Prisma.ApprovalStepCreateNestedManyWithoutApproverInput
-  attendanceRecords?: Prisma.AttendanceRecordCreateNestedManyWithoutEmployeeInput
-  leaveBalances?: Prisma.LeaveBalanceCreateNestedManyWithoutEmployeeInput
-  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutEmployeeInput
-  reviewedLeaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutReviewedByInput
-  payrollItems?: Prisma.PayrollItemCreateNestedManyWithoutEmployeeInput
-  createdPayrollRuns?: Prisma.PayrollRunCreateNestedManyWithoutCreatedByInput
-  payrollSummaries?: Prisma.PayrollEmployeeSummaryCreateNestedManyWithoutEmployeeInput
-  onboardingTokens?: Prisma.OrganizationOnboardingTokenCreateNestedManyWithoutEmployeeInput
-}
-
-export type EmployeeUncheckedCreateWithoutDocumentsInput = {
-  id?: number
-  full_name: string
-  avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
-  code: string
-  email?: string | null
-  phoneNumber?: string | null
-  password?: string | null
-  dob?: Date | string | null
-  employment_type?: $Enums.EmployeeType
-  status?: $Enums.EmployeeStatus
-  location: string
-  date_joined?: Date | string
-  updated_at?: Date | string
-  department_id: number
-  organizationId: number
-  positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
-  head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
-  designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
-  requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
-  approvalSteps?: Prisma.ApprovalStepUncheckedCreateNestedManyWithoutApproverInput
-  attendanceRecords?: Prisma.AttendanceRecordUncheckedCreateNestedManyWithoutEmployeeInput
-  leaveBalances?: Prisma.LeaveBalanceUncheckedCreateNestedManyWithoutEmployeeInput
-  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutEmployeeInput
-  reviewedLeaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutReviewedByInput
-  payrollItems?: Prisma.PayrollItemUncheckedCreateNestedManyWithoutEmployeeInput
-  createdPayrollRuns?: Prisma.PayrollRunUncheckedCreateNestedManyWithoutCreatedByInput
-  payrollSummaries?: Prisma.PayrollEmployeeSummaryUncheckedCreateNestedManyWithoutEmployeeInput
-  onboardingTokens?: Prisma.OrganizationOnboardingTokenUncheckedCreateNestedManyWithoutEmployeeInput
-}
-
-export type EmployeeCreateOrConnectWithoutDocumentsInput = {
-  where: Prisma.EmployeeWhereUniqueInput
-  create: Prisma.XOR<Prisma.EmployeeCreateWithoutDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutDocumentsInput>
-}
-
-export type EmployeeUpsertWithoutDocumentsInput = {
-  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutDocumentsInput, Prisma.EmployeeUncheckedUpdateWithoutDocumentsInput>
-  create: Prisma.XOR<Prisma.EmployeeCreateWithoutDocumentsInput, Prisma.EmployeeUncheckedCreateWithoutDocumentsInput>
-  where?: Prisma.EmployeeWhereInput
-}
-
-export type EmployeeUpdateToOneWithWhereWithoutDocumentsInput = {
-  where?: Prisma.EmployeeWhereInput
-  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutDocumentsInput, Prisma.EmployeeUncheckedUpdateWithoutDocumentsInput>
-}
-
-export type EmployeeUpdateWithoutDocumentsInput = {
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
-  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  location?: Prisma.StringFieldUpdateOperationsInput | string
-  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
-  head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
-  designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
-  requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
-  approvalSteps?: Prisma.ApprovalStepUpdateManyWithoutApproverNestedInput
-  attendanceRecords?: Prisma.AttendanceRecordUpdateManyWithoutEmployeeNestedInput
-  leaveBalances?: Prisma.LeaveBalanceUpdateManyWithoutEmployeeNestedInput
-  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutEmployeeNestedInput
-  reviewedLeaveRequests?: Prisma.LeaveRequestUpdateManyWithoutReviewedByNestedInput
-  payrollItems?: Prisma.PayrollItemUpdateManyWithoutEmployeeNestedInput
-  createdPayrollRuns?: Prisma.PayrollRunUpdateManyWithoutCreatedByNestedInput
-  payrollSummaries?: Prisma.PayrollEmployeeSummaryUpdateManyWithoutEmployeeNestedInput
-  onboardingTokens?: Prisma.OrganizationOnboardingTokenUpdateManyWithoutEmployeeNestedInput
-}
-
-export type EmployeeUncheckedUpdateWithoutDocumentsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  employment_type?: Prisma.EnumEmployeeTypeFieldUpdateOperationsInput | $Enums.EmployeeType
-  status?: Prisma.EnumEmployeeStatusFieldUpdateOperationsInput | $Enums.EmployeeStatus
-  location?: Prisma.StringFieldUpdateOperationsInput | string
-  date_joined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  department_id?: Prisma.IntFieldUpdateOperationsInput | number
-  organizationId?: Prisma.IntFieldUpdateOperationsInput | number
-  positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -2279,7 +2020,6 @@ export type EmployeeUncheckedUpdateWithoutDocumentsInput = {
 export type EmployeeCreateWithoutDesignationsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2293,8 +2033,7 @@ export type EmployeeCreateWithoutDesignationsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
   approvalSteps?: Prisma.ApprovalStepCreateNestedManyWithoutApproverInput
@@ -2312,7 +2051,6 @@ export type EmployeeUncheckedCreateWithoutDesignationsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2326,8 +2064,7 @@ export type EmployeeUncheckedCreateWithoutDesignationsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
   approvalSteps?: Prisma.ApprovalStepUncheckedCreateNestedManyWithoutApproverInput
@@ -2360,7 +2097,6 @@ export type EmployeeUpdateToOneWithWhereWithoutDesignationsInput = {
 export type EmployeeUpdateWithoutDesignationsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2374,8 +2110,7 @@ export type EmployeeUpdateWithoutDesignationsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
   approvalSteps?: Prisma.ApprovalStepUpdateManyWithoutApproverNestedInput
@@ -2393,7 +2128,6 @@ export type EmployeeUncheckedUpdateWithoutDesignationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2407,8 +2141,7 @@ export type EmployeeUncheckedUpdateWithoutDesignationsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
   approvalSteps?: Prisma.ApprovalStepUncheckedUpdateManyWithoutApproverNestedInput
@@ -2425,7 +2158,6 @@ export type EmployeeUncheckedUpdateWithoutDesignationsInput = {
 export type EmployeeCreateWithoutAttendanceRecordsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2439,8 +2171,7 @@ export type EmployeeCreateWithoutAttendanceRecordsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -2458,7 +2189,6 @@ export type EmployeeUncheckedCreateWithoutAttendanceRecordsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2472,8 +2202,7 @@ export type EmployeeUncheckedCreateWithoutAttendanceRecordsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -2506,7 +2235,6 @@ export type EmployeeUpdateToOneWithWhereWithoutAttendanceRecordsInput = {
 export type EmployeeUpdateWithoutAttendanceRecordsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2520,8 +2248,7 @@ export type EmployeeUpdateWithoutAttendanceRecordsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -2539,7 +2266,6 @@ export type EmployeeUncheckedUpdateWithoutAttendanceRecordsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2553,8 +2279,7 @@ export type EmployeeUncheckedUpdateWithoutAttendanceRecordsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -2571,7 +2296,6 @@ export type EmployeeUncheckedUpdateWithoutAttendanceRecordsInput = {
 export type EmployeeCreateWithoutLeaveBalancesInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2585,8 +2309,7 @@ export type EmployeeCreateWithoutLeaveBalancesInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -2604,7 +2327,6 @@ export type EmployeeUncheckedCreateWithoutLeaveBalancesInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2618,8 +2340,7 @@ export type EmployeeUncheckedCreateWithoutLeaveBalancesInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -2652,7 +2373,6 @@ export type EmployeeUpdateToOneWithWhereWithoutLeaveBalancesInput = {
 export type EmployeeUpdateWithoutLeaveBalancesInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2666,8 +2386,7 @@ export type EmployeeUpdateWithoutLeaveBalancesInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -2685,7 +2404,6 @@ export type EmployeeUncheckedUpdateWithoutLeaveBalancesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2699,8 +2417,7 @@ export type EmployeeUncheckedUpdateWithoutLeaveBalancesInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -2717,7 +2434,6 @@ export type EmployeeUncheckedUpdateWithoutLeaveBalancesInput = {
 export type EmployeeCreateWithoutLeaveRequestsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2731,8 +2447,7 @@ export type EmployeeCreateWithoutLeaveRequestsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -2750,7 +2465,6 @@ export type EmployeeUncheckedCreateWithoutLeaveRequestsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2764,8 +2478,7 @@ export type EmployeeUncheckedCreateWithoutLeaveRequestsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -2787,7 +2500,6 @@ export type EmployeeCreateOrConnectWithoutLeaveRequestsInput = {
 export type EmployeeCreateWithoutReviewedLeaveRequestsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2801,8 +2513,7 @@ export type EmployeeCreateWithoutReviewedLeaveRequestsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -2820,7 +2531,6 @@ export type EmployeeUncheckedCreateWithoutReviewedLeaveRequestsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -2834,8 +2544,7 @@ export type EmployeeUncheckedCreateWithoutReviewedLeaveRequestsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -2868,7 +2577,6 @@ export type EmployeeUpdateToOneWithWhereWithoutLeaveRequestsInput = {
 export type EmployeeUpdateWithoutLeaveRequestsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2882,8 +2590,7 @@ export type EmployeeUpdateWithoutLeaveRequestsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -2901,7 +2608,6 @@ export type EmployeeUncheckedUpdateWithoutLeaveRequestsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2915,8 +2621,7 @@ export type EmployeeUncheckedUpdateWithoutLeaveRequestsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -2944,7 +2649,6 @@ export type EmployeeUpdateToOneWithWhereWithoutReviewedLeaveRequestsInput = {
 export type EmployeeUpdateWithoutReviewedLeaveRequestsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2958,8 +2662,7 @@ export type EmployeeUpdateWithoutReviewedLeaveRequestsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -2977,7 +2680,6 @@ export type EmployeeUncheckedUpdateWithoutReviewedLeaveRequestsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2991,8 +2693,7 @@ export type EmployeeUncheckedUpdateWithoutReviewedLeaveRequestsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3009,7 +2710,6 @@ export type EmployeeUncheckedUpdateWithoutReviewedLeaveRequestsInput = {
 export type EmployeeCreateWithoutCreatedPayrollRunsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3023,8 +2723,7 @@ export type EmployeeCreateWithoutCreatedPayrollRunsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -3042,7 +2741,6 @@ export type EmployeeUncheckedCreateWithoutCreatedPayrollRunsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3056,8 +2754,7 @@ export type EmployeeUncheckedCreateWithoutCreatedPayrollRunsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -3090,7 +2787,6 @@ export type EmployeeUpdateToOneWithWhereWithoutCreatedPayrollRunsInput = {
 export type EmployeeUpdateWithoutCreatedPayrollRunsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3104,8 +2800,7 @@ export type EmployeeUpdateWithoutCreatedPayrollRunsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -3123,7 +2818,6 @@ export type EmployeeUncheckedUpdateWithoutCreatedPayrollRunsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3137,8 +2831,7 @@ export type EmployeeUncheckedUpdateWithoutCreatedPayrollRunsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3155,7 +2848,6 @@ export type EmployeeUncheckedUpdateWithoutCreatedPayrollRunsInput = {
 export type EmployeeCreateWithoutPayrollItemsInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3169,8 +2861,7 @@ export type EmployeeCreateWithoutPayrollItemsInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -3188,7 +2879,6 @@ export type EmployeeUncheckedCreateWithoutPayrollItemsInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3202,8 +2892,7 @@ export type EmployeeUncheckedCreateWithoutPayrollItemsInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -3236,7 +2925,6 @@ export type EmployeeUpdateToOneWithWhereWithoutPayrollItemsInput = {
 export type EmployeeUpdateWithoutPayrollItemsInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3250,8 +2938,7 @@ export type EmployeeUpdateWithoutPayrollItemsInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -3269,7 +2956,6 @@ export type EmployeeUncheckedUpdateWithoutPayrollItemsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3283,8 +2969,7 @@ export type EmployeeUncheckedUpdateWithoutPayrollItemsInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3301,7 +2986,6 @@ export type EmployeeUncheckedUpdateWithoutPayrollItemsInput = {
 export type EmployeeCreateWithoutPayrollSummariesInput = {
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3315,8 +2999,7 @@ export type EmployeeCreateWithoutPayrollSummariesInput = {
   positions?: Prisma.EmployeeOnPositionCreateNestedManyWithoutEmployeeInput
   organization: Prisma.OrganizationCreateNestedOneWithoutEmployeesInput
   department: Prisma.DepartmentCreateNestedOneWithoutEmployeesInput
-  documents?: Prisma.ID_DocumentCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestCreateNestedManyWithoutRequesterInput
@@ -3334,7 +3017,6 @@ export type EmployeeUncheckedCreateWithoutPayrollSummariesInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3348,8 +3030,7 @@ export type EmployeeUncheckedCreateWithoutPayrollSummariesInput = {
   department_id: number
   organizationId: number
   positions?: Prisma.EmployeeOnPositionUncheckedCreateNestedManyWithoutEmployeeInput
-  documents?: Prisma.ID_DocumentUncheckedCreateNestedManyWithoutEmployeeInput
-  contractRecords?: Prisma.EmployeeContractUncheckedCreateNestedManyWithoutEmployeeInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedCreateNestedManyWithoutEmployeeInput
   head_employee?: Prisma.DepartmentUncheckedCreateNestedOneWithoutHead_employeeInput
   designations?: Prisma.DesignationOnEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedCreateNestedManyWithoutRequesterInput
@@ -3382,7 +3063,6 @@ export type EmployeeUpdateToOneWithWhereWithoutPayrollSummariesInput = {
 export type EmployeeUpdateWithoutPayrollSummariesInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3396,8 +3076,7 @@ export type EmployeeUpdateWithoutPayrollSummariesInput = {
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -3415,7 +3094,6 @@ export type EmployeeUncheckedUpdateWithoutPayrollSummariesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3429,8 +3107,7 @@ export type EmployeeUncheckedUpdateWithoutPayrollSummariesInput = {
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3448,7 +3125,6 @@ export type EmployeeCreateManyOrganizationInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3465,7 +3141,6 @@ export type EmployeeCreateManyOrganizationInput = {
 export type EmployeeUpdateWithoutOrganizationInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3478,8 +3153,7 @@ export type EmployeeUpdateWithoutOrganizationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   department?: Prisma.DepartmentUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -3498,7 +3172,6 @@ export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3511,8 +3184,7 @@ export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   department_id?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3531,7 +3203,6 @@ export type EmployeeUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3549,7 +3220,6 @@ export type EmployeeCreateManyDepartmentInput = {
   id?: number
   full_name: string
   avatar?: string | null
-  contracts?: Prisma.EmployeeCreatecontractsInput | string[]
   code: string
   email?: string | null
   phoneNumber?: string | null
@@ -3566,7 +3236,6 @@ export type EmployeeCreateManyDepartmentInput = {
 export type EmployeeUpdateWithoutDepartmentInput = {
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3579,8 +3248,7 @@ export type EmployeeUpdateWithoutDepartmentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positions?: Prisma.EmployeeOnPositionUpdateManyWithoutEmployeeNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutEmployeesNestedInput
-  documents?: Prisma.ID_DocumentUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUpdateManyWithoutRequesterNestedInput
@@ -3599,7 +3267,6 @@ export type EmployeeUncheckedUpdateWithoutDepartmentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3612,8 +3279,7 @@ export type EmployeeUncheckedUpdateWithoutDepartmentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organizationId?: Prisma.IntFieldUpdateOperationsInput | number
   positions?: Prisma.EmployeeOnPositionUncheckedUpdateManyWithoutEmployeeNestedInput
-  documents?: Prisma.ID_DocumentUncheckedUpdateManyWithoutEmployeeNestedInput
-  contractRecords?: Prisma.EmployeeContractUncheckedUpdateManyWithoutEmployeeNestedInput
+  employeeDocuments?: Prisma.EmployeeDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
   head_employee?: Prisma.DepartmentUncheckedUpdateOneWithoutHead_employeeNestedInput
   designations?: Prisma.DesignationOnEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
   requestedApprovals?: Prisma.ApprovalRequestUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3632,7 +3298,6 @@ export type EmployeeUncheckedUpdateManyWithoutDepartmentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   full_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contracts?: Prisma.EmployeeUpdatecontractsInput | string[]
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3653,8 +3318,7 @@ export type EmployeeUncheckedUpdateManyWithoutDepartmentInput = {
 
 export type EmployeeCountOutputType = {
   positions: number
-  documents: number
-  contractRecords: number
+  employeeDocuments: number
   designations: number
   requestedApprovals: number
   approvalSteps: number
@@ -3670,8 +3334,7 @@ export type EmployeeCountOutputType = {
 
 export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   positions?: boolean | EmployeeCountOutputTypeCountPositionsArgs
-  documents?: boolean | EmployeeCountOutputTypeCountDocumentsArgs
-  contractRecords?: boolean | EmployeeCountOutputTypeCountContractRecordsArgs
+  employeeDocuments?: boolean | EmployeeCountOutputTypeCountEmployeeDocumentsArgs
   designations?: boolean | EmployeeCountOutputTypeCountDesignationsArgs
   requestedApprovals?: boolean | EmployeeCountOutputTypeCountRequestedApprovalsArgs
   approvalSteps?: boolean | EmployeeCountOutputTypeCountApprovalStepsArgs
@@ -3705,15 +3368,8 @@ export type EmployeeCountOutputTypeCountPositionsArgs<ExtArgs extends runtime.Ty
 /**
  * EmployeeCountOutputType without action
  */
-export type EmployeeCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ID_DocumentWhereInput
-}
-
-/**
- * EmployeeCountOutputType without action
- */
-export type EmployeeCountOutputTypeCountContractRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EmployeeContractWhereInput
+export type EmployeeCountOutputTypeCountEmployeeDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EmployeeDocumentWhereInput
 }
 
 /**
@@ -3798,7 +3454,6 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   full_name?: boolean
   avatar?: boolean
-  contracts?: boolean
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
@@ -3814,8 +3469,7 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   positions?: boolean | Prisma.Employee$positionsArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  documents?: boolean | Prisma.Employee$documentsArgs<ExtArgs>
-  contractRecords?: boolean | Prisma.Employee$contractRecordsArgs<ExtArgs>
+  employeeDocuments?: boolean | Prisma.Employee$employeeDocumentsArgs<ExtArgs>
   head_employee?: boolean | Prisma.Employee$head_employeeArgs<ExtArgs>
   designations?: boolean | Prisma.Employee$designationsArgs<ExtArgs>
   requestedApprovals?: boolean | Prisma.Employee$requestedApprovalsArgs<ExtArgs>
@@ -3835,7 +3489,6 @@ export type EmployeeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   full_name?: boolean
   avatar?: boolean
-  contracts?: boolean
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
@@ -3856,7 +3509,6 @@ export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   full_name?: boolean
   avatar?: boolean
-  contracts?: boolean
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
@@ -3877,7 +3529,6 @@ export type EmployeeSelectScalar = {
   id?: boolean
   full_name?: boolean
   avatar?: boolean
-  contracts?: boolean
   code?: boolean
   email?: boolean
   phoneNumber?: boolean
@@ -3892,13 +3543,12 @@ export type EmployeeSelectScalar = {
   organizationId?: boolean
 }
 
-export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "avatar" | "contracts" | "code" | "email" | "phoneNumber" | "password" | "dob" | "employment_type" | "status" | "location" | "date_joined" | "updated_at" | "department_id" | "organizationId", ExtArgs["result"]["employee"]>
+export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "avatar" | "code" | "email" | "phoneNumber" | "password" | "dob" | "employment_type" | "status" | "location" | "date_joined" | "updated_at" | "department_id" | "organizationId", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   positions?: boolean | Prisma.Employee$positionsArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  documents?: boolean | Prisma.Employee$documentsArgs<ExtArgs>
-  contractRecords?: boolean | Prisma.Employee$contractRecordsArgs<ExtArgs>
+  employeeDocuments?: boolean | Prisma.Employee$employeeDocumentsArgs<ExtArgs>
   head_employee?: boolean | Prisma.Employee$head_employeeArgs<ExtArgs>
   designations?: boolean | Prisma.Employee$designationsArgs<ExtArgs>
   requestedApprovals?: boolean | Prisma.Employee$requestedApprovalsArgs<ExtArgs>
@@ -3928,8 +3578,7 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     positions: Prisma.$EmployeeOnPositionPayload<ExtArgs>[]
     organization: Prisma.$OrganizationPayload<ExtArgs>
     department: Prisma.$DepartmentPayload<ExtArgs>
-    documents: Prisma.$ID_DocumentPayload<ExtArgs>[]
-    contractRecords: Prisma.$EmployeeContractPayload<ExtArgs>[]
+    employeeDocuments: Prisma.$EmployeeDocumentPayload<ExtArgs>[]
     head_employee: Prisma.$DepartmentPayload<ExtArgs> | null
     designations: Prisma.$DesignationOnEmployeePayload<ExtArgs>[]
     requestedApprovals: Prisma.$ApprovalRequestPayload<ExtArgs>[]
@@ -3947,7 +3596,6 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: number
     full_name: string
     avatar: string | null
-    contracts: string[]
     code: string
     email: string | null
     phoneNumber: string | null
@@ -4357,8 +4005,7 @@ export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime
   positions<T extends Prisma.Employee$positionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$positionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeeOnPositionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   department<T extends Prisma.DepartmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentDefaultArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  documents<T extends Prisma.Employee$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ID_DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  contractRecords<T extends Prisma.Employee$contractRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$contractRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeeContractPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  employeeDocuments<T extends Prisma.Employee$employeeDocumentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$employeeDocumentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeeDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   head_employee<T extends Prisma.Employee$head_employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$head_employeeArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   designations<T extends Prisma.Employee$designationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$designationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DesignationOnEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   requestedApprovals<T extends Prisma.Employee$requestedApprovalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$requestedApprovalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApprovalRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4403,7 +4050,6 @@ export interface EmployeeFieldRefs {
   readonly id: Prisma.FieldRef<"Employee", 'Int'>
   readonly full_name: Prisma.FieldRef<"Employee", 'String'>
   readonly avatar: Prisma.FieldRef<"Employee", 'String'>
-  readonly contracts: Prisma.FieldRef<"Employee", 'String[]'>
   readonly code: Prisma.FieldRef<"Employee", 'String'>
   readonly email: Prisma.FieldRef<"Employee", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"Employee", 'String'>
@@ -4841,51 +4487,27 @@ export type Employee$positionsArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Employee.documents
+ * Employee.employeeDocuments
  */
-export type Employee$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Employee$employeeDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ID_Document
+   * Select specific fields to fetch from the EmployeeDocument
    */
-  select?: Prisma.ID_DocumentSelect<ExtArgs> | null
+  select?: Prisma.EmployeeDocumentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ID_Document
+   * Omit specific fields from the EmployeeDocument
    */
-  omit?: Prisma.ID_DocumentOmit<ExtArgs> | null
+  omit?: Prisma.EmployeeDocumentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ID_DocumentInclude<ExtArgs> | null
-  where?: Prisma.ID_DocumentWhereInput
-  orderBy?: Prisma.ID_DocumentOrderByWithRelationInput | Prisma.ID_DocumentOrderByWithRelationInput[]
-  cursor?: Prisma.ID_DocumentWhereUniqueInput
+  include?: Prisma.EmployeeDocumentInclude<ExtArgs> | null
+  where?: Prisma.EmployeeDocumentWhereInput
+  orderBy?: Prisma.EmployeeDocumentOrderByWithRelationInput | Prisma.EmployeeDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.EmployeeDocumentWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ID_DocumentScalarFieldEnum | Prisma.ID_DocumentScalarFieldEnum[]
-}
-
-/**
- * Employee.contractRecords
- */
-export type Employee$contractRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the EmployeeContract
-   */
-  select?: Prisma.EmployeeContractSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the EmployeeContract
-   */
-  omit?: Prisma.EmployeeContractOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmployeeContractInclude<ExtArgs> | null
-  where?: Prisma.EmployeeContractWhereInput
-  orderBy?: Prisma.EmployeeContractOrderByWithRelationInput | Prisma.EmployeeContractOrderByWithRelationInput[]
-  cursor?: Prisma.EmployeeContractWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.EmployeeContractScalarFieldEnum | Prisma.EmployeeContractScalarFieldEnum[]
+  distinct?: Prisma.EmployeeDocumentScalarFieldEnum | Prisma.EmployeeDocumentScalarFieldEnum[]
 }
 
 /**

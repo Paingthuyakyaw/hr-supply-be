@@ -57,13 +57,12 @@ export const ModelName = {
   Position: 'Position',
   Employee: 'Employee',
   OrganizationOnboardingToken: 'OrganizationOnboardingToken',
-  EmployeeContract: 'EmployeeContract',
+  EmployeeDocument: 'EmployeeDocument',
   ApprovalRequest: 'ApprovalRequest',
   ApprovalStep: 'ApprovalStep',
   PlatformUser: 'PlatformUser',
   EmployeeOnPosition: 'EmployeeOnPosition',
   Image: 'Image',
-  ID_Document: 'ID_Document',
   Menu: 'Menu',
   PlanOnMenu: 'PlanOnMenu',
   Designation: 'Designation',
@@ -162,7 +161,6 @@ export const EmployeeScalarFieldEnum = {
   id: 'id',
   full_name: 'full_name',
   avatar: 'avatar',
-  contracts: 'contracts',
   code: 'code',
   email: 'email',
   phoneNumber: 'phoneNumber',
@@ -195,12 +193,17 @@ export const OrganizationOnboardingTokenScalarFieldEnum = {
 export type OrganizationOnboardingTokenScalarFieldEnum = (typeof OrganizationOnboardingTokenScalarFieldEnum)[keyof typeof OrganizationOnboardingTokenScalarFieldEnum]
 
 
-export const EmployeeContractScalarFieldEnum = {
+export const EmployeeDocumentScalarFieldEnum = {
   id: 'id',
+  organizationId: 'organizationId',
   employeeId: 'employeeId',
+  type: 'type',
+  documentSubtype: 'documentSubtype',
   fileUrl: 'fileUrl',
+  frontUrl: 'frontUrl',
+  backUrl: 'backUrl',
   version: 'version',
-  status: 'status',
+  contractStatus: 'contractStatus',
   expiresAt: 'expiresAt',
   reminderDays: 'reminderDays',
   notes: 'notes',
@@ -208,7 +211,7 @@ export const EmployeeContractScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type EmployeeContractScalarFieldEnum = (typeof EmployeeContractScalarFieldEnum)[keyof typeof EmployeeContractScalarFieldEnum]
+export type EmployeeDocumentScalarFieldEnum = (typeof EmployeeDocumentScalarFieldEnum)[keyof typeof EmployeeDocumentScalarFieldEnum]
 
 
 export const ApprovalRequestScalarFieldEnum = {
@@ -278,19 +281,6 @@ export const ImageScalarFieldEnum = {
 } as const
 
 export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
-
-
-export const ID_DocumentScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  front_url: 'front_url',
-  back_url: 'back_url',
-  employee_id: 'employee_id',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
-} as const
-
-export type ID_DocumentScalarFieldEnum = (typeof ID_DocumentScalarFieldEnum)[keyof typeof ID_DocumentScalarFieldEnum]
 
 
 export const MenuScalarFieldEnum = {

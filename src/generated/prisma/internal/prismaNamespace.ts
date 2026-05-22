@@ -390,13 +390,12 @@ export const ModelName = {
   Position: 'Position',
   Employee: 'Employee',
   OrganizationOnboardingToken: 'OrganizationOnboardingToken',
-  EmployeeContract: 'EmployeeContract',
+  EmployeeDocument: 'EmployeeDocument',
   ApprovalRequest: 'ApprovalRequest',
   ApprovalStep: 'ApprovalStep',
   PlatformUser: 'PlatformUser',
   EmployeeOnPosition: 'EmployeeOnPosition',
   Image: 'Image',
-  ID_Document: 'ID_Document',
   Menu: 'Menu',
   PlanOnMenu: 'PlanOnMenu',
   Designation: 'Designation',
@@ -430,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "organizationOnboardingToken" | "employeeContract" | "approvalRequest" | "approvalStep" | "platformUser" | "employeeOnPosition" | "image" | "iD_Document" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee" | "codeCounter" | "organizationSchedule" | "attendancePolicy" | "attendanceShift" | "attendanceRecord" | "leaveType" | "leaveBalance" | "leaveRequest" | "holidayCalendar" | "payrollComponent" | "payrollRun" | "payrollItem" | "payrollEmployeeSummary"
+    modelProps: "organization" | "plan" | "department" | "position" | "employee" | "organizationOnboardingToken" | "employeeDocument" | "approvalRequest" | "approvalStep" | "platformUser" | "employeeOnPosition" | "image" | "menu" | "planOnMenu" | "designation" | "designationOnMenu" | "designationOnEmployee" | "codeCounter" | "organizationSchedule" | "attendancePolicy" | "attendanceShift" | "attendanceRecord" | "leaveType" | "leaveBalance" | "leaveRequest" | "holidayCalendar" | "payrollComponent" | "payrollRun" | "payrollItem" | "payrollEmployeeSummary"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -878,77 +877,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    EmployeeContract: {
-      payload: Prisma.$EmployeeContractPayload<ExtArgs>
-      fields: Prisma.EmployeeContractFieldRefs
+    EmployeeDocument: {
+      payload: Prisma.$EmployeeDocumentPayload<ExtArgs>
+      fields: Prisma.EmployeeDocumentFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.EmployeeContractFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload> | null
+          args: Prisma.EmployeeDocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.EmployeeContractFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>
+          args: Prisma.EmployeeDocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>
         }
         findFirst: {
-          args: Prisma.EmployeeContractFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload> | null
+          args: Prisma.EmployeeDocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.EmployeeContractFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>
+          args: Prisma.EmployeeDocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>
         }
         findMany: {
-          args: Prisma.EmployeeContractFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>[]
+          args: Prisma.EmployeeDocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>[]
         }
         create: {
-          args: Prisma.EmployeeContractCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>
+          args: Prisma.EmployeeDocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>
         }
         createMany: {
-          args: Prisma.EmployeeContractCreateManyArgs<ExtArgs>
+          args: Prisma.EmployeeDocumentCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.EmployeeContractCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>[]
+          args: Prisma.EmployeeDocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>[]
         }
         delete: {
-          args: Prisma.EmployeeContractDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>
+          args: Prisma.EmployeeDocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>
         }
         update: {
-          args: Prisma.EmployeeContractUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>
+          args: Prisma.EmployeeDocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>
         }
         deleteMany: {
-          args: Prisma.EmployeeContractDeleteManyArgs<ExtArgs>
+          args: Prisma.EmployeeDocumentDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.EmployeeContractUpdateManyArgs<ExtArgs>
+          args: Prisma.EmployeeDocumentUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.EmployeeContractUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>[]
+          args: Prisma.EmployeeDocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>[]
         }
         upsert: {
-          args: Prisma.EmployeeContractUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractPayload>
+          args: Prisma.EmployeeDocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeDocumentPayload>
         }
         aggregate: {
-          args: Prisma.EmployeeContractAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployeeContract>
+          args: Prisma.EmployeeDocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployeeDocument>
         }
         groupBy: {
-          args: Prisma.EmployeeContractGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.EmployeeContractGroupByOutputType>[]
+          args: Prisma.EmployeeDocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeDocumentGroupByOutputType>[]
         }
         count: {
-          args: Prisma.EmployeeContractCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.EmployeeContractCountAggregateOutputType> | number
+          args: Prisma.EmployeeDocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeDocumentCountAggregateOutputType> | number
         }
       }
     }
@@ -1319,80 +1318,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ImageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ImageCountAggregateOutputType> | number
-        }
-      }
-    }
-    ID_Document: {
-      payload: Prisma.$ID_DocumentPayload<ExtArgs>
-      fields: Prisma.ID_DocumentFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ID_DocumentFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ID_DocumentFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>
-        }
-        findFirst: {
-          args: Prisma.ID_DocumentFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ID_DocumentFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>
-        }
-        findMany: {
-          args: Prisma.ID_DocumentFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>[]
-        }
-        create: {
-          args: Prisma.ID_DocumentCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>
-        }
-        createMany: {
-          args: Prisma.ID_DocumentCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ID_DocumentCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>[]
-        }
-        delete: {
-          args: Prisma.ID_DocumentDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>
-        }
-        update: {
-          args: Prisma.ID_DocumentUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>
-        }
-        deleteMany: {
-          args: Prisma.ID_DocumentDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ID_DocumentUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ID_DocumentUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>[]
-        }
-        upsert: {
-          args: Prisma.ID_DocumentUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ID_DocumentPayload>
-        }
-        aggregate: {
-          args: Prisma.ID_DocumentAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateID_Document>
-        }
-        groupBy: {
-          args: Prisma.ID_DocumentGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ID_DocumentGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ID_DocumentCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ID_DocumentCountAggregateOutputType> | number
         }
       }
     }
@@ -2829,7 +2754,6 @@ export const EmployeeScalarFieldEnum = {
   id: 'id',
   full_name: 'full_name',
   avatar: 'avatar',
-  contracts: 'contracts',
   code: 'code',
   email: 'email',
   phoneNumber: 'phoneNumber',
@@ -2862,12 +2786,17 @@ export const OrganizationOnboardingTokenScalarFieldEnum = {
 export type OrganizationOnboardingTokenScalarFieldEnum = (typeof OrganizationOnboardingTokenScalarFieldEnum)[keyof typeof OrganizationOnboardingTokenScalarFieldEnum]
 
 
-export const EmployeeContractScalarFieldEnum = {
+export const EmployeeDocumentScalarFieldEnum = {
   id: 'id',
+  organizationId: 'organizationId',
   employeeId: 'employeeId',
+  type: 'type',
+  documentSubtype: 'documentSubtype',
   fileUrl: 'fileUrl',
+  frontUrl: 'frontUrl',
+  backUrl: 'backUrl',
   version: 'version',
-  status: 'status',
+  contractStatus: 'contractStatus',
   expiresAt: 'expiresAt',
   reminderDays: 'reminderDays',
   notes: 'notes',
@@ -2875,7 +2804,7 @@ export const EmployeeContractScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type EmployeeContractScalarFieldEnum = (typeof EmployeeContractScalarFieldEnum)[keyof typeof EmployeeContractScalarFieldEnum]
+export type EmployeeDocumentScalarFieldEnum = (typeof EmployeeDocumentScalarFieldEnum)[keyof typeof EmployeeDocumentScalarFieldEnum]
 
 
 export const ApprovalRequestScalarFieldEnum = {
@@ -2945,19 +2874,6 @@ export const ImageScalarFieldEnum = {
 } as const
 
 export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
-
-
-export const ID_DocumentScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  front_url: 'front_url',
-  back_url: 'back_url',
-  employee_id: 'employee_id',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
-} as const
-
-export type ID_DocumentScalarFieldEnum = (typeof ID_DocumentScalarFieldEnum)[keyof typeof ID_DocumentScalarFieldEnum]
 
 
 export const MenuScalarFieldEnum = {
@@ -3364,6 +3280,34 @@ export type ListEnumEmployeeStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'EmployeeDocumentType'
+ */
+export type EnumEmployeeDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmployeeDocumentType'>
+    
+
+
+/**
+ * Reference to a field of type 'EmployeeDocumentType[]'
+ */
+export type ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmployeeDocumentType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'IDDocType'
+ */
+export type EnumIDDocTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IDDocType'>
+    
+
+
+/**
+ * Reference to a field of type 'IDDocType[]'
+ */
+export type ListEnumIDDocTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IDDocType[]'>
+    
+
+
+/**
  * Reference to a field of type 'ContractStatus'
  */
 export type EnumContractStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContractStatus'>
@@ -3458,20 +3402,6 @@ export type ListEnumPlatformPermissionFieldRefInput<$PrismaModel> = FieldRefInpu
  * Reference to a field of type 'PlatformPermission'
  */
 export type EnumPlatformPermissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformPermission'>
-    
-
-
-/**
- * Reference to a field of type 'IDDocType'
- */
-export type EnumIDDocTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IDDocType'>
-    
-
-
-/**
- * Reference to a field of type 'IDDocType[]'
- */
-export type ListEnumIDDocTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IDDocType[]'>
     
 
 
@@ -3729,13 +3659,12 @@ export type GlobalOmitConfig = {
   position?: Prisma.PositionOmit
   employee?: Prisma.EmployeeOmit
   organizationOnboardingToken?: Prisma.OrganizationOnboardingTokenOmit
-  employeeContract?: Prisma.EmployeeContractOmit
+  employeeDocument?: Prisma.EmployeeDocumentOmit
   approvalRequest?: Prisma.ApprovalRequestOmit
   approvalStep?: Prisma.ApprovalStepOmit
   platformUser?: Prisma.PlatformUserOmit
   employeeOnPosition?: Prisma.EmployeeOnPositionOmit
   image?: Prisma.ImageOmit
-  iD_Document?: Prisma.ID_DocumentOmit
   menu?: Prisma.MenuOmit
   planOnMenu?: Prisma.PlanOnMenuOmit
   designation?: Prisma.DesignationOmit

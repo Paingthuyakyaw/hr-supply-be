@@ -253,21 +253,55 @@ export type EnumEmployeeStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumEmployeeStatusFilter<$PrismaModel>
 }
 
-export type EnumContractStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContractStatusFilter<$PrismaModel> | $Enums.ContractStatus
+export type EnumEmployeeDocumentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmployeeDocumentType | Prisma.EnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEmployeeDocumentTypeFilter<$PrismaModel> | $Enums.EmployeeDocumentType
 }
 
-export type EnumContractStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContractStatusWithAggregatesFilter<$PrismaModel> | $Enums.ContractStatus
+export type EnumIDDocTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumIDDocTypeNullableFilter<$PrismaModel> | $Enums.IDDocType | null
+}
+
+export type EnumContractStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContractStatusNullableFilter<$PrismaModel> | $Enums.ContractStatus | null
+}
+
+export type EnumEmployeeDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmployeeDocumentType | Prisma.EnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEmployeeDocumentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmployeeDocumentType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumContractStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumContractStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmployeeDocumentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmployeeDocumentTypeFilter<$PrismaModel>
+}
+
+export type EnumIDDocTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumIDDocTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.IDDocType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIDDocTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIDDocTypeNullableFilter<$PrismaModel>
+}
+
+export type EnumContractStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContractStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContractStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumContractStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumContractStatusNullableFilter<$PrismaModel>
 }
 
 export type EnumApprovalTypeFilter<$PrismaModel = never> = {
@@ -387,23 +421,6 @@ export type EnumApprovalStepStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumApprovalStepStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumApprovalStepStatusFilter<$PrismaModel>
-}
-
-export type EnumIDDocTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIDDocTypeFilter<$PrismaModel> | $Enums.IDDocType
-}
-
-export type EnumIDDocTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIDDocTypeWithAggregatesFilter<$PrismaModel> | $Enums.IDDocType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumIDDocTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumIDDocTypeFilter<$PrismaModel>
 }
 
 export type EnumMenuCodeFilter<$PrismaModel = never> = {
@@ -838,21 +855,55 @@ export type NestedEnumEmployeeStatusWithAggregatesFilter<$PrismaModel = never> =
   _max?: Prisma.NestedEnumEmployeeStatusFilter<$PrismaModel>
 }
 
-export type NestedEnumContractStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContractStatusFilter<$PrismaModel> | $Enums.ContractStatus
+export type NestedEnumEmployeeDocumentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmployeeDocumentType | Prisma.EnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEmployeeDocumentTypeFilter<$PrismaModel> | $Enums.EmployeeDocumentType
 }
 
-export type NestedEnumContractStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContractStatusWithAggregatesFilter<$PrismaModel> | $Enums.ContractStatus
+export type NestedEnumIDDocTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumIDDocTypeNullableFilter<$PrismaModel> | $Enums.IDDocType | null
+}
+
+export type NestedEnumContractStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContractStatusNullableFilter<$PrismaModel> | $Enums.ContractStatus | null
+}
+
+export type NestedEnumEmployeeDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmployeeDocumentType | Prisma.EnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EmployeeDocumentType[] | Prisma.ListEnumEmployeeDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEmployeeDocumentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmployeeDocumentType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumContractStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumContractStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmployeeDocumentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmployeeDocumentTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumIDDocTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumIDDocTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.IDDocType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumIDDocTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumIDDocTypeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumContractStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContractStatus | Prisma.EnumContractStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContractStatus[] | Prisma.ListEnumContractStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContractStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContractStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumContractStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumContractStatusNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumApprovalTypeFilter<$PrismaModel = never> = {
@@ -945,23 +996,6 @@ export type NestedEnumApprovalStepStatusWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumApprovalStepStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumApprovalStepStatusFilter<$PrismaModel>
-}
-
-export type NestedEnumIDDocTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIDDocTypeFilter<$PrismaModel> | $Enums.IDDocType
-}
-
-export type NestedEnumIDDocTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.IDDocType | Prisma.EnumIDDocTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.IDDocType[] | Prisma.ListEnumIDDocTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumIDDocTypeWithAggregatesFilter<$PrismaModel> | $Enums.IDDocType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumIDDocTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumIDDocTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumMenuCodeFilter<$PrismaModel = never> = {

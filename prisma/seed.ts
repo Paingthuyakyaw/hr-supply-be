@@ -12,6 +12,7 @@ import {
   AttendanceWorkStatus,
   ContractStatus,
   EmployeeStatus,
+  EmployeeDocumentType,
   EmployeeType,
   LeaveRequestStatus,
   MenuCode,
@@ -286,7 +287,6 @@ async function main() {
       organizationId: org.id,
       status: EmployeeStatus.ACTIVE,
       employment_type: EmployeeType.FULL_TIME,
-      contracts: ["https://seed.local/contracts/staff-contract-v1.pdf"],
     },
     create: {
       full_name: "Seed Staff",
@@ -298,7 +298,6 @@ async function main() {
       organizationId: org.id,
       status: EmployeeStatus.ACTIVE,
       employment_type: EmployeeType.FULL_TIME,
-      contracts: ["https://seed.local/contracts/staff-contract-v1.pdf"],
     },
   });
 
@@ -536,26 +535,37 @@ async function main() {
     });
   }
 
-  await prisma.employeeContract.upsert({
+  const existingStaffContractDoc = await prisma.employeeDocument.findFirst({
     where: {
-      employeeId_version: {
-        employeeId: staff.id,
-        version: 1,
-      },
-    },
-    update: {
-      fileUrl: "https://seed.local/contracts/staff-contract-v1.pdf",
-      status: ContractStatus.ACTIVE,
-      reminderDays: 30,
-    },
-    create: {
       employeeId: staff.id,
+      type: EmployeeDocumentType.CONTRACT,
       version: 1,
-      fileUrl: "https://seed.local/contracts/staff-contract-v1.pdf",
-      status: ContractStatus.ACTIVE,
-      reminderDays: 30,
     },
+    select: { id: true },
   });
+  if (existingStaffContractDoc) {
+    await prisma.employeeDocument.update({
+      where: { id: existingStaffContractDoc.id },
+      data: {
+        organizationId: org.id,
+        fileUrl: "https://seed.local/contracts/staff-contract-v1.pdf",
+        contractStatus: ContractStatus.ACTIVE,
+        reminderDays: 30,
+      },
+    });
+  } else {
+    await prisma.employeeDocument.create({
+      data: {
+        organizationId: org.id,
+        employeeId: staff.id,
+        type: EmployeeDocumentType.CONTRACT,
+        version: 1,
+        fileUrl: "https://seed.local/contracts/staff-contract-v1.pdf",
+        contractStatus: ContractStatus.ACTIVE,
+        reminderDays: 30,
+      },
+    });
+  }
 
   const defaultPayrollComponents = [
     {

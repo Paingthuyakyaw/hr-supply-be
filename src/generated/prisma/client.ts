@@ -70,10 +70,10 @@ export type Employee = Prisma.EmployeeModel
  */
 export type OrganizationOnboardingToken = Prisma.OrganizationOnboardingTokenModel
 /**
- * Model EmployeeContract
+ * Model EmployeeDocument
  * 
  */
-export type EmployeeContract = Prisma.EmployeeContractModel
+export type EmployeeDocument = Prisma.EmployeeDocumentModel
 /**
  * Model ApprovalRequest
  * 
@@ -99,11 +99,6 @@ export type EmployeeOnPosition = Prisma.EmployeeOnPositionModel
  * 
  */
 export type Image = Prisma.ImageModel
-/**
- * Model ID_Document
- * 
- */
-export type ID_Document = Prisma.ID_DocumentModel
 /**
  * Model Menu
  * 
